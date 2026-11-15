@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WebDev Lab — Your completion certificate: finish all 23 lessons and projects to download it.">
+<title>Certificate — WebDev Lab</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">WebDev <span>Lab</span></a>
+    <button class="icon-btn menu-btn" id="menuToggle" aria-label="Open menu">&#9776;</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="editor.html">Editor</a>
+      <a href="enroll.html">Enroll</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="enroll.html?plan=earlybird" class="cta">Enroll — Rs 999</a>
+    </nav>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle dark or light mode">&#12719;</button>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Your certificate</h2>
+        <p>Finish all 23 lessons and projects to earn your certificate — then download or print it here.</p>
+      </div>
+
+      <div id="certLocked" class="card form-card hidden" style="max-width: 640px; text-align: center;">
+        <h3>This certificate is for enrolled students</h3>
+        <p>Only students who enrolled and finished the full course get a certificate. If you already paid, enter your access code. If not, enroll first — it takes two minutes.</p>
+        <a class="btn" href="unlock.html">Unlock with Code</a>
+        <a class="btn btn-outline" href="enroll.html">Enroll Now</a>
+        <p class="note" style="margin-top: 16px;">The first 3 HTML lessons are free for everyone — <a href="lessons/html-1.html">start Lesson 1 here</a>.</p>
+      </div>
+
+      <div id="certProgress" class="card form-card hidden" style="max-width: 640px;">
+        <h3>Almost there — keep going</h3>
+        <p id="certProgressText"></p>
+        <p><strong>Still to finish:</strong></p>
+        <ul id="certRemaining" class="check-list"></ul>
+        <p>Complete all 23 lessons and projects to unlock your certificate.</p>
+        <a class="btn" href="lessons.html">Continue Learning</a>
+        <a class="btn btn-outline" href="dashboard.html">Back to Dashboard</a>
+      </div>
+
+      <div id="certReady" class="hidden">
+        <div class="certificate" id="certificateCard">
+          <div class="cert-inner">
+            <p class="cert-eyebrow">WebDev Lab</p>
+            <h2>Certificate of Completion</h2>
+            <p class="cert-presented">This certificate is proudly presented to</p>
+            <p class="cert-name" id="certName">—</p>
+            <p class="cert-body">has successfully completed <strong>WebDev Lab — HTML, CSS &amp; JavaScript</strong></p>
+            <p class="cert-batch" id="certBatch">Batch 1 — 1 December 2026</p>
+            <div class="cert-meta">
+              <span>Completed on <strong id="certDate">—</strong></span>
+              <span>Certificate ID: <strong id="certId">—</strong></span>
+            </div>
+            <p class="cert-sign">Muhammad Usman, Founder &amp; CEO, Rakhzaar Tech</p>
+          </div>
+        </div>
+        <p class="cert-preview-note hidden" id="certPreviewNote">Preview — complete all 23 items to unlock the real certificate.</p>
+        <div class="cert-actions">
+          <button class="btn" id="certPrintBtn" type="button">Download / Print Certificate</button>
+          <a class="btn btn-outline" href="dashboard.html">Back to Dashboard</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      <a href="https://usmankalera-dev.github.io/portfolio/" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://github.com/Usmankalera-dev" target="_blank" rel="noopener">GitHub</a>
+      <a href="lessons.html">Lessons</a>
+    </p>
+    <p>By Muhammad Usman (Usman Kalera) — Rakhzaar Tech</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

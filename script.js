@@ -109,6 +109,34 @@ const WEBDEV_CONFIG = {
     { id: "proj-5", num: 23, title: "To-Do App", module: "Mini Projects", href: "lessons/proj-5.html" }
   ];
 
+  /* ---------- Loop 4: testimonials (empty until Batch 1 graduates) ---------- */
+  var TESTIMONIALS = [];
+  (function renderTestimonials() {
+    var list = document.getElementById("testimonialsList");
+    if (!list) return;
+    list.innerHTML = "";
+    if (!TESTIMONIALS.length) {
+      var p = document.createElement("p");
+      p.className = "note";
+      p.textContent = "Student reviews will appear here after Batch 1 graduates — starting 1 December 2026.";
+      list.appendChild(p);
+      return;
+    }
+    list.className = "grid grid-3";
+    TESTIMONIALS.forEach(function (t) {
+      var card = document.createElement("div");
+      card.className = "card";
+      var quote = document.createElement("p");
+      quote.textContent = "\u201C" + t.text + "\u201D";
+      var name = document.createElement("p");
+      name.className = "testimonial-name";
+      name.textContent = "\u2014 " + t.name;
+      card.appendChild(quote);
+      card.appendChild(name);
+      list.appendChild(card);
+    });
+  })();
+
 
   /* ---------- Loop 3: quizzes ---------- */
   var QUIZZES = {
@@ -407,6 +435,32 @@ const WEBDEV_CONFIG = {
     }
   }
 
+  /* ---------- Loop 4: lesson search ---------- */
+  var lessonSearch = document.getElementById("lessonSearch");
+  if (lessonSearch) {
+    var noLessonMatch = document.getElementById("noLessonMatch");
+    lessonSearch.addEventListener("input", function () {
+      var q = lessonSearch.value.trim().toLowerCase();
+      var anyVisible = false;
+      document.querySelectorAll(".lesson-group").forEach(function (group) {
+        var groupVisible = false;
+        var heading = group.querySelector("h3");
+        var moduleName = heading ? heading.textContent : "";
+        group.querySelectorAll(".lesson-row").forEach(function (row) {
+          var titleEl = row.querySelector(".lname");
+          var title = titleEl ? titleEl.textContent : "";
+          var match = !q ||
+            title.toLowerCase().indexOf(q) !== -1 ||
+            moduleName.toLowerCase().indexOf(q) !== -1;
+          row.classList.toggle("hidden", !match);
+          if (match) { groupVisible = true; anyVisible = true; }
+        });
+        group.classList.toggle("hidden", !groupVisible);
+      });
+      if (noLessonMatch) noLessonMatch.classList.toggle("hidden", anyVisible);
+    });
+  }
+
   /* ---------- enroll page ---------- */
   var enrollForm = document.getElementById("enrollForm");
   if (enrollForm) {
@@ -633,11 +687,78 @@ const WEBDEV_CONFIG = {
       var certBox = document.getElementById("certBox");
       if (doneCount >= TOTAL_LESSONS) {
         certBox.className = "alert alert-ok";
-        certBox.innerHTML = "<strong>Certificate ready!</strong> You finished all 23 lessons. Your certificate will be available in the final version (Loop 4).";
+        certBox.innerHTML = "<strong>Certificate ready!</strong> You finished all 23 lessons and projects.<div style=\"margin-top: 12px;\"><a class=\"btn btn-small\" href=\"certificate.html\">Download Certificate</a></div>";
       } else {
         certBox.className = "alert";
-        certBox.innerHTML = "<strong>Certificate:</strong> Complete all 23 lessons to unlock your certificate. Your certificate will be available in the final version (Loop 4).";
+        certBox.innerHTML = "<strong>Certificate:</strong> You have completed " + doneCount + " of " + TOTAL_LESSONS + " lessons and projects — " + (TOTAL_LESSONS - doneCount) + " remaining. Complete all 23 to unlock your certificate. <a href=\"certificate.html\">See your progress &rarr;</a>";
       }
+    }
+  }
+
+  /* ---------- Loop 4: certificate page ---------- */
+  var COMPLETED_KEY = "webdevlab-completed-date";
+  function formatDate(iso) {
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var parts = String(iso || "").split("-");
+    if (parts.length !== 3) return iso;
+    var m = parseInt(parts[1], 10);
+    if (!m || m < 1 || m > 12) return iso;
+    return parseInt(parts[2], 10) + " " + months[m - 1] + " " + parts[0];
+  }
+  var certLocked = document.getElementById("certLocked");
+  var certProgress = document.getElementById("certProgress");
+  var certReady = document.getElementById("certReady");
+  if (certLocked && certProgress && certReady) {
+    var cacc = getAccess();
+    var preview = false;
+    try {
+      preview = new URLSearchParams(window.location.search).get("preview") === "1";
+    } catch (e) {}
+    var certDone = getProgress().filter(function (id) {
+      return LESSONS.some(function (l) { return l.id === id; });
+    });
+    var certDoneCount = certDone.length;
+    var certCompletedAll = certDoneCount >= TOTAL_LESSONS;
+    if (!cacc) {
+      certLocked.classList.remove("hidden");
+    } else if (certCompletedAll || preview) {
+      document.getElementById("certName").textContent = cacc.name;
+      document.getElementById("certId").textContent = "WDL-" + cacc.code;
+      document.getElementById("certBatch").textContent = WEBDEV_CONFIG.batch;
+      var completedDate = null;
+      try { completedDate = localStorage.getItem(COMPLETED_KEY); } catch (e) {}
+      if (certCompletedAll && !completedDate) {
+        completedDate = new Date().toISOString().slice(0, 10);
+        try { localStorage.setItem(COMPLETED_KEY, completedDate); } catch (e) {}
+      }
+      if (!completedDate) completedDate = new Date().toISOString().slice(0, 10);
+      document.getElementById("certDate").textContent = formatDate(completedDate);
+      if (preview && !certCompletedAll) {
+        document.getElementById("certPreviewNote").classList.remove("hidden");
+      }
+      certReady.classList.remove("hidden");
+    } else {
+      var remaining = LESSONS.filter(function (l) {
+        return certDone.indexOf(l.id) === -1;
+      });
+      document.getElementById("certProgressText").textContent =
+        "You have completed " + certDoneCount + " of " + TOTAL_LESSONS +
+        " lessons and projects — " + remaining.length + " remaining.";
+      var remList = document.getElementById("certRemaining");
+      remList.innerHTML = "";
+      remaining.forEach(function (l) {
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.href = l.href;
+        a.textContent = l.num + ". " + l.title;
+        li.appendChild(a);
+        remList.appendChild(li);
+      });
+      certProgress.classList.remove("hidden");
+    }
+    var certPrintBtn = document.getElementById("certPrintBtn");
+    if (certPrintBtn) {
+      certPrintBtn.addEventListener("click", function () { window.print(); });
     }
   }
 
