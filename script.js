@@ -825,7 +825,7 @@ const WEBDEV_CONFIG = {
           signature: "Muhammad Usman",
           signatureSub: "Founder & CEO, Rakhzaar Tech"
         });
-        downloadCertificatePDF(bytes, certFileName(cacc ? cacc.name : "Student", "Certificate"));
+        downloadCertificatePDF(bytes, certFileName(cacc ? cacc.name : "Student", "Completion"));
       });
     }
   }
