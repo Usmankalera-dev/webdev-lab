@@ -15,9 +15,11 @@
     <nav class="main-nav" id="mainNav">
       <a href="index.html">Home</a>
       <a href="lessons.html">Lessons</a>
+      <a href="enroll.html">Enroll</a>
+      <a href="dashboard.html">Dashboard</a>
       <a href="index.html#pricing">Pricing</a>
       <a href="index.html#faq">FAQ</a>
-      <a href="index.html#waitlist" class="cta">Enroll — Rs 999</a>
+      <a href="enroll.html?plan=earlybird" class="cta">Enroll — Rs 999</a>
     </nav>
     <button class="icon-btn" id="themeToggle" aria-label="Toggle dark or light mode">&#12719;</button>
   </div>
@@ -28,7 +30,8 @@
     <div class="container">
       <div class="section-head">
         <h2>All lessons</h2>
-        <p>23 lessons and projects in order. The first 3 HTML lessons are free — the rest unlock when you enroll.</p>
+        <p id="lessonsIntro">23 lessons and projects in order. The first 3 HTML lessons are free — the rest unlock when you enroll.</p>
+        <p class="unlock-bar" id="unlockBar">Already paid and have an access code? <a href="unlock.html">Unlock with code &rarr;</a></p>
       </div>
 
       <div class="lesson-group">
@@ -163,7 +166,7 @@
       </div>
 
       <div style="text-align: center; margin-top: 32px;">
-        <a class="btn" href="index.html#pricing">Enroll Now — Rs 999</a>
+        <a class="btn" id="lessonsCtaBtn" href="enroll.html?plan=earlybird">Enroll Now — Rs 999</a>
         <p class="note">Full course: all 18 lessons, live code editor, quizzes, 5 projects and a certificate.</p>
       </div>
     </div>

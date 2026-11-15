@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WebDev Lab — Unlock your course with the access code you received on WhatsApp after payment.">
+<title>Unlock Your Course — WebDev Lab</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">WebDev <span>Lab</span></a>
+    <button class="icon-btn menu-btn" id="menuToggle" aria-label="Open menu">&#9776;</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="enroll.html">Enroll</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="enroll.html?plan=earlybird" class="cta">Enroll — Rs 999</a>
+    </nav>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle dark or light mode">&#12719;</button>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Unlock your course</h2>
+        <p>Already paid? Enter the access code we sent you on WhatsApp and start learning.</p>
+      </div>
+
+      <div class="card form-card" style="max-width: 640px;">
+        <ol class="steps-list">
+          <li><strong>Enroll and pay</strong> — fill the <a href="enroll.html">enroll form</a> and pay with JazzCash, Easypaisa or Nayapay.</li>
+          <li><strong>Get your code</strong> — send your payment screenshot on WhatsApp. We verify it and send your access code within 24 hours.</li>
+          <li><strong>Enter it here</strong> — type your code below and your full course unlocks on this device.</li>
+        </ol>
+
+        <div id="alreadyBox" class="alert alert-ok hidden">
+          <p id="alreadyText" style="margin-bottom: 10px;"></p>
+          <a class="btn btn-small" href="dashboard.html">Go to Dashboard</a>
+          <a class="btn btn-outline btn-small" href="lessons.html">All Lessons</a>
+        </div>
+
+        <form id="unlockForm" novalidate>
+          <label for="unName">Your name</label>
+          <input type="text" id="unName" name="name" placeholder="e.g. Ali Raza" autocomplete="name" required>
+          <label for="unCode">Access code</label>
+          <input type="text" id="unCode" name="code" class="code-input" placeholder="e.g. WEB-1001" autocomplete="off" required>
+          <button type="submit" class="btn">Unlock Course</button>
+          <p class="form-msg" id="unlockMsg"></p>
+        </form>
+
+        <div id="unlockSuccess" class="alert alert-ok hidden">
+          <p id="unlockSuccessText" style="margin-bottom: 12px;"></p>
+          <a class="btn btn-small" href="dashboard.html">Go to Dashboard</a>
+          <a class="btn btn-outline btn-small" href="lessons.html">Start Learning</a>
+        </div>
+
+        <p class="note">No code yet? <a href="enroll.html">Enroll here</a> first. Lost your code or having trouble? Message us on <a href="https://wa.me/923187579301" target="_blank" rel="noopener">WhatsApp</a>.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      <a href="https://usmankalera-dev.github.io/portfolio/" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://github.com/Usmankalera-dev" target="_blank" rel="noopener">GitHub</a>
+      <a href="lessons.html">Lessons</a>
+    </p>
+    <p>By Muhammad Usman (Usman Kalera) — Rakhzaar Tech</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
