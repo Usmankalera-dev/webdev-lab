@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WebDev Lab lesson 16 — Arrays & Objects. Learn arrays, indexes, push and pop, objects, dot notation and arrays of objects.">
+<title>Lesson 16: Arrays &amp; Objects — WebDev Lab</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="../index.html">WebDev <span>Lab</span></a>
+    <button class="icon-btn menu-btn" id="menuToggle" aria-label="Open menu">&#9776;</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="../index.html">Home</a>
+      <a href="../lessons.html">Lessons</a>
+      <a href="../editor.html">Editor</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../index.html#faq">FAQ</a>
+      <a href="../index.html#waitlist" class="cta">Enroll — Rs 999</a>
+    </nav>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle dark or light mode">&#12719;</button>
+  </div>
+</header>
+
+<main class="lesson-wrap">
+  <p class="breadcrumb"><a href="../lessons.html">&larr; All lessons</a> / Module 3 — JavaScript</p>
+  <h1>Lesson 16: Arrays &amp; Objects</h1>
+
+  <div id="lockBox" class="card hidden" style="text-align: center; max-width: 560px; margin: 24px auto;">
+    <h3>This lesson is for enrolled students</h3>
+    <p>Enroll in WebDev Lab to unlock this lesson and the full course.</p>
+    <a class="btn" href="../enroll.html">Enroll to unlock</a>
+    <a class="btn btn-outline" href="../unlock.html">Unlock with Code</a>
+  </div>
+
+  <div id="lessonBody">
+    <div class="progress-note">
+      <strong>Lesson 16 of 23 — Enrolled students</strong><br>
+      <span id="progressCount">0 of 23 lessons complete</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="lesson-content">
+    <h2>Lists with arrays</h2>
+<p>A variable holds one value. An <strong>array</strong> holds a list of values, in order, inside square brackets. Each value has a position called an <strong>index</strong> — and the first position is 0, not 1:</p>
+    <pre><code>let fruits = ["apple", "banana", "mango"];
+console.log(fruits[0]);  // "apple"
+console.log(fruits[2]);  // "mango"
+console.log(fruits.length);  // 3</code></pre>
+    <p>The <code class="inline">length</code> property tells you how many items there are. The last item is always at index <code class="inline">length - 1</code> — for three items, index 2. Asking for an index that does not exist gives <code class="inline">undefined</code>, not an error, so check your indexes carefully.</p>
+    <p>You can change an item by its index, and you can loop over the whole list with the <code class="inline">for...of</code> loop from the last lesson:</p>
+    <pre><code>fruits[1] = "orange";
+for (let fruit of fruits) {
+  console.log(fruit);
+}</code></pre>
+
+    <h2>Array methods</h2>
+<p>Arrays come with built-in methods — functions that belong to the array. The four you will use most are <code class="inline">push</code> (add to the end), <code class="inline">pop</code> (remove from the end), <code class="inline">indexOf</code> (find the position of a value) and <code class="inline">join</code> (glue the items into one string):</p>
+    <pre><code>let tasks = ["Learn HTML", "Learn CSS"];
+tasks.push("Learn JavaScript");
+console.log(tasks);  // ["Learn HTML", "Learn CSS", "Learn JavaScript"]
+let last = tasks.pop();
+console.log(last);   // "Learn JavaScript"
+console.log(tasks.indexOf("Learn CSS"));  // 1
+console.log(tasks.join(", "));  // "Learn HTML, Learn CSS"</code></pre>
+    <p>There are many more methods — <code class="inline">filter</code>, <code class="inline">map</code> and <code class="inline">forEach</code> are the next ones to learn — but these four carry most real programs. The to-do app in Lesson 18 is built almost entirely from <code class="inline">push</code>, <code class="inline">filter</code> and <code class="inline">join</code>.</p>
+
+    <h2>Objects: labelled values</h2>
+<p>An array is a list in order. An <strong>object</strong> is a set of labelled values — each value has a name, called a <strong>key</strong>. Objects describe one thing with several properties:</p>
+    <pre><code>let student = {
+  name: "Usman",
+  age: 20,
+  city: "Lahore",
+  isEnrolled: true
+};
+console.log(student.name);  // "Usman"
+console.log(student.city);  // "Lahore"
+student.age = 21;           // change a property</code></pre>
+    <p>You read a property with <strong>dot notation</strong> — <code class="inline">student.name</code>. You can add a new property the same way, by assigning to a key that does not exist yet. Objects and arrays are the two shapes almost all data takes in JavaScript: a list of things (array) where each thing has named fields (object).</p>
+
+    <h2>Arrays of objects</h2>
+<p>Put them together and you can describe real data. A list of students, where each student is an object:</p>
+    <pre><code>let students = [
+  { name: "Usman", age: 20, city: "Lahore" },
+  { name: "Ahmad", age: 21, city: "Karachi" },
+  { name: "Sara", age: 19, city: "Islamabad" }
+];
+
+for (let s of students) {
+  console.log(s.name + " lives in " + s.city);
+}</code></pre>
+    <p>This pattern — an array of objects, looped over to build a page — is behind almost every list on the internet: products in a shop, posts in a feed, messages in a chat. Learn it well, because the final project uses exactly this shape to store its tasks.</p>
+
+    <div class="exercise">
+      <h3>Exercise — A small shop list</h3>
+      <p>Make an array of three products, each an object with name and price (for example, { name: 'Bread', price: 200 }). Loop over the array and print each product as 'Bread — Rs 200'. Then add a fourth product with push, and print the new total price by adding up all the prices in a loop.</p>
+    </div>
+
+    <div class="quiz-box" id="quizBox" data-lesson="js-6">
+      <h2>Quiz — check what you learned</h2>
+      <p class="quiz-best" id="quizBest"></p>
+      <div id="quizQuestions"></div>
+      <button class="btn" id="quizSubmit">Check my score</button>
+      <div id="quizResult"></div>
+    </div>
+
+    <p class="try-it"><a class="btn btn-outline btn-small" href="../editor.html?lesson=js-6">Try this code in the editor &rarr;</a></p>
+    </div>
+
+    <button class="btn" data-complete="js-6">Mark as complete</button>
+  </div>
+
+  <div class="lesson-nav">
+    <a class="btn btn-outline btn-small" href="js-5.html">&larr; Conditions &amp; Loops</a>
+    <a class="btn btn-small" href="js-7.html">Next: Fetch &amp; APIs (intro) &rarr;</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      <a href="https://usmankalera-dev.github.io/portfolio/" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://github.com/Usmankalera-dev" target="_blank" rel="noopener">GitHub</a>
+      <a href="../lessons.html">Lessons</a>
+    </p>
+    <p>By Muhammad Usman (Usman Kalera) — Rakhzaar Tech</p>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

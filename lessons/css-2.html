@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WebDev Lab lesson 7 — Colours, Fonts & Text. Learn colour names, hex and rgb, font families, sizes, weights and text alignment.">
+<title>Lesson 7: Colours, Fonts &amp; Text — WebDev Lab</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="../index.html">WebDev <span>Lab</span></a>
+    <button class="icon-btn menu-btn" id="menuToggle" aria-label="Open menu">&#9776;</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="../index.html">Home</a>
+      <a href="../lessons.html">Lessons</a>
+      <a href="../editor.html">Editor</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../index.html#faq">FAQ</a>
+      <a href="../index.html#waitlist" class="cta">Enroll — Rs 999</a>
+    </nav>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle dark or light mode">&#12719;</button>
+  </div>
+</header>
+
+<main class="lesson-wrap">
+  <p class="breadcrumb"><a href="../lessons.html">&larr; All lessons</a> / Module 2 — CSS</p>
+  <h1>Lesson 7: Colours, Fonts &amp; Text</h1>
+
+  <div id="lockBox" class="card hidden" style="text-align: center; max-width: 560px; margin: 24px auto;">
+    <h3>This lesson is for enrolled students</h3>
+    <p>Enroll in WebDev Lab to unlock this lesson and the full course.</p>
+    <a class="btn" href="../enroll.html">Enroll to unlock</a>
+    <a class="btn btn-outline" href="../unlock.html">Unlock with Code</a>
+  </div>
+
+  <div id="lessonBody">
+    <div class="progress-note">
+      <strong>Lesson 7 of 23 — Enrolled students</strong><br>
+      <span id="progressCount">0 of 23 lessons complete</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="lesson-content">
+    <h2>Colours in CSS</h2>
+<p>CSS gives you three ways to write a colour. <strong>Colour names</strong> are the simplest — <code class="inline">red</code>, <code class="inline">darkblue</code>, <code class="inline">gold</code> — but there are only 140 of them, and "lightblue" may not be the exact blue you want. <strong>Hex codes</strong> are the professional standard: a hash followed by six digits, two each for red, green and blue. <code class="inline">#ff0000</code> is pure red, <code class="inline">#000000</code> is black, <code class="inline">#ffffff</code> is white, and <code class="inline">#f59e0b</code> is the amber colour this website uses:</p>
+    <pre><code>h1 { color: #d97706; }          /* amber heading */
+p  { color: #333333; }          /* dark grey text */
+body { background-color: #f9fafb; }  /* very light grey */</code></pre>
+    <p><strong>RGB</strong> writes the same three numbers in decimal: <code class="inline">rgb(255, 0, 0)</code> is the same red as <code class="inline">#ff0000</code>. RGBA adds a fourth number for transparency — <code class="inline">rgba(0, 0, 0, 0.5)</code> is black at half strength, so whatever is behind it shows through. Use <code class="inline">color</code> for text and <code class="inline">background-color</code> for the fill behind it. One rule of design: text must be easy to read. Dark text on a light background, or light text on a dark background — never light grey on white.</p>
+
+    <h2>Fonts</h2>
+<p>The <code class="inline">font-family</code> property picks the typeface. You do not name one font — you name a list, called a <strong>font stack</strong>, from your first choice to a safe fallback. If the visitor's device does not have your first font, it tries the next one:</p>
+    <pre><code>body {
+  font-family: Georgia, "Times New Roman", serif;
+}
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+}</code></pre>
+    <p>There are five generic families every device understands: <code class="inline">serif</code> (letters with little feet, like Times New Roman — good for long reading), <code class="inline">sans-serif</code> (clean letters without feet, like Arial — good for screens), <code class="inline">monospace</code> (every letter the same width, like Courier — for code), <code class="inline">cursive</code> and <code class="inline">fantasy</code>. Always end your stack with a generic family, so the text never falls back to a random font.</p>
+    <p>You can also load web fonts from services like Google Fonts, which gives you thousands of free fonts with one link tag. That is how most modern sites get their distinctive look. For now, system fonts are enough — learn the properties first, then explore fonts later.</p>
+
+    <h2>Text size and weight</h2>
+<p>Size is set with <code class="inline">font-size</code>. Pixels (<code class="inline">px</code>) are exact and easy: <code class="inline">16px</code> is the browser default for body text. But pixels do not scale when a visitor zooms or changes their settings, so professionals often use <code class="inline">rem</code> — one <code class="inline">rem</code> equals the root font size (usually 16px), so <code class="inline">1.5rem</code> is 24px and it grows if the visitor makes their text bigger:</p>
+    <pre><code>h1 { font-size: 2.5rem; }   /* about 40px */
+p  { font-size: 1rem; }     /* 16px, the default */
+small { font-size: 0.85rem; }</code></pre>
+    <p><code class="inline">font-weight</code> controls boldness: <code class="inline">400</code> is normal, <code class="inline">700</code> is bold, and <code class="inline">300</code> is light. <code class="inline">line-height</code> controls the space between lines — <code class="inline">1.6</code> (no unit, a multiple of the font size) makes long paragraphs much easier to read than the cramped default of about 1.2.</p>
+
+    <h2>Text alignment and style</h2>
+<p>Three more properties finish the basics. <code class="inline">text-align</code> moves text left, right, centre or justified (<code class="inline">left</code> is the default for English, and the easiest to read — centre is for headings and short lines, never for long paragraphs). <code class="inline">text-decoration</code> adds or removes underlines — links are underlined by default, and <code class="inline">text-decoration: none</code> is how navigation links lose the line. <code class="inline">letter-spacing</code> adds space between letters, which makes small capital-style headings look sharp:</p>
+    <pre><code>h2 {
+  text-align: center;
+  letter-spacing: 1px;
+}
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }</code></pre>
+    <p>That last rule uses a <strong>pseudo-class</strong>: <code class="inline">:hover</code> means "when the mouse is over this link". Pseudo-classes let you style an element in a particular state — <code class="inline">:hover</code>, <code class="inline">:focus</code> (when a field is selected), <code class="inline">:first-child</code>. You will use <code class="inline">:hover</code> constantly, starting with the mini projects.</p>
+
+    <div class="exercise">
+      <h3>Exercise — A readable article page</h3>
+      <p>Make a small article page with one h1, two h2 headings and three paragraphs. Style it: body font Georgia, serif; h1 dark blue at 2.5rem, centred; paragraphs at 1rem with line-height 1.7; links with no underline until hover. Then change the h1 colour to a hex code of your choice and watch it update.</p>
+    </div>
+
+    <div class="quiz-box" id="quizBox" data-lesson="css-2">
+      <h2>Quiz — check what you learned</h2>
+      <p class="quiz-best" id="quizBest"></p>
+      <div id="quizQuestions"></div>
+      <button class="btn" id="quizSubmit">Check my score</button>
+      <div id="quizResult"></div>
+    </div>
+
+    <p class="try-it"><a class="btn btn-outline btn-small" href="../editor.html?lesson=css-2">Try this code in the editor &rarr;</a></p>
+    </div>
+
+    <button class="btn" data-complete="css-2">Mark as complete</button>
+  </div>
+
+  <div class="lesson-nav">
+    <a class="btn btn-outline btn-small" href="css-1.html">&larr; What is CSS</a>
+    <a class="btn btn-small" href="css-3.html">Next: Box Model &rarr;</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      <a href="https://usmankalera-dev.github.io/portfolio/" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://github.com/Usmankalera-dev" target="_blank" rel="noopener">GitHub</a>
+      <a href="../lessons.html">Lessons</a>
+    </p>
+    <p>By Muhammad Usman (Usman Kalera) — Rakhzaar Tech</p>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

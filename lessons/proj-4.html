@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WebDev Lab mini project 4 — Image Gallery. Build a responsive photo gallery with CSS Grid, captions and a hover effect.">
+<title>Mini Project 4: Image Gallery — WebDev Lab</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="../index.html">WebDev <span>Lab</span></a>
+    <button class="icon-btn menu-btn" id="menuToggle" aria-label="Open menu">&#9776;</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="../index.html">Home</a>
+      <a href="../lessons.html">Lessons</a>
+      <a href="../editor.html">Editor</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../index.html#faq">FAQ</a>
+      <a href="../index.html#waitlist" class="cta">Enroll — Rs 999</a>
+    </nav>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle dark or light mode">&#12719;</button>
+  </div>
+</header>
+
+<main class="lesson-wrap">
+  <p class="breadcrumb"><a href="../lessons.html">&larr; All lessons</a> / Module 4 — Mini Projects</p>
+  <h1>Mini Project 4: Image Gallery</h1>
+
+  <div id="lockBox" class="card hidden" style="text-align: center; max-width: 560px; margin: 24px auto;">
+    <h3>This lesson is for enrolled students</h3>
+    <p>Enroll in WebDev Lab to unlock this lesson and the full course.</p>
+    <a class="btn" href="../enroll.html">Enroll to unlock</a>
+    <a class="btn btn-outline" href="../unlock.html">Unlock with Code</a>
+  </div>
+
+  <div id="lessonBody">
+    <div class="progress-note">
+      <strong>Project 22 of 23 — Enrolled students</strong><br>
+      <span id="progressCount">0 of 23 lessons complete</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="lesson-content">
+      <p>A photo gallery is a grid of images with captions — a photographer's portfolio, a shop's products, a travel blog's best shots. In this project you build one with CSS Grid, a layout system made for two-dimensional grids. The pictures here are coloured placeholder blocks: replace each one with your own photos, and the gallery is ready to show people.</p>
+
+    <h2>Step 1 — The HTML: figures in a grid</h2>
+<p>Each picture is a <code class="inline">&lt;figure&gt;</code> with a coloured block standing in for a photo, and a <code class="inline">&lt;figcaption&gt;</code> underneath. Six of them go inside a gallery container:</p>
+    <pre><code>&lt;div class="gallery"&gt;
+  &lt;figure&gt;
+    &lt;div class="photo" style="background: #f59e0b;"&gt;Hunza&lt;/div&gt;
+    &lt;figcaption&gt;Hunza valley in autumn&lt;/figcaption&gt;
+  &lt;/figure&gt;
+  &lt;figure&gt;
+    &lt;div class="photo" style="background: #3b82f6;"&gt;Sea&lt;/div&gt;
+    &lt;figcaption&gt;The sea at Clifton beach&lt;/figcaption&gt;
+  &lt;/figure&gt;
+  &lt;!-- four more figures the same way --&gt;
+&lt;/div&gt;</code></pre>
+    <p>The <code class="inline">style</code> attribute here only sets the placeholder colour. When you use real photos, replace each <code class="inline">&lt;div class="photo"&gt;</code> with an <code class="inline">&lt;img&gt;</code> tag — the CSS below works for both.</p>
+
+    <h2>Step 2 — CSS Grid layout</h2>
+<p>CSS Grid is like Flexbox, but for two dimensions at once — rows and columns together. <code class="inline">display: grid</code> turns the container into a grid, and <code class="inline">grid-template-columns</code> defines the columns. The magic value is <code class="inline">repeat(auto-fill, minmax(200px, 1fr))</code>: "make as many columns as fit, each at least 200px wide, sharing the space equally":</p>
+    <pre><code>.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}</code></pre>
+    <p>On a laptop that gives three or four columns. On a phone it gives one or two — automatically, with no media query. <code class="inline">1fr</code> means "one fraction of the free space", so the columns always share the width evenly.</p>
+
+    <h2>Step 3 — Style the pictures and captions</h2>
+<p>Give each picture a fixed height and rounded corners, and centre the caption text underneath:</p>
+    <pre><code>.photo {
+  height: 160px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.gallery figcaption {
+  text-align: center;
+  margin-top: 8px;
+  color: #4b5563;
+}</code></pre>
+    <p>For real photos, add <code class="inline">width: 100%; height: 160px; object-fit: cover;</code> to the <code class="inline">img</code> instead — the picture fills the box without stretching, exactly like the round profile photo in Project 1.</p>
+
+    <h2>Step 4 — A hover effect</h2>
+<p>A small hover effect makes the gallery feel alive. When the mouse is over a figure, the picture lifts slightly and grows a soft shadow. The <code class="inline">transition</code> property makes the change smooth instead of instant:</p>
+    <pre><code>.gallery figure { margin: 0; transition: transform 0.2s ease; }
+.gallery figure:hover {
+  transform: translateY(-4px);
+}
+.gallery figure:hover .photo {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}</code></pre>
+    <p><code class="inline">transform: translateY(-4px)</code> moves the whole figure 4 pixels up. Transforms do not disturb the layout around them — the other pictures stay exactly where they are.</p>
+
+    <h2>Step 5 — Responsive check</h2>
+<p>Shrink your browser window and watch the grid: columns should drop from four to three to two to one, with no horizontal scrolling and no squashed pictures. If a column looks too narrow on a phone, lower the minimum in <code class="inline">minmax()</code> from 200px to 150px. That one number controls the whole responsive behaviour — change it and the grid reflows itself.</p>
+
+    <div class="checklist-box" data-checklist="proj-4">
+      <h2>Build checklist</h2>
+      <p>Tick each item as you finish it. Your ticks are saved in this browser.</p>
+      <label class="check-item"><input type="checkbox"> Six pictures in a grid</label>
+      <label class="check-item"><input type="checkbox"> Every picture has a caption</label>
+      <label class="check-item"><input type="checkbox"> Grid changes columns on a phone</label>
+      <label class="check-item"><input type="checkbox"> Hover effect works on a picture</label>
+      <label class="check-item"><input type="checkbox"> No horizontal scrolling at any size</label>
+    </div>
+
+    <p class="try-it"><a class="btn btn-outline btn-small" href="../editor.html?lesson=proj-4">Try this project in the editor &rarr;</a></p>
+    </div>
+
+    <button class="btn" data-complete="proj-4">Mark as complete</button>
+  </div>
+
+  <div class="lesson-nav">
+    <a class="btn btn-outline btn-small" href="proj-3.html">&larr; Mini Project 3: Navbar</a>
+    <a class="btn btn-small" href="proj-5.html">Next: Mini Project 5: To-Do App &rarr;</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      <a href="https://usmankalera-dev.github.io/portfolio/" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://github.com/Usmankalera-dev" target="_blank" rel="noopener">GitHub</a>
+      <a href="../lessons.html">Lessons</a>
+    </p>
+    <p>By Muhammad Usman (Usman Kalera) — Rakhzaar Tech</p>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

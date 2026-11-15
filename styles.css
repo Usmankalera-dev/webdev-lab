@@ -483,3 +483,88 @@ details.faq p { color: var(--muted); margin: 10px 0 0; }
 .dash-stat { font-size: 1.3rem; font-weight: 800; color: var(--text); margin: 0; }
 .dash-card .progress-track { margin-top: 12px; }
 #dashLessons .lesson-group { margin-bottom: 0; }
+
+/* ---------- Loop 3: quizzes ---------- */
+.quiz-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin: 28px 0;
+}
+.quiz-box h2 { margin-top: 0; }
+.quiz-best { color: var(--muted); font-size: 0.95rem; }
+.quiz-q { margin-bottom: 18px; }
+.quiz-q-title { font-weight: 700; margin-bottom: 8px; }
+.quiz-opt {
+  display: block;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+.quiz-opt:hover { border-color: var(--accent); }
+.quiz-opt input { margin-right: 8px; }
+.quiz-opt.quiz-right { border-color: var(--green); background: rgba(52, 211, 153, 0.12); }
+.quiz-opt.quiz-wrong { border-color: var(--red); background: rgba(248, 113, 113, 0.12); }
+.quiz-why { font-size: 0.95rem; color: var(--muted); margin: 8px 0 0; }
+.quiz-score { font-weight: 700; font-size: 1.05rem; margin: 16px 0 12px; }
+.try-it { margin: 24px 0; }
+
+/* ---------- Loop 3: project checklists ---------- */
+.checklist-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin: 28px 0;
+}
+.checklist-box h2 { margin-top: 0; }
+.check-item { display: block; padding: 8px 0; cursor: pointer; font-weight: 600; }
+.check-item input { margin-right: 10px; width: 18px; height: 18px; vertical-align: middle; }
+
+/* ---------- Loop 3: editor ---------- */
+.editor-wrap { max-width: 900px; margin: 0 auto; padding: 32px 16px 56px; }
+.editor-intro { color: var(--muted); }
+.editor-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 20px 0 0; }
+.tab-btn {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px 10px 0 0;
+  border-bottom: none;
+  padding: 10px 20px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.tab-btn.active { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+.editor-pane {
+  width: 100%;
+  min-height: 260px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 0 10px 10px 10px;
+  background: var(--bg-soft);
+  color: var(--text);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+.editor-pane:focus { outline: 2px solid var(--accent); }
+.editor-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 16px 0 24px; }
+.editor-msg { color: var(--muted); font-size: 0.95rem; }
+#previewFrame {
+  width: 100%;
+  height: 380px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #ffffff;
+}
+@media (max-width: 699px) {
+  .tab-btn { flex: 1; text-align: center; padding: 10px 8px; }
+  .editor-pane { min-height: 220px; }
+  #previewFrame { height: 320px; }
+}

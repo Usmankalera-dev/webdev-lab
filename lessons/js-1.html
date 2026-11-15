@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WebDev Lab lesson 11 — What is JavaScript. Learn what JavaScript does, how to add a script tag, console.log, and your first button.">
+<title>Lesson 11: What is JavaScript — WebDev Lab</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="../index.html">WebDev <span>Lab</span></a>
+    <button class="icon-btn menu-btn" id="menuToggle" aria-label="Open menu">&#9776;</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="../index.html">Home</a>
+      <a href="../lessons.html">Lessons</a>
+      <a href="../editor.html">Editor</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../index.html#faq">FAQ</a>
+      <a href="../index.html#waitlist" class="cta">Enroll — Rs 999</a>
+    </nav>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle dark or light mode">&#12719;</button>
+  </div>
+</header>
+
+<main class="lesson-wrap">
+  <p class="breadcrumb"><a href="../lessons.html">&larr; All lessons</a> / Module 3 — JavaScript</p>
+  <h1>Lesson 11: What is JavaScript</h1>
+
+  <div id="lockBox" class="card hidden" style="text-align: center; max-width: 560px; margin: 24px auto;">
+    <h3>This lesson is for enrolled students</h3>
+    <p>Enroll in WebDev Lab to unlock this lesson and the full course.</p>
+    <a class="btn" href="../enroll.html">Enroll to unlock</a>
+    <a class="btn btn-outline" href="../unlock.html">Unlock with Code</a>
+  </div>
+
+  <div id="lessonBody">
+    <div class="progress-note">
+      <strong>Lesson 11 of 23 — Enrolled students</strong><br>
+      <span id="progressCount">0 of 23 lessons complete</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="lesson-content">
+    <h2>What JavaScript does</h2>
+<p>HTML builds the structure of a page. CSS makes it look good. JavaScript makes it <em>do</em> things. It is the programming language of the web: it reacts to clicks, checks form inputs, loads new data without reloading the page, and changes what is on the screen while the visitor watches.</p>
+    <p>Every interactive thing you have used on the web — a like button, a shopping cart, a live search box, a photo slider — is JavaScript. It runs in the visitor's browser, on their device, the moment the page loads. Unlike HTML and CSS, JavaScript is a real programming language: it has variables, conditions, loops and functions, and you can build almost anything with it.</p>
+
+    <h2>Adding JavaScript to a page</h2>
+<p>JavaScript lives inside <code class="inline">&lt;script&gt;</code> tags. You can put them in the <code class="inline">&lt;head&gt;</code>, but the usual place is at the end of the <code class="inline">&lt;body&gt;</code> — that way the HTML loads first, and the script runs after the page exists:</p>
+    <pre><code>&lt;body&gt;
+  &lt;h1&gt;Hello&lt;/h1&gt;
+  &lt;script&gt;
+    alert("Hello from JavaScript!");
+  &lt;/script&gt;
+&lt;/body&gt;</code></pre>
+    <p>For a real website, the script goes in its own file, just like CSS. A file called <code class="inline">script.js</code> is linked with a <code class="inline">src</code> attribute:</p>
+    <pre><code>&lt;script src="script.js"&gt;&lt;/script&gt;</code></pre>
+    <p>This website does exactly that — every page you have opened loads the same <code class="inline">script.js</code>, which powers the theme toggle, the progress bar and the quizzes. One script file, shared by the whole site, just like the stylesheet.</p>
+
+    <h2>Your first line: console.log</h2>
+<p>The simplest JavaScript command is <code class="inline">console.log()</code>. It prints a message to the browser's <strong>console</strong> — a panel for developers. Open it with F12 (or Ctrl+Shift+J on Windows, Cmd+Option+J on Mac) and click the Console tab:</p>
+    <pre><code>console.log("Hello, world!");
+console.log(2 + 3);</code></pre>
+    <p>The first line prints the text. The second prints <code class="inline">5</code>, because JavaScript can do maths. The console is where you will test ideas and find mistakes for the rest of this module — error messages appear there, with the line number where the problem is. When something does not work and the page looks fine, the console is the first place to look.</p>
+    <p>One more thing: every JavaScript statement usually ends with a semicolon. JavaScript will often guess where a statement ends without one, but relying on guessing causes strange bugs. End your statements with semicolons from day one.</p>
+
+    <h2>Making a button do something</h2>
+<p>Here is the classic first program in JavaScript: a button that counts clicks. The HTML gives the button an id, and the script finds it and listens for clicks:</p>
+    <pre><code>&lt;button id="countBtn"&gt;Clicked 0 times&lt;/button&gt;
+
+&lt;script&gt;
+  var count = 0;
+  var button = document.getElementById("countBtn");
+  button.addEventListener("click", function () {
+    count = count + 1;
+    button.textContent = "Clicked " + count + " times";
+  });
+&lt;/script&gt;</code></pre>
+    <p>Do not worry if every line is not clear yet — the next three lessons explain variables, functions and events one by one. The point is the shape: HTML provides the button, JavaScript finds it, listens, and changes it. That pattern — find, listen, change — is the heart of everything you will build in this module.</p>
+
+    <div class="exercise">
+      <h3>Exercise — A greeting button</h3>
+      <p>Make a page with a button that says 'Say hello'. Add a script at the end of the body that finds the button by its id and, when clicked, shows an alert saying 'Hello, and welcome to my page!'. Open the page, open the console with F12, and add a console.log line that prints 'Button clicked' — watch it appear in the console every time you click.</p>
+    </div>
+
+    <div class="quiz-box" id="quizBox" data-lesson="js-1">
+      <h2>Quiz — check what you learned</h2>
+      <p class="quiz-best" id="quizBest"></p>
+      <div id="quizQuestions"></div>
+      <button class="btn" id="quizSubmit">Check my score</button>
+      <div id="quizResult"></div>
+    </div>
+
+    <p class="try-it"><a class="btn btn-outline btn-small" href="../editor.html?lesson=js-1">Try this code in the editor &rarr;</a></p>
+    </div>
+
+    <button class="btn" data-complete="js-1">Mark as complete</button>
+  </div>
+
+  <div class="lesson-nav">
+    <a class="btn btn-outline btn-small" href="css-5.html">&larr; Lesson 10: Responsive Design</a>
+    <a class="btn btn-small" href="js-2.html">Next: Variables &amp; Data &rarr;</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      <a href="https://usmankalera-dev.github.io/portfolio/" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://github.com/Usmankalera-dev" target="_blank" rel="noopener">GitHub</a>
+      <a href="../lessons.html">Lessons</a>
+    </p>
+    <p>By Muhammad Usman (Usman Kalera) — Rakhzaar Tech</p>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

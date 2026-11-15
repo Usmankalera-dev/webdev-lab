@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WebDev Lab lesson 15 — Conditions & Loops. Learn if and else, comparison operators, logical operators, for loops and while loops.">
+<title>Lesson 15: Conditions &amp; Loops — WebDev Lab</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="../index.html">WebDev <span>Lab</span></a>
+    <button class="icon-btn menu-btn" id="menuToggle" aria-label="Open menu">&#9776;</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="../index.html">Home</a>
+      <a href="../lessons.html">Lessons</a>
+      <a href="../editor.html">Editor</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../index.html#faq">FAQ</a>
+      <a href="../index.html#waitlist" class="cta">Enroll — Rs 999</a>
+    </nav>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle dark or light mode">&#12719;</button>
+  </div>
+</header>
+
+<main class="lesson-wrap">
+  <p class="breadcrumb"><a href="../lessons.html">&larr; All lessons</a> / Module 3 — JavaScript</p>
+  <h1>Lesson 15: Conditions &amp; Loops</h1>
+
+  <div id="lockBox" class="card hidden" style="text-align: center; max-width: 560px; margin: 24px auto;">
+    <h3>This lesson is for enrolled students</h3>
+    <p>Enroll in WebDev Lab to unlock this lesson and the full course.</p>
+    <a class="btn" href="../enroll.html">Enroll to unlock</a>
+    <a class="btn btn-outline" href="../unlock.html">Unlock with Code</a>
+  </div>
+
+  <div id="lessonBody">
+    <div class="progress-note">
+      <strong>Lesson 15 of 23 — Enrolled students</strong><br>
+      <span id="progressCount">0 of 23 lessons complete</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="lesson-content">
+    <h2>Making decisions with if</h2>
+<p>Real programs make decisions. "If the password is correct, let the user in. Otherwise, show an error." In JavaScript, that is an <code class="inline">if</code> statement. The code inside the braces runs only when the condition is true:</p>
+    <pre><code>let age = 20;
+if (age >= 18) {
+  console.log("You are an adult.");
+} else {
+  console.log("You are under 18.");
+}</code></pre>
+    <p>The condition uses comparison operators: <code class="inline">===</code> (equal), <code class="inline">!==</code> (not equal), <code class="inline">&gt;</code>, <code class="inline">&lt;</code>, <code class="inline">&gt;=</code>, <code class="inline">&lt;=</code>. Notice <code class="inline">===</code> has three equals signs. Two equals (<code class="inline">==</code>) also exists, but it converts types before comparing, so <code class="inline">"5" == 5</code> is true while <code class="inline">"5" === 5</code> is false. The three-equals version is stricter and safer — always use <code class="inline">===</code>.</p>
+    <p>You can chain decisions with <code class="inline">else if</code>:</p>
+    <pre><code>let marks = 85;
+if (marks >= 90) {
+  console.log("Grade: A+");
+} else if (marks >= 80) {
+  console.log("Grade: A");
+} else if (marks >= 70) {
+  console.log("Grade: B");
+} else {
+  console.log("Grade: C or below");
+}</code></pre>
+    <p>JavaScript checks the conditions from the top and runs the first one that is true, then skips the rest. Order matters: put the most specific condition first.</p>
+
+    <h2>Combining conditions</h2>
+<p>Real decisions usually combine two or more checks. <code class="inline">&amp;&amp;</code> means "and" — both sides must be true. <code class="inline">||</code> means "or" — at least one side must be true. <code class="inline">!</code> means "not" — it flips true to false:</p>
+    <pre><code>let age = 20;
+let hasTicket = true;
+if (age >= 18 && hasTicket) {
+  console.log("You may enter.");
+}
+if (age &lt; 18 || !hasTicket) {
+  console.log("You may not enter.");
+}</code></pre>
+    <p>A common pattern is a <strong>guard</strong>: check the bad case first and stop early, so the rest of the function only runs when everything is fine. It keeps the code flat and readable instead of nesting ifs inside ifs.</p>
+
+    <h2>Repeating with loops</h2>
+<p>A <strong>loop</strong> repeats code. The <code class="inline">for</code> loop is for when you know how many times to repeat. It has three parts, separated by semicolons: start, condition, and step:</p>
+    <pre><code>for (let i = 1; i &lt;= 5; i++) {
+  console.log("Count: " + i);
+}
+// Count: 1, Count: 2, Count: 3, Count: 4, Count: 5</code></pre>
+    <p>Read it as: start with <code class="inline">i</code> at 1; while <code class="inline">i</code> is 5 or less, run the code, then add 1 to <code class="inline">i</code>. The variable <code class="inline">i</code> is the counter — by tradition it is called <code class="inline">i</code>, short for index.</p>
+    <p>The <code class="inline">while</code> loop is for when you do not know how many times: it repeats while its condition is true, and stops when it becomes false. Be careful — if the condition never becomes false, the loop never stops, and the page freezes. Always make sure something inside the loop moves towards the exit:</p>
+    <pre><code>let number = 1;
+while (number &lt; 100) {
+  number = number * 2;
+}
+console.log(number);  // 128</code></pre>
+
+    <h2>Looping over things</h2>
+<p>Loops are most useful for going through a list. The <code class="inline">for...of</code> loop takes each item in turn, with no counting needed:</p>
+    <pre><code>let fruits = ["apple", "banana", "mango"];
+for (let fruit of fruits) {
+  console.log("I like " + fruit);
+}</code></pre>
+    <p>You will use this pattern constantly in the next lesson, where lists become arrays, and in the final project, where a loop draws every task in the to-do list. Conditions decide <em>whether</em> code runs; loops decide <em>how many times</em>. Together they are the two ideas that make programs useful.</p>
+
+    <div class="exercise">
+      <h3>Exercise — A grading program</h3>
+      <p>Write a script with a variable marks (try 85, then 65, then 45). Use if / else if / else to print the grade: 90+ is A+, 80+ is A, 70+ is B, 60+ is C, otherwise F. Then write a for loop that prints the numbers 1 to 10, and a second loop that prints only the even numbers from 2 to 20.</p>
+    </div>
+
+    <div class="quiz-box" id="quizBox" data-lesson="js-5">
+      <h2>Quiz — check what you learned</h2>
+      <p class="quiz-best" id="quizBest"></p>
+      <div id="quizQuestions"></div>
+      <button class="btn" id="quizSubmit">Check my score</button>
+      <div id="quizResult"></div>
+    </div>
+
+    <p class="try-it"><a class="btn btn-outline btn-small" href="../editor.html?lesson=js-5">Try this code in the editor &rarr;</a></p>
+    </div>
+
+    <button class="btn" data-complete="js-5">Mark as complete</button>
+  </div>
+
+  <div class="lesson-nav">
+    <a class="btn btn-outline btn-small" href="js-4.html">&larr; DOM &amp; Events</a>
+    <a class="btn btn-small" href="js-6.html">Next: Arrays &amp; Objects &rarr;</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      <a href="https://usmankalera-dev.github.io/portfolio/" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://github.com/Usmankalera-dev" target="_blank" rel="noopener">GitHub</a>
+      <a href="../lessons.html">Lessons</a>
+    </p>
+    <p>By Muhammad Usman (Usman Kalera) — Rakhzaar Tech</p>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

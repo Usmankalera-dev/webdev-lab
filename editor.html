@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WebDev Lab live code editor — write HTML, CSS and JavaScript and see the result instantly.">
+<title>Code Editor — WebDev Lab</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">WebDev <span>Lab</span></a>
+    <button class="icon-btn menu-btn" id="menuToggle" aria-label="Open menu">&#9776;</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="editor.html">Editor</a>
+      <a href="enroll.html">Enroll</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="enroll.html?plan=earlybird" class="cta">Enroll — Rs 999</a>
+    </nav>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle dark or light mode">&#12719;</button>
+  </div>
+</header>
+
+<main class="editor-wrap">
+  <p class="breadcrumb"><a href="lessons.html">&larr; All lessons</a> / Code Editor</p>
+  <h1>Code Editor</h1>
+  <p class="editor-intro">Write HTML, CSS and JavaScript below and see the result instantly. Your code runs only inside the preview box — it cannot touch this page.</p>
+  <p class="note" id="editorLesson" style="text-align: left;">Starter code: a blank page</p>
+
+  <div class="editor-tabs">
+    <button class="tab-btn active" data-tab="html">HTML</button>
+    <button class="tab-btn" data-tab="css">CSS</button>
+    <button class="tab-btn" data-tab="js">JavaScript</button>
+  </div>
+  <textarea id="edHtml" class="editor-pane" spellcheck="false" placeholder="Write your HTML here..."></textarea>
+  <textarea id="edCss" class="editor-pane hidden" spellcheck="false" placeholder="Write your CSS here..."></textarea>
+  <textarea id="edJs" class="editor-pane hidden" spellcheck="false" placeholder="Write your JavaScript here..."></textarea>
+
+  <div class="editor-actions">
+    <button class="btn" id="runBtn">Run &#9654;</button>
+    <button class="btn btn-outline" id="resetBtn">Reset</button>
+    <button class="btn btn-outline" id="copyBtn">Copy code</button>
+    <span class="editor-msg" id="editorMsg"></span>
+  </div>
+
+  <h2>Preview</h2>
+  <iframe id="previewFrame" sandbox="allow-scripts" title="Code preview"></iframe>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      <a href="https://usmankalera-dev.github.io/portfolio/" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://github.com/Usmankalera-dev" target="_blank" rel="noopener">GitHub</a>
+      <a href="lessons.html">Lessons</a>
+    </p>
+    <p>By Muhammad Usman (Usman Kalera) — Rakhzaar Tech</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

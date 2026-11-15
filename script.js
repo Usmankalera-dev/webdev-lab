@@ -87,27 +87,132 @@ const WEBDEV_CONFIG = {
     { id: "html-1", num: 1, title: "Your First Web Page", module: "HTML", href: "lessons/html-1.html" },
     { id: "html-2", num: 2, title: "Headings, Paragraphs & Links", module: "HTML", href: "lessons/html-2.html" },
     { id: "html-3", num: 3, title: "Images, Lists & Tables", module: "HTML", href: "lessons/html-3.html" },
-    { id: "html-4", num: 4, title: "Forms & Inputs", module: "HTML", href: null },
-    { id: "html-5", num: 5, title: "Semantic HTML & Page Structure", module: "HTML", href: null },
-    { id: "css-1", num: 6, title: "What is CSS", module: "CSS", href: null },
-    { id: "css-2", num: 7, title: "Colours, Fonts & Text", module: "CSS", href: null },
-    { id: "css-3", num: 8, title: "Box Model", module: "CSS", href: null },
-    { id: "css-4", num: 9, title: "Flexbox Layout", module: "CSS", href: null },
-    { id: "css-5", num: 10, title: "Responsive Design", module: "CSS", href: null },
-    { id: "js-1", num: 11, title: "What is JavaScript", module: "JavaScript", href: null },
-    { id: "js-2", num: 12, title: "Variables & Data", module: "JavaScript", href: null },
-    { id: "js-3", num: 13, title: "Functions", module: "JavaScript", href: null },
-    { id: "js-4", num: 14, title: "DOM & Events", module: "JavaScript", href: null },
-    { id: "js-5", num: 15, title: "Conditions & Loops", module: "JavaScript", href: null },
-    { id: "js-6", num: 16, title: "Arrays & Objects", module: "JavaScript", href: null },
-    { id: "js-7", num: 17, title: "Fetch & APIs (intro)", module: "JavaScript", href: null },
-    { id: "js-8", num: 18, title: "Build a To-Do App", module: "JavaScript", href: null },
-    { id: "proj-1", num: 19, title: "Profile Card", module: "Mini Projects", href: null },
-    { id: "proj-2", num: 20, title: "Contact Form", module: "Mini Projects", href: null },
-    { id: "proj-3", num: 21, title: "Navbar", module: "Mini Projects", href: null },
-    { id: "proj-4", num: 22, title: "Image Gallery", module: "Mini Projects", href: null },
-    { id: "proj-5", num: 23, title: "To-Do App", module: "Mini Projects", href: null }
+    { id: "html-4", num: 4, title: "Forms & Inputs", module: "HTML", href: "lessons/html-4.html" },
+    { id: "html-5", num: 5, title: "Semantic HTML & Page Structure", module: "HTML", href: "lessons/html-5.html" },
+    { id: "css-1", num: 6, title: "What is CSS", module: "CSS", href: "lessons/css-1.html" },
+    { id: "css-2", num: 7, title: "Colours, Fonts & Text", module: "CSS", href: "lessons/css-2.html" },
+    { id: "css-3", num: 8, title: "Box Model", module: "CSS", href: "lessons/css-3.html" },
+    { id: "css-4", num: 9, title: "Flexbox Layout", module: "CSS", href: "lessons/css-4.html" },
+    { id: "css-5", num: 10, title: "Responsive Design", module: "CSS", href: "lessons/css-5.html" },
+    { id: "js-1", num: 11, title: "What is JavaScript", module: "JavaScript", href: "lessons/js-1.html" },
+    { id: "js-2", num: 12, title: "Variables & Data", module: "JavaScript", href: "lessons/js-2.html" },
+    { id: "js-3", num: 13, title: "Functions", module: "JavaScript", href: "lessons/js-3.html" },
+    { id: "js-4", num: 14, title: "DOM & Events", module: "JavaScript", href: "lessons/js-4.html" },
+    { id: "js-5", num: 15, title: "Conditions & Loops", module: "JavaScript", href: "lessons/js-5.html" },
+    { id: "js-6", num: 16, title: "Arrays & Objects", module: "JavaScript", href: "lessons/js-6.html" },
+    { id: "js-7", num: 17, title: "Fetch & APIs (intro)", module: "JavaScript", href: "lessons/js-7.html" },
+    { id: "js-8", num: 18, title: "Build a To-Do App", module: "JavaScript", href: "lessons/js-8.html" },
+    { id: "proj-1", num: 19, title: "Profile Card", module: "Mini Projects", href: "lessons/proj-1.html" },
+    { id: "proj-2", num: 20, title: "Contact Form", module: "Mini Projects", href: "lessons/proj-2.html" },
+    { id: "proj-3", num: 21, title: "Navbar", module: "Mini Projects", href: "lessons/proj-3.html" },
+    { id: "proj-4", num: 22, title: "Image Gallery", module: "Mini Projects", href: "lessons/proj-4.html" },
+    { id: "proj-5", num: 23, title: "To-Do App", module: "Mini Projects", href: "lessons/proj-5.html" }
   ];
+
+
+  /* ---------- Loop 3: quizzes ---------- */
+  var QUIZZES = {
+    "html-4": [
+      { q: "Which input type should you use for an email address?", options: ["type=\"text\"", "type=\"email\"", "type=\"number\"", "type=\"date\""], answer: 1, why: "type=\"email\" makes the browser check that the text looks like an email address." },
+      { q: "What does the label tag's for attribute do?", options: ["It sets the label's colour", "It links the label to an input by its id", "It makes the field required", "It hides the label"], answer: 1, why: "for must match the input's id — then clicking the label focuses the field." },
+      { q: "Which attribute stops a form from submitting until a field is filled?", options: ["placeholder", "value", "required", "name"], answer: 2, why: "required tells the browser the field must be filled before the form can submit." },
+    ],
+    "html-5": [
+      { q: "Which tag holds the main content of a page?", options: ["<header>", "<main>", "<footer>", "<div>"], answer: 1, why: "There is exactly one <main> per page, holding the content that makes the page unique." },
+      { q: "Which tag is for navigation links?", options: ["<nav>", "<aside>", "<section>", "<article>"], answer: 0, why: "<nav> marks the navigation block, so screen readers can jump to it." },
+      { q: "Why use semantic tags instead of divs everywhere?", options: ["They make the page load faster", "Screen readers and search engines understand the page better", "They add colour automatically", "They are required by law"], answer: 1, why: "Semantic tags describe meaning — search engines and screen readers use that meaning." },
+    ],
+    "css-1": [
+      { q: "What does CSS stand for?", options: ["Computer Style Sheets", "Cascading Style Sheets", "Creative Style System", "Coded Style Sheets"], answer: 1, why: "CSS is short for Cascading Style Sheets." },
+      { q: "Which way of adding CSS is best for a whole website?", options: ["Inline styles in every tag", "An internal <style> tag on each page", "An external .css file linked from every page", "Writing CSS inside the HTML comments"], answer: 2, why: "One external file styles every page, so one change updates the whole site." },
+      { q: "What does the selector .menu do?", options: ["It selects the element with id=\"menu\"", "It selects every <menu> tag", "It selects every element with class=\"menu\"", "It selects the whole page"], answer: 2, why: "A dot in front of a name selects elements by class." },
+    ],
+    "css-2": [
+      { q: "Which hex code is black?", options: ["#ffffff", "#ff0000", "#000000", "#00ff00"], answer: 2, why: "#000000 means zero red, zero green, zero blue — black." },
+      { q: "Which property changes the font of an element?", options: ["font-style", "font-family", "text-font", "typeface"], answer: 1, why: "font-family picks the typeface, with fallbacks in a comma-separated list." },
+      { q: "What is 1rem relative to?", options: ["The parent element's font size", "The root element's font size", "The screen width", "The browser window height"], answer: 1, why: "rem is relative to the root (html) font size, usually 16px." },
+    ],
+    "css-3": [
+      { q: "Which layer of the box model sits between the content and the border?", options: ["Margin", "Padding", "Outline", "Gap"], answer: 1, why: "From the inside out: content, padding, border, margin." },
+      { q: "What does box-sizing: border-box do?", options: ["It removes all borders", "It makes the width include padding and border", "It centres the box on the page", "It makes the box invisible"], answer: 1, why: "With border-box, a 300px box stays 300px wide even with padding and a border." },
+      { q: "How do you centre a block element that has a fixed width?", options: ["text-align: center", "margin: 0 auto", "padding: 0 auto", "align: center"], answer: 1, why: "margin: 0 auto splits the leftover space equally on the left and right." },
+    ],
+    "css-4": [
+      { q: "Which property turns an element into a flex container?", options: ["display: block", "display: flex", "position: flex", "flex: true"], answer: 1, why: "display: flex makes the element a flex container and its children flex items." },
+      { q: "justify-content aligns items along which axis?", options: ["The cross axis", "The main axis", "The vertical axis only", "No axis — it sets the size"], answer: 1, why: "justify-content works along the main axis; align-items works along the cross axis." },
+      { q: "What is the default flex-direction?", options: ["column", "row", "row-reverse", "wrap"], answer: 1, why: "The default is row — items line up left to right." },
+    ],
+    "css-5": [
+      { q: "What does the viewport meta tag do?", options: ["It makes the page load faster", "It tells the phone the page width matches the device width", "It blocks zooming", "It adds a dark mode"], answer: 1, why: "Without it, phones pretend to be 980px wide and shrink the page." },
+      { q: "Which is a correct media query for small screens?", options: ["@media (max-width: 700px)", "@screen (width < 700px)", "@responsive (small)", "@media phone"], answer: 0, why: "@media (max-width: 700px) applies its rules only up to 700px wide." },
+      { q: "Why set max-width: 100% on images?", options: ["To make images bigger", "So images never overflow a small screen", "To hide images on phones", "To make images load faster"], answer: 1, why: "A fixed-width image can overflow a 390px phone screen; max-width: 100% stops that." },
+    ],
+    "js-1": [
+      { q: "What is JavaScript mainly used for?", options: ["Styling colours and fonts", "Page structure and headings", "Behaviour and interactivity", "Storing images"], answer: 2, why: "JavaScript makes pages do things: react to clicks, check forms, load data." },
+      { q: "Where do you usually write JavaScript in an HTML file?", options: ["Inside <style> tags", "Inside <script> tags", "Inside <head> only, never the body", "In a .css file"], answer: 1, why: "JavaScript goes in <script> tags, usually at the end of the body." },
+      { q: "What does console.log() do?", options: ["It prints a message to the browser console", "It shows an alert box", "It writes text on the page", "It saves a file"], answer: 0, why: "console.log() prints to the developer console, opened with F12." },
+    ],
+    "js-2": [
+      { q: "Which keyword do you use for a value that never changes?", options: ["let", "var", "const", "static"], answer: 2, why: "const is for values that never change; trying to change one is an error." },
+      { q: "What is typeof \"5\" in JavaScript?", options: ["\"number\"", "\"string\"", "\"boolean\"", "\"undefined\""], answer: 1, why: "Quotes make it a string, even though the character is a digit." },
+      { q: "What is 5 + \"5\" in JavaScript?", options: ["10", "\"55\"", "0", "An error"], answer: 1, why: "When one side is a string, + joins the values instead of adding them." },
+    ],
+    "js-3": [
+      { q: "What does return do in a function?", options: ["It prints the value on the page", "It sends a value back to the caller and ends the function", "It repeats the function", "It deletes the function"], answer: 1, why: "return hands a value back to the caller, and nothing after it runs." },
+      { q: "What is the difference between parameters and arguments?", options: ["There is no difference", "Parameters are in the definition, arguments are the values passed when calling", "Arguments are in the definition, parameters are passed when calling", "Parameters are only for arrow functions"], answer: 1, why: "function add(a, b) has parameters a and b; add(3, 4) passes the arguments 3 and 4." },
+      { q: "Which is a correct function declaration?", options: ["function greet() { }", "greet function() { }", "def greet() { }", "function = greet() { }"], answer: 0, why: "A function declaration starts with the keyword function, then the name and parentheses." },
+    ],
+    "js-4": [
+      { q: "What does document.getElementById(\"title\") return?", options: ["The text inside the element", "The element with that id", "The number of elements on the page", "Nothing — it only works with classes"], answer: 1, why: "getElementById finds the one element with the given id." },
+      { q: "What does textContent change?", options: ["The text inside an element", "The colour of the element", "The element's id", "The page title only"], answer: 0, why: "textContent sets the text inside an element, safely, without HTML." },
+      { q: "What does addEventListener(\"click\", ...) do?", options: ["It clicks the element once", "It runs a function every time the element is clicked", "It deletes the element", "It changes the element's colour"], answer: 1, why: "addEventListener tells the browser to run a function when the event happens." },
+    ],
+    "js-5": [
+      { q: "What is the difference between == and ===?", options: ["There is no difference", "== checks the value, === also checks the type", "=== is for strings only", "== is for numbers only"], answer: 1, why: "\"5\" == 5 is true, but \"5\" === 5 is false, because the types differ." },
+      { q: "Which loop is best when you know how many times to repeat?", options: ["while", "for", "if", "switch"], answer: 1, why: "A for loop has a start, a condition and a step, so it fits a fixed count." },
+      { q: "What does && mean in a condition?", options: ["At least one side must be true", "Both sides must be true", "Neither side must be true", "It adds the two sides"], answer: 1, why: "&& means 'and' — both sides must be true for the whole condition to be true." },
+    ],
+    "js-6": [
+      { q: "What is the index of the first item in an array?", options: ["1", "0", "-1", "It has no index"], answer: 1, why: "Arrays are zero-based: the first item is at index 0." },
+      { q: "What does push() do to an array?", options: ["It removes the first item", "It adds an item to the end", "It sorts the array", "It empties the array"], answer: 1, why: "push() adds a value to the end of the array." },
+      { q: "How do you read the name property of an object called user?", options: ["user[name]", "user->name", "user.name", "name.user"], answer: 2, why: "Dot notation reads a property: user.name." },
+    ],
+    "js-7": [
+      { q: "What does fetch() return?", options: ["The data itself", "A Promise", "A JSON object", "Nothing"], answer: 1, why: "fetch() returns a Promise — the data arrives later, and .then() or await receives it." },
+      { q: "What does response.json() do?", options: ["It sends data to the server", "It reads the response body as JSON", "It checks the status code", "It deletes the response"], answer: 1, why: "response.json() turns the raw response body into a JavaScript object." },
+      { q: "Why use async/await instead of chained .then() calls?", options: ["It is faster", "The code reads top to bottom, like normal code", "It works without the internet", "It is the only way fetch works"], answer: 1, why: "async/await pauses the function until the promise finishes, so the code stays readable." },
+    ],
+    "js-8": [
+      { q: "Which array method adds a task to the end of the list?", options: ["pop()", "push()", "shift()", "splice()"], answer: 1, why: "push() adds a value to the end of the array." },
+      { q: "How do you save an array in localStorage?", options: ["localStorage.setItem(\"key\", array)", "localStorage.setItem(\"key\", JSON.stringify(array))", "localStorage.save(array)", "localStorage.store(array)"], answer: 1, why: "localStorage only stores strings, so the array must be turned into JSON text first." },
+      { q: "Which DOM method creates a new element in JavaScript?", options: ["document.createElement()", "document.newElement()", "document.make()", "document.build()"], answer: 0, why: "document.createElement(\"li\") builds a new element, which appendChild then puts on the page." },
+    ],
+  };
+
+  /* ---------- Loop 3: editor starter code ---------- */
+  var STARTER_CODE = {
+    "default": { html: "<h1>Hello, world!</h1>\n<p>Change this text and press Run.</p>", css: "body { font-family: sans-serif; }\nh1 { color: #d97706; }", js: "console.log(\"Hello from the editor!\");" },
+    "html-4": { html: "<form>\n  <label for=\"name\">Name</label>\n  <input type=\"text\" id=\"name\" placeholder=\"Your name\">\n  <button type=\"submit\">Send</button>\n</form>", css: "label { display: block; font-weight: bold; margin: 8px 0 4px; }\ninput { padding: 8px; border: 1px solid #ccc; border-radius: 6px; }\nbutton { margin-top: 12px; padding: 8px 16px; background: #f59e0b; border: none; border-radius: 6px; font-weight: bold; }", js: "" },
+    "html-5": { html: "<header>\n  <h1>My Bakery</h1>\n  <nav><a href=\"#\">Home</a> | <a href=\"#\">Menu</a></nav>\n</header>\n<main>\n  <section>\n    <h2>Fresh every morning</h2>\n    <p>Bread, cakes and biscuits.</p>\n  </section>\n</main>\n<footer><p>Since 2015.</p></footer>", css: "header { background: #111827; color: white; padding: 12px; }\nheader a { color: #f59e0b; }\nmain { padding: 12px; }", js: "" },
+    "css-1": { html: "<h1>Hello, styled world!</h1>\n<p class=\"highlight\">This paragraph has a yellow background.</p>", css: "body { background-color: #f9fafb; }\nh1 { color: #d97706; }\np { color: #333333; font-size: 18px; }\n.highlight { background-color: #fef3c7; }", js: "" },
+    "css-2": { html: "<h1>Colours and Fonts</h1>\n<p>Change the colours and fonts below and press Run.</p>\n<a href=\"#\">A link</a>", css: "body { font-family: Georgia, serif; }\nh1 { color: #1e40af; font-size: 2.5rem; text-align: center; }\np { line-height: 1.7; }\na { text-decoration: none; }\na:hover { text-decoration: underline; }", js: "" },
+    "css-3": { html: "<div class=\"card\">\n  <h2>My Card</h2>\n  <p>A card with padding, border and margin.</p>\n</div>", css: "* { box-sizing: border-box; }\n.card {\n  width: 320px;\n  margin: 20px auto;\n  padding: 20px;\n  background: #f3f4f6;\n  border: 2px solid #d97706;\n  border-radius: 12px;\n}", js: "" },
+    "css-4": { html: "<div class=\"navbar\">\n  <a class=\"logo\" href=\"#\">My Site</a>\n  <nav><a href=\"#\">Home</a><a href=\"#\">About</a><a href=\"#\">Contact</a></nav>\n</div>", css: ".navbar {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 12px 20px;\n  background: #111827;\n}\n.navbar a { color: white; text-decoration: none; }\n.navbar nav { display: flex; gap: 16px; }\n.logo { color: #f59e0b !important; font-weight: bold; }", js: "" },
+    "css-5": { html: "<h1>Responsive Page</h1>\n<div class=\"cards\">\n  <div class=\"card\">Card 1</div>\n  <div class=\"card\">Card 2</div>\n  <div class=\"card\">Card 3</div>\n</div>", css: ".cards { display: flex; gap: 16px; }\n.card { background: #fef3c7; border: 1px solid #d97706; padding: 16px; flex: 1; }\n@media (max-width: 700px) {\n  .cards { flex-direction: column; }\n  h1 { font-size: 1.8rem; }\n}", js: "" },
+    "js-1": { html: "<button id=\"countBtn\">Clicked 0 times</button>", css: "button { padding: 12px 20px; font-size: 1rem; background: #f59e0b; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }", js: "var count = 0;\nvar button = document.getElementById(\"countBtn\");\nbutton.addEventListener(\"click\", function () {\n  count = count + 1;\n  button.textContent = \"Clicked \" + count + \" times\";\n});" },
+    "js-2": { html: "<p id=\"output\">Press Run to see the total.</p>", css: "body { font-family: sans-serif; }", js: "let price = 500;\nlet quantity = 3;\nlet total = price * quantity;\ndocument.getElementById(\"output\").textContent =\n  \"Total: Rs \" + total + \" for \" + quantity + \" items.\";" },
+    "js-3": { html: "<p id=\"output\">Press Run to see the greeting.</p>", css: "body { font-family: sans-serif; }", js: "function greet(name) {\n  return \"Hello, \" + name + \"!\";\n}\ndocument.getElementById(\"output\").textContent = greet(\"Usman\");" },
+    "js-4": { html: "<h1 id=\"main-title\">Hello!</h1>\n<button id=\"changeBtn\">Change the heading</button>", css: "button { padding: 10px 18px; background: #f59e0b; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }", js: "document.getElementById(\"changeBtn\").addEventListener(\"click\", function () {\n  let heading = document.getElementById(\"main-title\");\n  heading.textContent = \"Welcome to my page!\";\n  heading.style.color = \"darkblue\";\n});" },
+    "js-5": { html: "<p id=\"output\">Press Run to see the grade.</p>", css: "body { font-family: sans-serif; }", js: "let marks = 85;\nlet grade;\nif (marks >= 90) { grade = \"A+\"; }\nelse if (marks >= 80) { grade = \"A\"; }\nelse if (marks >= 70) { grade = \"B\"; }\nelse { grade = \"C or below\"; }\ndocument.getElementById(\"output\").textContent = \"Grade: \" + grade;" },
+    "js-6": { html: "<ul id=\"list\"></ul>", css: "body { font-family: sans-serif; }", js: "let students = [\n  { name: \"Usman\", city: \"Lahore\" },\n  { name: \"Ahmad\", city: \"Karachi\" },\n  { name: \"Sara\", city: \"Islamabad\" }\n];\nlet list = document.getElementById(\"list\");\nfor (let s of students) {\n  let li = document.createElement(\"li\");\n  li.textContent = s.name + \" lives in \" + s.city;\n  list.appendChild(li);\n}" },
+    "js-7": { html: "<h2 id=\"postTitle\">Loading...</h2>\n<p id=\"postBody\"></p>", css: "body { font-family: sans-serif; }", js: "async function loadPost() {\n  let response = await fetch(\"https://jsonplaceholder.typicode.com/posts/1\");\n  let post = await response.json();\n  document.getElementById(\"postTitle\").textContent = post.title;\n  document.getElementById(\"postBody\").textContent = post.body;\n}\nloadPost();" },
+    "js-8": { html: "<input id=\"taskInput\" placeholder=\"New task...\">\n<button id=\"addBtn\">Add</button>\n<ul id=\"taskList\"></ul>", css: "input { padding: 10px; border: 1px solid #ccc; border-radius: 6px; }\nbutton { padding: 10px 16px; background: #f59e0b; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }", js: "let tasks = [];\nlet input = document.getElementById(\"taskInput\");\nlet list = document.getElementById(\"taskList\");\ndocument.getElementById(\"addBtn\").addEventListener(\"click\", function () {\n  let text = input.value.trim();\n  if (text === \"\") return;\n  tasks.push(text);\n  input.value = \"\";\n  list.innerHTML = \"\";\n  tasks.forEach(function (t) {\n    let li = document.createElement(\"li\");\n    li.textContent = t;\n    list.appendChild(li);\n  });\n});" },
+    "proj-1": { html: "<div class=\"card\">\n  <img src=\"https://via.placeholder.com/150\" alt=\"Photo of Usman\">\n  <h2>Muhammad Usman</h2>\n  <p class=\"role\">AI Engineer &amp; Creator</p>\n  <p>Building AI video ads and websites in Lahore.</p>\n  <a href=\"#\">GitHub</a>\n  <a href=\"#\">Portfolio</a>\n</div>", css: ".card {\n  width: 90%;\n  max-width: 320px;\n  margin: 40px auto;\n  padding: 24px;\n  background: #ffffff;\n  border-radius: 16px;\n  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);\n  text-align: center;\n}\n.card img {\n  width: 120px;\n  height: 120px;\n  border-radius: 50%;\n  object-fit: cover;\n  border: 3px solid #f59e0b;\n}\n.role { color: #6b7280; margin-top: -8px; }\n.card a {\n  display: inline-block;\n  margin: 4px;\n  padding: 8px 16px;\n  background: #f59e0b;\n  color: #111827;\n  text-decoration: none;\n  border-radius: 8px;\n  font-weight: bold;\n}", js: "" },
+    "proj-2": { html: "<form id=\"contactForm\">\n  <label for=\"cName\">Your name</label>\n  <input type=\"text\" id=\"cName\" required>\n  <label for=\"cEmail\">Email</label>\n  <input type=\"email\" id=\"cEmail\" required>\n  <label for=\"cMsg\">Message</label>\n  <textarea id=\"cMsg\" rows=\"4\" required></textarea>\n  <button type=\"submit\">Send message</button>\n  <p id=\"formMsg\"></p>\n</form>", css: "form { max-width: 480px; margin: 0 auto; }\nlabel { display: block; font-weight: bold; margin: 12px 0 4px; }\ninput, textarea { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem; }\nbutton[type=\"submit\"] { width: 100%; margin-top: 16px; padding: 12px; background: #f59e0b; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }", js: "let form = document.getElementById(\"contactForm\");\nlet msg = document.getElementById(\"formMsg\");\nform.addEventListener(\"submit\", function (e) {\n  e.preventDefault();\n  let text = document.getElementById(\"cMsg\").value.trim();\n  if (text.length < 10) {\n    msg.textContent = \"Please write a message of at least 10 characters.\";\n    msg.style.color = \"red\";\n    return;\n  }\n  msg.textContent = \"Thank you! Your message has been sent.\";\n  msg.style.color = \"green\";\n  form.reset();\n});" },
+    "proj-3": { html: "<header class=\"navbar\">\n  <a class=\"logo\" href=\"#\">My Bakery</a>\n  <nav>\n    <a href=\"#\">Home</a>\n    <a href=\"#\">Menu</a>\n    <a href=\"#\">About</a>\n    <a href=\"#\">Contact</a>\n  </nav>\n</header>\n<p style=\"padding: 16px;\">Scroll down — the navbar stays at the top.</p>", css: ".navbar {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 12px 20px;\n  background: #111827;\n  position: sticky;\n  top: 0;\n  z-index: 50;\n}\n.navbar nav { display: flex; gap: 20px; }\n.navbar a { color: #f9fafb; text-decoration: none; }\n.navbar .logo { font-size: 1.3rem; font-weight: 800; color: #f59e0b; }\n.navbar nav a { padding: 8px 10px; border-radius: 8px; }\n.navbar nav a:hover { background: #374151; }\n@media (max-width: 600px) {\n  .navbar { flex-wrap: wrap; gap: 8px; }\n  .navbar nav { gap: 8px; }\n}", js: "" },
+    "proj-4": { html: "<div class=\"gallery\">\n  <figure><div class=\"photo\" style=\"background: #f59e0b;\">Hunza</div><figcaption>Hunza valley in autumn</figcaption></figure>\n  <figure><div class=\"photo\" style=\"background: #3b82f6;\">Sea</div><figcaption>The sea at Clifton beach</figcaption></figure>\n  <figure><div class=\"photo\" style=\"background: #10b981;\">Hills</div><figcaption>Green hills after rain</figcaption></figure>\n  <figure><div class=\"photo\" style=\"background: #ef4444;\">Desert</div><figcaption>Desert sunset</figcaption></figure>\n</div>", css: ".gallery {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));\n  gap: 16px;\n}\n.gallery figure { margin: 0; transition: transform 0.2s ease; }\n.gallery figure:hover { transform: translateY(-4px); }\n.photo {\n  height: 160px;\n  border-radius: 12px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  font-weight: bold;\n  font-size: 1.2rem;\n}\n.gallery figcaption { text-align: center; margin-top: 8px; color: #4b5563; }", js: "" },
+    "proj-5": { html: "<div class=\"todo-app\">\n  <h2>My Tasks</h2>\n  <input id=\"taskInput\" placeholder=\"New task...\">\n  <button id=\"addBtn\">Add</button>\n  <p id=\"counter\">0 tasks left</p>\n  <ul id=\"taskList\"></ul>\n  <button id=\"clearBtn\">Clear completed</button>\n</div>", css: ".todo-app { max-width: 480px; margin: 0 auto; background: #ffffff; padding: 24px; border-radius: 16px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); }\n#taskList { list-style: none; padding: 0; }\n#taskList li { padding: 10px; border-bottom: 1px solid #e5e7eb; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }\n#taskList li.done { text-decoration: line-through; color: #9ca3af; }", js: "let tasks = [];\nlet input = document.getElementById(\"taskInput\");\nlet list = document.getElementById(\"taskList\");\nlet counter = document.getElementById(\"counter\");\nfunction saveAndRender() {\n  localStorage.setItem(\"todo-tasks\", JSON.stringify(tasks));\n  render();\n}\nfunction render() {\n  list.innerHTML = \"\";\n  let left = 0;\n  tasks.forEach(function (task, index) {\n    if (!task.done) left++;\n    let li = document.createElement(\"li\");\n    li.textContent = task.text;\n    if (task.done) li.classList.add(\"done\");\n    li.addEventListener(\"click\", function () {\n      task.done = !task.done;\n      saveAndRender();\n    });\n    let del = document.createElement(\"button\");\n    del.textContent = \"Delete\";\n    del.addEventListener(\"click\", function (e) {\n      e.stopPropagation();\n      tasks.splice(index, 1);\n      saveAndRender();\n    });\n    li.appendChild(del);\n    list.appendChild(li);\n  });\n  counter.textContent = left + \" task\" + (left === 1 ? \"\" : \"s\") + \" left\";\n}\ndocument.getElementById(\"addBtn\").addEventListener(\"click\", function () {\n  let text = input.value.trim();\n  if (text === \"\") return;\n  tasks.push({ text: text, done: false });\n  input.value = \"\";\n  saveAndRender();\n});\ndocument.getElementById(\"clearBtn\").addEventListener(\"click\", function () {\n  tasks = tasks.filter(function (task) { return !task.done; });\n  saveAndRender();\n});\nlet saved = localStorage.getItem(\"todo-tasks\");\nif (saved) tasks = JSON.parse(saved);\nrender();" },
+  };
 
   var PLAN_LABELS = {
     earlybird: "Full Course — Early Bird (Batch 1)",
@@ -266,18 +371,34 @@ const WEBDEV_CONFIG = {
     lessonsIntro.textContent = "You have full access — all 23 lessons and projects are unlocked for you.";
     if (unlockBar) unlockBar.classList.add("hidden");
     document.querySelectorAll(".lesson-row .lock").forEach(function (lock) {
+      var row = lock.closest(".lesson-row");
+      var lid = row ? row.getAttribute("data-lesson") : null;
+      var lesson = null;
+      if (lid) {
+        for (var li = 0; li < LESSONS.length; li++) {
+          if (LESSONS[li].id === lid) { lesson = LESSONS[li]; break; }
+        }
+      }
       var badge = document.createElement("span");
       badge.className = "badge-unlocked";
-      badge.textContent = "\u2713 Unlocked";
-      var note = document.createElement("span");
-      note.className = "coming-note";
-      note.textContent = "Lesson page coming in Loop 3";
-      lock.replaceWith(badge, note);
+      badge.textContent = "✓ Unlocked";
+      if (lesson && lesson.href) {
+        var a = document.createElement("a");
+        a.className = "open-link";
+        a.href = lesson.href;
+        a.textContent = "Open →";
+        lock.replaceWith(badge, a);
+      } else {
+        var note = document.createElement("span");
+        note.className = "coming-note";
+        note.textContent = "Lesson page coming in Loop 3";
+        lock.replaceWith(badge, note);
+      }
     });
     document.querySelectorAll(".lesson-row .open-link").forEach(function (link) {
       var badge = document.createElement("span");
       badge.className = "badge-unlocked";
-      badge.textContent = "\u2713 Unlocked";
+      badge.textContent = "✓ Unlocked";
       link.parentNode.insertBefore(badge, link.nextSibling);
     });
     if (lessonsCtaBtn) {
@@ -518,5 +639,224 @@ const WEBDEV_CONFIG = {
         certBox.innerHTML = "<strong>Certificate:</strong> Complete all 23 lessons to unlock your certificate. Your certificate will be available in the final version (Loop 4).";
       }
     }
+  }
+
+  /* ---------- Loop 3: locked lesson / project pages ---------- */
+  var lockBox = document.getElementById("lockBox");
+  var lessonBody = document.getElementById("lessonBody");
+  if (lockBox && lessonBody) {
+    if (hasAccess()) {
+      lockBox.classList.add("hidden");
+      lessonBody.classList.remove("hidden");
+    } else {
+      lockBox.classList.remove("hidden");
+      lessonBody.classList.add("hidden");
+    }
+  }
+
+  /* ---------- Loop 3: quizzes ---------- */
+  var QUIZ_KEY = "webdevlab-quiz-scores";
+  function getQuizScores() {
+    try {
+      var s = JSON.parse(localStorage.getItem(QUIZ_KEY) || "{}");
+      return s && typeof s === "object" ? s : {};
+    } catch (e) { return {}; }
+  }
+  function saveQuizScore(id, score) {
+    var scores = getQuizScores();
+    if (scores[id] === undefined || score > scores[id]) {
+      scores[id] = score;
+      try { localStorage.setItem(QUIZ_KEY, JSON.stringify(scores)); } catch (e) {}
+    }
+    return scores[id];
+  }
+  (function renderQuiz() {
+    var box = document.getElementById("quizBox");
+    if (!box) return;
+    var lid = box.getAttribute("data-lesson");
+    var quiz = QUIZZES[lid];
+    var qWrap = document.getElementById("quizQuestions");
+    var resultEl = document.getElementById("quizResult");
+    var bestEl = document.getElementById("quizBest");
+    var submitBtn = document.getElementById("quizSubmit");
+    if (!quiz || !qWrap || !submitBtn) return;
+    function showBest() {
+      var scores = getQuizScores();
+      if (bestEl) {
+        bestEl.textContent = scores[lid] !== undefined
+          ? "Best score: " + scores[lid] + "/" + quiz.length
+          : "You have not taken this quiz yet.";
+      }
+    }
+    function build() {
+      qWrap.innerHTML = "";
+      resultEl.innerHTML = "";
+      submitBtn.classList.remove("hidden");
+      quiz.forEach(function (item, qi) {
+        var qDiv = document.createElement("div");
+        qDiv.className = "quiz-q";
+        var title = document.createElement("p");
+        title.className = "quiz-q-title";
+        title.textContent = (qi + 1) + ". " + item.q;
+        qDiv.appendChild(title);
+        item.options.forEach(function (opt, oi) {
+          var label = document.createElement("label");
+          label.className = "quiz-opt";
+          var radio = document.createElement("input");
+          radio.type = "radio";
+          radio.name = "quiz-" + lid + "-" + qi;
+          radio.value = oi;
+          label.appendChild(radio);
+          label.appendChild(document.createTextNode(" " + opt));
+          qDiv.appendChild(label);
+        });
+        qWrap.appendChild(qDiv);
+      });
+      showBest();
+    }
+    build();
+    submitBtn.addEventListener("click", function () {
+      var score = 0;
+      quiz.forEach(function (item, qi) {
+        var picked = qWrap.querySelector('input[name="quiz-' + lid + '-' + qi + '"]:checked');
+        var chosen = picked ? parseInt(picked.value, 10) : -1;
+        var qDiv = qWrap.children[qi];
+        var labels = qDiv.querySelectorAll(".quiz-opt");
+        labels.forEach(function (lab, oi) {
+          lab.classList.remove("quiz-right", "quiz-wrong");
+          if (oi === item.answer) lab.classList.add("quiz-right");
+          if (oi === chosen && chosen !== item.answer) lab.classList.add("quiz-wrong");
+        });
+        if (chosen === item.answer) score++;
+        var why = document.createElement("p");
+        why.className = "quiz-why";
+        why.textContent = (chosen === item.answer ? "✓ Correct. " : "✗ The right answer is: " + item.options[item.answer] + ". ") + item.why;
+        qDiv.appendChild(why);
+      });
+      var best = saveQuizScore(lid, score);
+      resultEl.innerHTML = "";
+      var scoreP = document.createElement("p");
+      scoreP.className = "quiz-score";
+      scoreP.textContent = "You scored " + score + " out of " + quiz.length + ". Best score: " + best + "/" + quiz.length + ".";
+      resultEl.appendChild(scoreP);
+      var retake = document.createElement("button");
+      retake.className = "btn btn-outline btn-small";
+      retake.textContent = "Retake quiz";
+      retake.addEventListener("click", build);
+      resultEl.appendChild(retake);
+      submitBtn.classList.add("hidden");
+      showBest();
+      resultEl.scrollIntoView({ behavior: "smooth" });
+    });
+  })();
+
+  /* ---------- Loop 3: project checklists ---------- */
+  var CHECK_KEY = "webdevlab-checklists";
+  function getChecklists() {
+    try {
+      var c = JSON.parse(localStorage.getItem(CHECK_KEY) || "{}");
+      return c && typeof c === "object" ? c : {};
+    } catch (e) { return {}; }
+  }
+  document.querySelectorAll("[data-checklist]").forEach(function (box) {
+    var pid = box.getAttribute("data-checklist");
+    var saved = getChecklists()[pid] || [];
+    box.querySelectorAll("input[type=checkbox]").forEach(function (cb, idx) {
+      cb.checked = saved.indexOf(idx) !== -1;
+      cb.addEventListener("change", function () {
+        var lists = getChecklists();
+        var cur = lists[pid] || [];
+        var pos = cur.indexOf(idx);
+        if (cb.checked && pos === -1) cur.push(idx);
+        if (!cb.checked && pos !== -1) cur.splice(pos, 1);
+        lists[pid] = cur;
+        try { localStorage.setItem(CHECK_KEY, JSON.stringify(lists)); } catch (e) {}
+      });
+    });
+  });
+
+  /* ---------- Loop 3: code editor ---------- */
+  var edHtml = document.getElementById("edHtml");
+  if (edHtml) {
+    var edCss = document.getElementById("edCss");
+    var edJs = document.getElementById("edJs");
+    var preview = document.getElementById("previewFrame");
+    var runBtn = document.getElementById("runBtn");
+    var resetBtn = document.getElementById("resetBtn");
+    var copyBtn = document.getElementById("copyBtn");
+    var editorMsg = document.getElementById("editorMsg");
+    var activeTab = "html";
+    var lessonId = null;
+    try {
+      var ep = new URLSearchParams(window.location.search);
+      lessonId = ep.get("lesson");
+    } catch (e) {}
+    function starterFor(id) {
+      if (id && STARTER_CODE[id]) return STARTER_CODE[id];
+      return STARTER_CODE["default"];
+    }
+    function loadStarter() {
+      var s = starterFor(lessonId);
+      edHtml.value = s.html || "";
+      edCss.value = s.css || "";
+      edJs.value = s.js || "";
+    }
+    function buildDoc() {
+      var safeJs = (edJs.value || "").split("</scr" + "ipt").join("<" + String.fromCharCode(92) + "/script");
+      return "<!DOCTYPE html><html><head><meta charset=" + '"UTF-8"' + "><style>" + (edCss.value || "") + "</style></head><body>" + (edHtml.value || "") + "<script>" + safeJs + "</scr" + "ipt></body></html>";
+    }
+    function runPreview() {
+      if (preview) preview.srcdoc = buildDoc();
+    }
+    function showTab(tab) {
+      activeTab = tab;
+      document.querySelectorAll(".tab-btn").forEach(function (b) {
+        b.classList.toggle("active", b.getAttribute("data-tab") === tab);
+      });
+      edHtml.classList.toggle("hidden", tab !== "html");
+      edCss.classList.toggle("hidden", tab !== "css");
+      edJs.classList.toggle("hidden", tab !== "js");
+    }
+    document.querySelectorAll(".tab-btn").forEach(function (b) {
+      b.addEventListener("click", function () { showTab(b.getAttribute("data-tab")); });
+    });
+    var debounce = null;
+    [edHtml, edCss, edJs].forEach(function (ta) {
+      ta.addEventListener("input", function () {
+        clearTimeout(debounce);
+        debounce = setTimeout(runPreview, 800);
+      });
+    });
+    if (runBtn) runBtn.addEventListener("click", runPreview);
+    if (resetBtn) resetBtn.addEventListener("click", function () {
+      loadStarter();
+      runPreview();
+      if (editorMsg) editorMsg.textContent = "Starter code restored.";
+    });
+    if (copyBtn) copyBtn.addEventListener("click", function () {
+      var text = activeTab === "css" ? edCss.value : activeTab === "js" ? edJs.value : edHtml.value;
+      function done() { if (editorMsg) editorMsg.textContent = "Copied " + activeTab.toUpperCase() + " code."; }
+      function fail() { if (editorMsg) editorMsg.textContent = "Copy failed — select the code and copy it by hand."; }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fail);
+      } else {
+        var ta = activeTab === "css" ? edCss : activeTab === "js" ? edJs : edHtml;
+        ta.focus();
+        ta.select();
+        try { document.execCommand("copy"); done(); } catch (e) { fail(); }
+      }
+    });
+    var lessonTitle = document.getElementById("editorLesson");
+    if (lessonTitle) {
+      var found = null;
+      if (lessonId) {
+        for (var li = 0; li < LESSONS.length; li++) {
+          if (LESSONS[li].id === lessonId) { found = LESSONS[li]; break; }
+        }
+      }
+      lessonTitle.textContent = found ? "Starter code: " + found.title : "Starter code: a blank page";
+    }
+    loadStarter();
+    runPreview();
   }
 })();

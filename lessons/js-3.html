@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WebDev Lab lesson 13 — Functions. Learn how to write functions, parameters and arguments, return values, and arrow functions.">
+<title>Lesson 13: Functions — WebDev Lab</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="../index.html">WebDev <span>Lab</span></a>
+    <button class="icon-btn menu-btn" id="menuToggle" aria-label="Open menu">&#9776;</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="../index.html">Home</a>
+      <a href="../lessons.html">Lessons</a>
+      <a href="../editor.html">Editor</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../index.html#faq">FAQ</a>
+      <a href="../index.html#waitlist" class="cta">Enroll — Rs 999</a>
+    </nav>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle dark or light mode">&#12719;</button>
+  </div>
+</header>
+
+<main class="lesson-wrap">
+  <p class="breadcrumb"><a href="../lessons.html">&larr; All lessons</a> / Module 3 — JavaScript</p>
+  <h1>Lesson 13: Functions</h1>
+
+  <div id="lockBox" class="card hidden" style="text-align: center; max-width: 560px; margin: 24px auto;">
+    <h3>This lesson is for enrolled students</h3>
+    <p>Enroll in WebDev Lab to unlock this lesson and the full course.</p>
+    <a class="btn" href="../enroll.html">Enroll to unlock</a>
+    <a class="btn btn-outline" href="../unlock.html">Unlock with Code</a>
+  </div>
+
+  <div id="lessonBody">
+    <div class="progress-note">
+      <strong>Lesson 13 of 23 — Enrolled students</strong><br>
+      <span id="progressCount">0 of 23 lessons complete</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="lesson-content">
+    <h2>What is a function?</h2>
+<p>A <strong>function</strong> is a named block of code that does one job — and you can run it as many times as you like. Instead of writing the same five lines every time you need a total, you write them once inside a function, give it a name, and call it whenever you need it:</p>
+    <pre><code>function greet() {
+  console.log("Hello, welcome to WebDev Lab!");
+}
+
+greet();  // runs the function
+greet();  // runs it again</code></pre>
+    <p>Functions are the single most important idea in programming. They keep your code short, they give a name to a job so the code reads like a story, and when something is wrong, there is exactly one place to fix it.</p>
+
+    <h2>Parameters and return values</h2>
+<p>Most functions need input. A <strong>parameter</strong> is a placeholder in the function's definition — a name for the value it will receive. An <strong>argument</strong> is the actual value you pass when you call it:</p>
+    <pre><code>function add(a, b) {
+  return a + b;
+}
+
+let result = add(3, 4);  // result is 7</code></pre>
+    <p>Here <code class="inline">a</code> and <code class="inline">b</code> are parameters, and <code class="inline">3</code> and <code class="inline">4</code> are arguments. The <code class="inline">return</code> statement sends a value back to the caller and ends the function — nothing after a <code class="inline">return</code> runs. A function without <code class="inline">return</code> still runs its code, but it gives back <code class="inline">undefined</code>.</p>
+    <p>A function can take any number of parameters, and a parameter can have a default value that applies when the caller leaves it out:</p>
+    <pre><code>function greet(name = "friend") {
+  return "Hello, " + name + "!";
+}
+greet("Usman");  // "Hello, Usman!"
+greet();         // "Hello, friend!"</code></pre>
+
+    <h2>Calling functions</h2>
+<p>Calling a function is just writing its name followed by parentheses. The value it returns can be stored in a variable, printed, or passed into another function — functions are values too, in the sense that their <em>results</em> are values you can use anywhere:</p>
+    <pre><code>function square(n) {
+  return n * n;
+}
+
+let area = square(5);       // 25
+console.log(square(area));  // 625</code></pre>
+    <p>Be careful with one common mistake: <code class="inline">greet</code> without parentheses is the function itself, while <code class="inline">greet()</code> with parentheses runs it. When you hand a function to an event listener (next lesson), you pass it without parentheses — <code class="inline">button.addEventListener("click", greet)</code> — because you want the browser to call it later, not right now.</p>
+
+    <h2>Arrow functions</h2>
+<p>There is a shorter way to write a function, called an <strong>arrow function</strong>. It does the same job with less typing, and you will see it everywhere in modern code:</p>
+    <pre><code>const add = (a, b) => {
+  return a + b;
+};
+
+const double = (n) => n * 2;  // one line: return is implied</code></pre>
+    <p>When an arrow function has only one line, you can drop the curly braces and the <code class="inline">return</code> — the value is returned automatically. Arrow functions are especially common for short jobs passed to other functions, like event listeners and array methods. Use the normal <code class="inline">function</code> style while you are learning, and switch to arrows when they feel natural.</p>
+
+    <div class="exercise">
+      <h3>Exercise — A price calculator function</h3>
+      <p>Write a function called totalPrice that takes a price and a quantity, returns price times quantity, and test it with (500, 3) and (1200, 2). Then write a function called isFree that takes a total and returns true if the total is 0, otherwise false. Call both functions and print the results with console.log.</p>
+    </div>
+
+    <div class="quiz-box" id="quizBox" data-lesson="js-3">
+      <h2>Quiz — check what you learned</h2>
+      <p class="quiz-best" id="quizBest"></p>
+      <div id="quizQuestions"></div>
+      <button class="btn" id="quizSubmit">Check my score</button>
+      <div id="quizResult"></div>
+    </div>
+
+    <p class="try-it"><a class="btn btn-outline btn-small" href="../editor.html?lesson=js-3">Try this code in the editor &rarr;</a></p>
+    </div>
+
+    <button class="btn" data-complete="js-3">Mark as complete</button>
+  </div>
+
+  <div class="lesson-nav">
+    <a class="btn btn-outline btn-small" href="js-2.html">&larr; Variables &amp; Data</a>
+    <a class="btn btn-small" href="js-4.html">Next: DOM &amp; Events &rarr;</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      <a href="https://usmankalera-dev.github.io/portfolio/" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://github.com/Usmankalera-dev" target="_blank" rel="noopener">GitHub</a>
+      <a href="../lessons.html">Lessons</a>
+    </p>
+    <p>By Muhammad Usman (Usman Kalera) — Rakhzaar Tech</p>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

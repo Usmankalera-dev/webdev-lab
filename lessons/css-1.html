@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WebDev Lab lesson 6 — What is CSS. Learn how CSS styles a page, the three ways to add it, and selectors, rules and declarations.">
+<title>Lesson 6: What is CSS — WebDev Lab</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="../index.html">WebDev <span>Lab</span></a>
+    <button class="icon-btn menu-btn" id="menuToggle" aria-label="Open menu">&#9776;</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="../index.html">Home</a>
+      <a href="../lessons.html">Lessons</a>
+      <a href="../editor.html">Editor</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../index.html#faq">FAQ</a>
+      <a href="../index.html#waitlist" class="cta">Enroll — Rs 999</a>
+    </nav>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle dark or light mode">&#12719;</button>
+  </div>
+</header>
+
+<main class="lesson-wrap">
+  <p class="breadcrumb"><a href="../lessons.html">&larr; All lessons</a> / Module 2 — CSS</p>
+  <h1>Lesson 6: What is CSS</h1>
+
+  <div id="lockBox" class="card hidden" style="text-align: center; max-width: 560px; margin: 24px auto;">
+    <h3>This lesson is for enrolled students</h3>
+    <p>Enroll in WebDev Lab to unlock this lesson and the full course.</p>
+    <a class="btn" href="../enroll.html">Enroll to unlock</a>
+    <a class="btn btn-outline" href="../unlock.html">Unlock with Code</a>
+  </div>
+
+  <div id="lessonBody">
+    <div class="progress-note">
+      <strong>Lesson 6 of 23 — Enrolled students</strong><br>
+      <span id="progressCount">0 of 23 lessons complete</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="lesson-content">
+    <h2>What CSS does</h2>
+<p>CSS stands for <strong>Cascading Style Sheets</strong>. If HTML is the structure of a page — the walls and rooms of the house — CSS is the paint, the furniture and the lighting. It decides colours, sizes, spacing, fonts and layout. Without CSS, every page on the internet would look like a plain text document. With CSS, the same HTML can look like a blog, a shop, or a dashboard.</p>
+    <p>HTML says <em>what</em> things are. CSS says <em>how they look</em>. That separation is the whole idea: you can change the design of an entire website by editing one CSS file, without touching the HTML at all. That is why professional websites keep their CSS in a separate file.</p>
+
+    <h2>Three ways to add CSS</h2>
+<p>There are three ways to attach CSS to a page. <strong>Inline styles</strong> live inside a tag's <code class="inline">style</code> attribute. They work, but only for one element, and they make the HTML messy — avoid them except for quick tests:</p>
+    <pre><code>&lt;p style="color: red;"&gt;This text is red.&lt;/p&gt;</code></pre>
+    <p><strong>Internal CSS</strong> lives in a <code class="inline">&lt;style&gt;</code> tag inside the page's <code class="inline">&lt;head&gt;</code>. It styles only that one page, which is handy for a single-page test:</p>
+    <pre><code>&lt;head&gt;
+  &lt;style&gt;
+    p { color: blue; }
+  &lt;/style&gt;
+&lt;/head&gt;</code></pre>
+    <p><strong>External CSS</strong> lives in its own file, usually called <code class="inline">styles.css</code>, and the page links to it. This is the right way for a real website — one file styles every page, so changing one line changes the whole site:</p>
+    <pre><code>&lt;head&gt;
+  &lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;</code></pre>
+    <p>This website uses external CSS. Every page you have opened so far loads the same <code class="inline">styles.css</code> file. When you change the theme from dark to light, one file does all the work.</p>
+
+    <h2>Selectors and rules</h2>
+<p>A CSS <strong>rule</strong> has two parts: a <strong>selector</strong> that picks which elements to style, and a <strong>declaration block</strong> in curly braces that says how to style them. Each declaration is a property and a value, separated by a colon, ending with a semicolon:</p>
+    <pre><code>h1 {
+  color: darkblue;
+  font-size: 32px;
+}</code></pre>
+    <p>That rule says: every <code class="inline">&lt;h1&gt;</code> on the page should be dark blue and 32 pixels tall. There are three basic selectors. An <strong>element selector</strong> (<code class="inline">h1</code>, <code class="inline">p</code>) styles every element of that type. A <strong>class selector</strong> starts with a dot (<code class="inline">.warning</code>) and styles every element with <code class="inline">class="warning"</code> — the same class can be reused on many elements. An <strong>ID selector</strong> starts with a hash (<code class="inline">#main-title</code>) and styles the one element with that id:</p>
+    <pre><code>p { color: #333; }              /* every paragraph */
+.warning { color: red; }      /* every element with class="warning" */
+#main-title { color: navy; }  /* the one element with id="main-title" */</code></pre>
+    <p>Use classes for anything you will repeat, and ids for one unique thing on the page. And remember: CSS ignores extra spaces and line breaks, so format your rules neatly — future you will be grateful.</p>
+
+    <h2>Your first styled page</h2>
+<p>Let us put it together. This small page has no CSS file yet — the style is internal, so you can try it in one file:</p>
+    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;My Styled Page&lt;/title&gt;
+  &lt;style&gt;
+    body { background-color: #f9fafb; }
+    h1 { color: #d97706; }
+    p { color: #333333; font-size: 18px; }
+    .highlight { background-color: #fef3c7; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hello, styled world!&lt;/h1&gt;
+  &lt;p class="highlight"&gt;This paragraph has a yellow
+  background because of its class.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    <p>Change one value — the heading colour, the font size — save, and refresh. That instant feedback is the fun of CSS: you see your change the moment you save.</p>
+
+    <div class="exercise">
+      <h3>Exercise — Style your personal page</h3>
+      <p>Create a file called styles.css next to your personal page, and link it with a link tag in the head. In the CSS file, set the body background to a light colour, make the h1 dark blue and larger, and give one paragraph a class called highlight with a yellow background. Refresh your page — the styles should apply without changing any HTML except the one link tag.</p>
+    </div>
+
+    <div class="quiz-box" id="quizBox" data-lesson="css-1">
+      <h2>Quiz — check what you learned</h2>
+      <p class="quiz-best" id="quizBest"></p>
+      <div id="quizQuestions"></div>
+      <button class="btn" id="quizSubmit">Check my score</button>
+      <div id="quizResult"></div>
+    </div>
+
+    <p class="try-it"><a class="btn btn-outline btn-small" href="../editor.html?lesson=css-1">Try this code in the editor &rarr;</a></p>
+    </div>
+
+    <button class="btn" data-complete="css-1">Mark as complete</button>
+  </div>
+
+  <div class="lesson-nav">
+    <a class="btn btn-outline btn-small" href="html-5.html">&larr; Lesson 5: Semantic HTML &amp; Page Structure</a>
+    <a class="btn btn-small" href="css-2.html">Next: Colours, Fonts &amp; Text &rarr;</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      <a href="https://usmankalera-dev.github.io/portfolio/" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://github.com/Usmankalera-dev" target="_blank" rel="noopener">GitHub</a>
+      <a href="../lessons.html">Lessons</a>
+    </p>
+    <p>By Muhammad Usman (Usman Kalera) — Rakhzaar Tech</p>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>
