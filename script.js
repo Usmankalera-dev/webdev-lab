@@ -21,6 +21,9 @@ const WEBDEV_CONFIG = {
   var ACCESS_KEY = "webdevlab-access";
   var USED_CODES_KEY = "webdevlab-used-codes";
   var ENROLLMENT_KEY = "webdevlab-enrollment";
+  var REGISTERED_KEY = "webdevlab-registered-date";
+  var COMPLETED_KEY = "webdevlab-completed-date";
+  var QUIZ_KEY = "webdevlab-quiz-scores";
   var TOTAL_LESSONS = 23;
 
   /* ---------- access codes: WEB-1001 to WEB-1020 (Batch 1, 20 seats) ---------- */
@@ -80,6 +83,29 @@ const WEBDEV_CONFIG = {
         code: code, name: name, date: new Date().toISOString().slice(0, 10)
       }));
     } catch (e) {}
+    /* First unlock = registration date for the registration certificate. */
+    try {
+      if (!localStorage.getItem(REGISTERED_KEY)) {
+        localStorage.setItem(REGISTERED_KEY, new Date().toISOString().slice(0, 10));
+      }
+    } catch (e) {}
+  }
+
+  /* Safe file name for a certificate download: "WebDev-Lab-Certificate-Ali-Raza.pdf". */
+  function certFileName(name, kind) {
+    var safe = String(name || "Student").replace(/[^A-Za-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "Student";
+    return "WebDev-Lab-" + kind + "-Certificate-" + safe + ".pdf";
+  }
+
+  /* The registration date: stored at first unlock, else the unlock date,
+     else today (and then stored so it never changes). */
+  function getRegisteredDate(acc) {
+    var d = null;
+    try { d = localStorage.getItem(REGISTERED_KEY); } catch (e) {}
+    if (!d && acc && acc.date) d = acc.date;
+    if (!d) d = new Date().toISOString().slice(0, 10);
+    try { localStorage.setItem(REGISTERED_KEY, d); } catch (e) {}
+    return d;
   }
 
   /* ---------- lesson catalogue (23 items) ---------- */
@@ -643,6 +669,21 @@ const WEBDEV_CONFIG = {
       dashFill.style.width = Math.round((doneCount / TOTAL_LESSONS) * 100) + "%";
       dashCount.textContent = doneCount + " of " + TOTAL_LESSONS + " lessons complete";
 
+      /* Second stat row: real numbers only, from localStorage. */
+      var pctEl = document.getElementById("dashPct");
+      if (pctEl) pctEl.textContent = Math.round((doneCount / TOTAL_LESSONS) * 100) + "%";
+      var doneEl = document.getElementById("dashDone");
+      if (doneEl) doneEl.textContent = doneCount + " / " + TOTAL_LESSONS;
+      var quizScores = getQuizScores();
+      var quizTotal = 0, quizMax = 0;
+      Object.keys(QUIZZES).forEach(function (id) {
+        quizMax += QUIZZES[id].length;
+        if (quizScores[id] !== undefined) quizTotal += quizScores[id];
+      });
+      var quizEl = document.getElementById("dashQuiz");
+      if (quizEl) quizEl.textContent = quizTotal + " / " + quizMax;
+
+      var MOD_CLASS = { "HTML": "mod-html", "CSS": "mod-css", "JavaScript": "mod-js", "Mini Projects": "mod-proj" };
       var list = document.getElementById("dashLessons");
       var currentModule = "";
       LESSONS.forEach(function (l) {
@@ -654,7 +695,7 @@ const WEBDEV_CONFIG = {
           list.appendChild(h);
         }
         var row = document.createElement("div");
-        row.className = "lesson-row";
+        row.className = "lesson-row" + (MOD_CLASS[l.module] ? " " + MOD_CLASS[l.module] : "");
         row.setAttribute("data-lesson", l.id);
         var num = document.createElement("span");
         num.className = "num";
@@ -685,18 +726,22 @@ const WEBDEV_CONFIG = {
       });
 
       var certBox = document.getElementById("certBox");
+      var regLine = "<div style=\"margin-top: 10px;\">Registration Certificate — <a href=\"registration-certificate.html\">Download (PDF)</a></div>";
       if (doneCount >= TOTAL_LESSONS) {
         certBox.className = "alert alert-ok";
-        certBox.innerHTML = "<strong>Certificate ready!</strong> You finished all 23 lessons and projects.<div style=\"margin-top: 12px;\"><a class=\"btn btn-small\" href=\"certificate.html\">Download Certificate</a></div>";
+        certBox.innerHTML = "<strong>Certificate ready!</strong> You finished all 23 lessons and projects." +
+          regLine +
+          "<div style=\"margin-top: 12px;\"><a class=\"btn btn-small\" href=\"certificate.html\">Download Completion Certificate</a></div>";
       } else {
         certBox.className = "alert";
-        certBox.innerHTML = "<strong>Certificate:</strong> You have completed " + doneCount + " of " + TOTAL_LESSONS + " lessons and projects — " + (TOTAL_LESSONS - doneCount) + " remaining. Complete all 23 to unlock your certificate. <a href=\"certificate.html\">See your progress &rarr;</a>";
+        certBox.innerHTML = "<strong>Your certificates</strong>" +
+          regLine +
+          "<div style=\"margin-top: 10px;\">Completion Certificate: you have completed " + doneCount + " of " + TOTAL_LESSONS + " lessons and projects — " + (TOTAL_LESSONS - doneCount) + " remaining. <a href=\"certificate.html\">See your progress &rarr;</a></div>";
       }
     }
   }
 
   /* ---------- Loop 4: certificate page ---------- */
-  var COMPLETED_KEY = "webdevlab-completed-date";
   function formatDate(iso) {
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var parts = String(iso || "").split("-");
@@ -719,6 +764,7 @@ const WEBDEV_CONFIG = {
     });
     var certDoneCount = certDone.length;
     var certCompletedAll = certDoneCount >= TOTAL_LESSONS;
+    var certPdfDate = "";
     if (!cacc) {
       certLocked.classList.remove("hidden");
     } else if (certCompletedAll || preview) {
@@ -732,6 +778,7 @@ const WEBDEV_CONFIG = {
         try { localStorage.setItem(COMPLETED_KEY, completedDate); } catch (e) {}
       }
       if (!completedDate) completedDate = new Date().toISOString().slice(0, 10);
+      certPdfDate = completedDate;
       document.getElementById("certDate").textContent = formatDate(completedDate);
       if (preview && !certCompletedAll) {
         document.getElementById("certPreviewNote").classList.remove("hidden");
@@ -760,6 +807,73 @@ const WEBDEV_CONFIG = {
     if (certPrintBtn) {
       certPrintBtn.addEventListener("click", function () { window.print(); });
     }
+    var certDownloadBtn = document.getElementById("certDownloadBtn");
+    if (certDownloadBtn) {
+      certDownloadBtn.addEventListener("click", function () {
+        if (typeof buildCertificatePDF !== "function" || typeof downloadCertificatePDF !== "function") {
+          window.print();
+          return;
+        }
+        var pdfDate = certPdfDate || new Date().toISOString().slice(0, 10);
+        var bytes = buildCertificatePDF({
+          title: "Certificate of Completion",
+          presentedTo: "This certificate is proudly presented to",
+          name: cacc ? cacc.name : "Student",
+          bodyLines: ["has successfully completed", "WebDev Lab - HTML, CSS & JavaScript"],
+          batch: WEBDEV_CONFIG.batch,
+          meta: "Completed on " + formatDate(pdfDate) + "  |  Certificate ID: WDL-" + (cacc ? cacc.code : ""),
+          signature: "Muhammad Usman",
+          signatureSub: "Founder & CEO, Rakhzaar Tech"
+        });
+        downloadCertificatePDF(bytes, certFileName(cacc ? cacc.name : "Student", "Certificate"));
+      });
+    }
+  }
+
+  /* ---------- registration certificate page ---------- */
+  var regLocked = document.getElementById("regLocked");
+  var regReady = document.getElementById("regReady");
+  if (regLocked && regReady) {
+    var racc = getAccess();
+    var regPreview = false;
+    try {
+      regPreview = new URLSearchParams(window.location.search).get("preview") === "1";
+    } catch (e) {}
+    if (!racc) {
+      regLocked.classList.remove("hidden");
+    } else {
+      var regDate = getRegisteredDate(racc);
+      document.getElementById("regName").textContent = racc.name;
+      document.getElementById("regId").textContent = "WDL-REG-" + racc.code;
+      document.getElementById("regBatch").textContent = WEBDEV_CONFIG.batch;
+      document.getElementById("regDate").textContent = formatDate(regDate);
+      if (regPreview) document.getElementById("regPreviewNote").classList.remove("hidden");
+      regReady.classList.remove("hidden");
+      var regPrintBtn = document.getElementById("regPrintBtn");
+      if (regPrintBtn) {
+        regPrintBtn.addEventListener("click", function () { window.print(); });
+      }
+      var regDownloadBtn = document.getElementById("regDownloadBtn");
+      if (regDownloadBtn) {
+        regDownloadBtn.addEventListener("click", function () {
+          if (typeof buildCertificatePDF !== "function" || typeof downloadCertificatePDF !== "function") {
+            window.print();
+            return;
+          }
+          var bytes = buildCertificatePDF({
+            title: "Certificate of Registration",
+            presentedTo: "This certificate is proudly presented to",
+            name: racc.name,
+            bodyLines: ["is registered for", "WebDev Lab - HTML, CSS & JavaScript"],
+            batch: WEBDEV_CONFIG.batch,
+            meta: "Registered on " + formatDate(regDate) + "  |  Registration ID: WDL-REG-" + racc.code,
+            signature: "Muhammad Usman",
+            signatureSub: "Founder & CEO, Rakhzaar Tech"
+          });
+          downloadCertificatePDF(bytes, certFileName(racc.name, "Registration"));
+        });
+      }
+    }
   }
 
   /* ---------- Loop 3: locked lesson / project pages ---------- */
@@ -776,7 +890,6 @@ const WEBDEV_CONFIG = {
   }
 
   /* ---------- Loop 3: quizzes ---------- */
-  var QUIZ_KEY = "webdevlab-quiz-scores";
   function getQuizScores() {
     try {
       var s = JSON.parse(localStorage.getItem(QUIZ_KEY) || "{}");

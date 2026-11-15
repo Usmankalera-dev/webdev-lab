@@ -678,3 +678,133 @@ details.faq p { color: var(--muted); margin: 10px 0 0; }
   .lesson-row .lock { white-space: normal; }
   .pay-method { flex-wrap: wrap; }
 }
+
+/* ---------- Real look upgrade (post-Loop 4) ---------- */
+
+/* Hero: richer gradient, stats row, trust line. */
+.hero {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(245, 158, 11, 0.16), transparent 65%),
+    linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 620px;
+  margin: 30px auto 0;
+}
+.hero-stat {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 8px;
+}
+.hero-stat b {
+  display: block;
+  font-size: 1.6rem;
+  line-height: 1.1;
+  color: var(--accent);
+}
+.hero-stat span { font-size: 0.9rem; color: var(--muted); }
+.hero-trust { margin-top: 18px; font-size: 0.95rem; color: var(--muted); }
+
+/* Section headings: one amber accent, consistent spacing. */
+.section-head h2 { padding-bottom: 14px; }
+.section-head h2::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 999px;
+  margin: 12px auto 0;
+}
+
+/* Buttons: one style, clear hover + focus, on every page. */
+.btn {
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(245, 158, 11, 0.30); }
+.btn:active { transform: translateY(0); box-shadow: none; }
+.btn:focus-visible, .btn-outline:focus-visible, .icon-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.btn-outline:hover { transform: translateY(-1px); }
+
+/* Cards in grids lift a little on hover. */
+.grid .card { transition: border-color 0.15s ease, transform 0.15s ease; }
+.grid .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+/* Lesson rows: module colour on the left edge, clearer states, hover. */
+.lesson-row {
+  border-left: 3px solid transparent;
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.lesson-row:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+.lesson-row.mod-html { border-left-color: #f97316; }
+.lesson-row.mod-html .num { color: #f97316; }
+.lesson-row.mod-css { border-left-color: #3b82f6; }
+.lesson-row.mod-css .num { color: #3b82f6; }
+.lesson-row.mod-js { border-left-color: #eab308; }
+.lesson-row.mod-js .num { color: #eab308; }
+.lesson-row.mod-proj { border-left-color: #34d399; }
+.lesson-row.mod-proj .num { color: #34d399; }
+.lesson-row.done { border-color: var(--green); }
+.lesson-row a.open-link {
+  background: var(--accent);
+  color: var(--accent-text);
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+.lesson-row a.open-link:hover { background: var(--accent-dark); text-decoration: none; }
+.lesson-row .lock { background: var(--card-2); padding: 6px 10px; border-radius: 8px; }
+
+/* Dashboard: accent numbers on the stat cards. */
+.stat-accent { color: var(--accent); }
+
+/* Enroll / payment: method cards look like real payment options. */
+.plan-card { transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease; }
+.plan-card:hover { transform: translateY(-1px); }
+.plan-card.selected { box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.35); }
+.pay-method { border-width: 2px; padding: 14px 16px; }
+.pay-method .pay-name { color: #ffffff; padding: 6px 12px; border-radius: 8px; font-size: 0.95rem; }
+.pay-method:nth-child(1) .pay-name { background: #dc2626; }
+.pay-method:nth-child(2) .pay-name { background: #16a34a; }
+.pay-method:nth-child(3) .pay-name { background: #2563eb; }
+.pay-method .pay-num { font-size: 1.15rem; }
+.pay-amount {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+}
+.pay-amount strong { font-size: 1.8rem; }
+.steps-list li::marker { color: var(--accent); font-weight: 800; }
+
+/* Editor: polish spacing and borders. */
+.editor-pane { border-width: 2px; }
+.tab-btn:hover { border-color: var(--accent); }
+.tab-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.editor-actions .btn { min-width: 110px; text-align: center; }
+#previewFrame { box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28); }
+
+/* Mobile (390px): stats stay in one row, certificate fits, numbers stay readable. */
+@media (max-width: 699px) {
+  .hero-stats { gap: 8px; margin-top: 22px; }
+  .hero-stat { padding: 10px 4px; }
+  .hero-stat b { font-size: 1.3rem; }
+  .hero-stat span { font-size: 0.8rem; }
+  .cert-inner { padding: 28px 18px; }
+  .certificate h2 { font-size: 1.6rem; }
+  .cert-name { font-size: 1.6rem; padding: 0 12px 6px; }
+  .cert-meta { flex-direction: column; align-items: center; gap: 4px; }
+  .pay-method .pay-num { font-size: 1rem; }
+  .pay-amount strong { font-size: 1.5rem; }
+}

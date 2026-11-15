@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WebDev Lab — Your registration certificate: proof that you are registered for Batch 1. Download it as a PDF.">
+<title>Registration Certificate — WebDev Lab</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">WebDev <span>Lab</span></a>
+    <button class="icon-btn menu-btn" id="menuToggle" aria-label="Open menu">&#9776;</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="editor.html">Editor</a>
+      <a href="enroll.html">Enroll</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="enroll.html?plan=earlybird" class="cta">Enroll — Rs 999</a>
+    </nav>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle dark or light mode">&#12719;</button>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Your registration certificate</h2>
+        <p>Proof that you are registered for WebDev Lab Batch 1 — download it as a PDF.</p>
+      </div>
+
+      <div id="regLocked" class="card form-card hidden" style="max-width: 640px; text-align: center;">
+        <h3>This certificate is for enrolled students</h3>
+        <p>Only students who enrolled get a registration certificate. If you already paid, enter your access code. If not, enroll first — it takes two minutes.</p>
+        <a class="btn" href="unlock.html">Unlock with Code</a>
+        <a class="btn btn-outline" href="enroll.html">Enroll Now</a>
+        <p class="note" style="margin-top: 16px;">The first 3 HTML lessons are free for everyone — <a href="lessons/html-1.html">start Lesson 1 here</a>.</p>
+      </div>
+
+      <div id="regReady" class="hidden">
+        <div class="certificate" id="registrationCard">
+          <div class="cert-inner">
+            <p class="cert-eyebrow">WebDev Lab</p>
+            <h2>Certificate of Registration</h2>
+            <p class="cert-presented">This certificate is proudly presented to</p>
+            <p class="cert-name" id="regName">—</p>
+            <p class="cert-body">is registered for <strong>WebDev Lab — HTML, CSS &amp; JavaScript</strong></p>
+            <p class="cert-batch" id="regBatch">Batch 1 — 1 December 2026</p>
+            <div class="cert-meta">
+              <span>Registered on <strong id="regDate">—</strong></span>
+              <span>Registration ID: <strong id="regId">—</strong></span>
+            </div>
+            <p class="cert-sign">Muhammad Usman, Founder &amp; CEO, Rakhzaar Tech</p>
+          </div>
+        </div>
+        <p class="cert-preview-note hidden" id="regPreviewNote">Preview — this is your registration certificate design.</p>
+        <div class="cert-actions">
+          <button class="btn" id="regDownloadBtn" type="button">Download Registration Certificate (PDF)</button>
+          <button class="btn btn-outline" id="regPrintBtn" type="button">Print</button>
+          <a class="btn btn-outline" href="dashboard.html">Back to Dashboard</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      <a href="https://usmankalera-dev.github.io/portfolio/" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://github.com/Usmankalera-dev" target="_blank" rel="noopener">GitHub</a>
+      <a href="lessons.html">Lessons</a>
+    </p>
+    <p>By Muhammad Usman (Usman Kalera) — Rakhzaar Tech</p>
+  </div>
+</footer>
+
+<script src="pdf.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
