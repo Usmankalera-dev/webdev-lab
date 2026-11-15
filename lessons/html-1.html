@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WebDev Lab free lesson 1 — Your First Web Page. Learn what HTML is, how tags work, and build your first Hello World page.">
+<title>Lesson 1: Your First Web Page — WebDev Lab</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="../index.html">WebDev <span>Lab</span></a>
+    <button class="icon-btn menu-btn" id="menuToggle" aria-label="Open menu">&#9776;</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="../index.html">Home</a>
+      <a href="../lessons.html">Lessons</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../index.html#faq">FAQ</a>
+      <a href="../index.html#waitlist" class="cta">Enroll — Rs 999</a>
+    </nav>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle dark or light mode">&#12719;</button>
+  </div>
+</header>
+
+<main class="lesson-wrap">
+  <p class="breadcrumb"><a href="../lessons.html">&larr; All lessons</a> / Module 1 — HTML</p>
+  <h1>Lesson 1: Your First Web Page</h1>
+  <div class="progress-note">
+    <strong>Lesson 1 of 23 — Free preview</strong><br>
+    <span id="progressCount">0 of 23 lessons complete</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <div class="lesson-content">
+    <h2>What is HTML?</h2>
+    <p>HTML stands for <strong>HyperText Markup Language</strong>. It is the language that builds the structure of every web page. When you open a website, the browser reads the HTML file and turns it into the page you see — the headings, the text, the images, the buttons.</p>
+    <p>HTML is not a programming language like Python or JavaScript. You do not write logic or calculations in HTML. You write <strong>markup</strong>: you tell the browser <em>what</em> each piece of content is. This is a heading. This is a paragraph. This is a link. The browser then displays each piece in the right way.</p>
+    <p>Think of a web page like a house. HTML is the walls, the rooms and the doors — the structure. CSS is the paint and the furniture — the style. JavaScript is the electricity and the switches — the behaviour. In this course you learn all three, but we start with the structure, because nothing else works without it.</p>
+
+    <h2>Tags and elements</h2>
+    <p>HTML is written with <strong>tags</strong>. A tag is a word inside angle brackets, like <code class="inline">&lt;p&gt;</code>. Most tags come in pairs: an opening tag and a closing tag. The closing tag has a forward slash, like <code class="inline">&lt;/p&gt;</code>. The text between the two tags is the content.</p>
+    <p>Together, the opening tag, the content and the closing tag form an <strong>element</strong>. Here is the simplest element in HTML — a paragraph:</p>
+    <pre><code>&lt;p&gt;Hello, world!&lt;/p&gt;</code></pre>
+    <p>A few tags do not need a closing tag. They are called <strong>empty elements</strong>. The line break <code class="inline">&lt;br&gt;</code> and the image tag <code class="inline">&lt;img&gt;</code> are two examples. You will meet them in later lessons.</p>
+    <p>Tags can also carry extra information called <strong>attributes</strong>. An attribute sits inside the opening tag, like this: <code class="inline">&lt;a href="https://example.com"&gt;</code>. The <code class="inline">href</code> attribute tells the link where to go. You will use attributes a lot, starting from Lesson 2.</p>
+
+    <h2>The basic structure of a page</h2>
+    <p>Every HTML page has the same skeleton. It looks small, but every website on the internet — from a personal blog to a big online store — starts from this shape:</p>
+    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;My First Page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello, world!&lt;/h1&gt;
+    &lt;p&gt;This is my first web page.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    <p>Let us read it line by line. <code class="inline">&lt;!DOCTYPE html&gt;</code> tells the browser this is a modern HTML document. <code class="inline">&lt;html&gt;</code> is the root element — everything on the page lives inside it. The <code class="inline">&lt;head&gt;</code> holds information <em>about</em> the page that visitors do not see, like the page title shown in the browser tab. The <code class="inline">&lt;body&gt;</code> holds everything visitors <em>do</em> see: headings, text, images and links.</p>
+    <p>The <code class="inline">&lt;h1&gt;</code> tag is the main heading of the page. The <code class="inline">&lt;p&gt;</code> tag is a paragraph. That is all you need for your first page.</p>
+
+    <h2>How the browser reads your page</h2>
+    <p>When you open an HTML file in a browser, the browser reads it from top to bottom and builds the page. It ignores extra spaces and line breaks in your code, so you can format your code neatly without changing how the page looks. Indentation — the spaces at the start of a line — is for humans, not for the browser. Good indentation makes your code easy to read, so keep it tidy from day one.</p>
+    <p>One more thing: HTML is forgiving. If you forget a closing tag, the browser will usually guess what you meant and still show the page. Do not rely on this. Browsers guess differently, and a page that looks fine in Chrome can look broken in another browser. Close your tags, always.</p>
+
+    <h2>Common beginner mistakes</h2>
+    <ul>
+      <li>Forgetting the closing tag, like writing <code class="inline">&lt;p&gt;</code> without <code class="inline">&lt;/p&gt;</code>.</li>
+      <li>Mixing up the order of closing tags. Tags must close in reverse order: <code class="inline">&lt;p&gt;&lt;strong&gt;text&lt;/strong&gt;&lt;/p&gt;</code>, never <code class="inline">&lt;p&gt;&lt;strong&gt;text&lt;/p&gt;&lt;/strong&gt;</code>.</li>
+      <li>Putting visible content inside <code class="inline">&lt;head&gt;</code> instead of <code class="inline">&lt;body&gt;</code>. Nothing in the head shows on the page.</li>
+      <li>Using capital letters in tag names. HTML works with capitals, but the standard is lowercase — write <code class="inline">&lt;p&gt;</code>, not <code class="inline">&lt;P&gt;</code>.</li>
+    </ul>
+
+    <div class="exercise">
+      <h3>Exercise — Build your first page</h3>
+      <p>Open a text editor (Notepad on Windows, TextEdit on Mac, or VS Code if you have it). Type the full page from the example above, but change the heading to your name and the paragraph to one sentence about yourself. Save the file as <strong>my-first-page.html</strong> and open it in your browser. You just built your first web page — and that is exactly how every web developer started.</p>
+    </div>
+  </div>
+
+  <button class="btn" data-complete="html-1">Mark as complete</button>
+
+  <div class="lesson-nav">
+    <a class="btn btn-outline btn-small" href="../lessons.html">&larr; All lessons</a>
+    <a class="btn btn-small" href="html-2.html">Next: Headings, Paragraphs &amp; Links &rarr;</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      <a href="https://usmankalera-dev.github.io/portfolio/" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://github.com/Usmankalera-dev" target="_blank" rel="noopener">GitHub</a>
+      <a href="../lessons.html">Lessons</a>
+    </p>
+    <p>By Muhammad Usman (Usman Kalera) — Rakhzaar Tech</p>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WebDev Lab free lesson 2 — Headings, Paragraphs & Links. Learn h1 to h6, the p tag, and how to link pages together.">
+<title>Lesson 2: Headings, Paragraphs &amp; Links — WebDev Lab</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="../index.html">WebDev <span>Lab</span></a>
+    <button class="icon-btn menu-btn" id="menuToggle" aria-label="Open menu">&#9776;</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="../index.html">Home</a>
+      <a href="../lessons.html">Lessons</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../index.html#faq">FAQ</a>
+      <a href="../index.html#waitlist" class="cta">Enroll — Rs 999</a>
+    </nav>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle dark or light mode">&#12719;</button>
+  </div>
+</header>
+
+<main class="lesson-wrap">
+  <p class="breadcrumb"><a href="../lessons.html">&larr; All lessons</a> / Module 1 — HTML</p>
+  <h1>Lesson 2: Headings, Paragraphs &amp; Links</h1>
+  <div class="progress-note">
+    <strong>Lesson 2 of 23 — Free preview</strong><br>
+    <span id="progressCount">0 of 23 lessons complete</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <div class="lesson-content">
+    <h2>Headings: h1 to h6</h2>
+    <p>Headings organise your page the way chapter titles organise a book. HTML gives you six levels, from <code class="inline">&lt;h1&gt;</code> (the biggest, most important) to <code class="inline">&lt;h6&gt;</code> (the smallest). Browsers show them in decreasing size by default, but size is not their real job — their real job is <strong>meaning</strong>. Search engines and screen readers use headings to understand what your page is about.</p>
+    <pre><code>&lt;h1&gt;My Travel Blog&lt;/h1&gt;
+&lt;h2&gt;Places I Visited in 2026&lt;/h2&gt;
+&lt;h3&gt;Lahore&lt;/h3&gt;
+&lt;h3&gt;Hunza&lt;/h3&gt;
+&lt;h2&gt;What I Packed&lt;/h2&gt;</code></pre>
+    <p>Notice the pattern: one <code class="inline">&lt;h1&gt;</code> for the whole page, then <code class="inline">&lt;h2&gt;</code> for the big sections, then <code class="inline">&lt;h3&gt;</code> for smaller parts inside those sections. Never skip levels — do not jump from <code class="inline">&lt;h1&gt;</code> straight to <code class="inline">&lt;h4&gt;</code> — and never use a heading only because you want big bold text. If something is not a heading, use a paragraph and style it with CSS later.</p>
+
+    <h2>Paragraphs: the p tag</h2>
+    <p>Most of the text on the internet lives inside <code class="inline">&lt;p&gt;</code> tags. A paragraph is a block of text, and the browser automatically adds space above and below it. One idea, one paragraph — that is the rule for readable writing on the web.</p>
+    <pre><code>&lt;p&gt;HTML is the structure of every web page. It tells the
+browser what each piece of content is: a heading, a
+paragraph, an image, or a link.&lt;/p&gt;
+
+&lt;p&gt;This is a second paragraph. The browser puts space
+between the two paragraphs, even though there is only
+one blank line between them in the code.&lt;/p&gt;</code></pre>
+    <p>Inside a paragraph you can use small inline tags. <code class="inline">&lt;strong&gt;</code> makes text <strong>bold and important</strong>, <code class="inline">&lt;em&gt;</code> makes text <em>emphasised (italic)</em>, and <code class="inline">&lt;br&gt;</code> forces a line break inside the same paragraph. Use <code class="inline">&lt;br&gt;</code> sparingly — for an address or a poem, not for spacing between paragraphs. That is what the paragraph tag is for.</p>
+
+    <h2>Links: the a tag</h2>
+    <p>The link is what makes the web a <em>web</em>. Without links, every page would be an island. The anchor tag <code class="inline">&lt;a&gt;</code> creates a link, and its <code class="inline">href</code> attribute says where the link goes:</p>
+    <pre><code>&lt;a href="https://example.com"&gt;Visit Example&lt;/a&gt;</code></pre>
+    <p>There are two kinds of links. An <strong>absolute link</strong> has the full address, starting with <code class="inline">https://</code>, and it can point to any website in the world. A <strong>relative link</strong> points to another page on your own site, using only the file path — no domain name needed:</p>
+    <pre><code>&lt;!-- Absolute link: goes to another website --&gt;
+&lt;a href="https://www.wikipedia.org"&gt;Wikipedia&lt;/a&gt;
+
+&lt;!-- Relative link: goes to a page on your own site --&gt;
+&lt;a href="about.html"&gt;About Me&lt;/a&gt;
+&lt;a href="lessons/html-1.html"&gt;Lesson 1&lt;/a&gt;</code></pre>
+    <p>Relative links are the right choice inside your own website, because they keep working even if your domain name changes. Absolute links are for other people's websites.</p>
+    <p>By default, a link opens in the same browser tab. If you link to another website, it is polite to open it in a new tab so your visitor does not lose your page. Add <code class="inline">target="_blank"</code> for that:</p>
+    <pre><code>&lt;a href="https://example.com" target="_blank"&gt;
+  Open Example in a new tab
+&lt;/a&gt;</code></pre>
+    <p>One last rule about links: the link text should say where the link goes. "Click here" tells the reader nothing. "Read Lesson 1" tells them everything. Good link text helps your readers, and it helps search engines understand your site too.</p>
+
+    <h2>Linking to a part of the same page</h2>
+    <p>Sometimes you want a link that jumps to a section on the same page — like a "Back to top" link, or a table of contents at the start of a long article. You do it in two steps. First, give the section an <code class="inline">id</code> attribute. An id is a unique name for one element on the page. Second, link to it with a hash (<code class="inline">#</code>) in front of the name:</p>
+    <pre><code>&lt;!-- Step 1: give the section an id --&gt;
+&lt;h2 id="menu"&gt;Our Menu&lt;/h2&gt;
+
+&lt;!-- Step 2: link to it with a hash --&gt;
+&lt;a href="#menu"&gt;Jump to the menu&lt;/a&gt;</code></pre>
+    <p>When the reader clicks the link, the browser scrolls straight to the section with that id. The id must be unique — two elements on the same page must never share an id — and it cannot contain spaces, so use hyphens, like <code class="inline">id="my-favourite-books"</code>. You will use ids again in the CSS and JavaScript modules, where they let you style and control one exact element.</p>
+
+    <h2>Putting it together</h2>
+    <p>Headings, paragraphs and links are the three tags you will use more than any others. A complete little page needs nothing else:</p>
+    <pre><code>&lt;h1&gt;Ali's Bakery&lt;/h1&gt;
+&lt;p&gt;Fresh bread, cakes and biscuits, baked every morning
+in Lahore.&lt;/p&gt;
+
+&lt;h2&gt;Our Menu&lt;/h2&gt;
+&lt;p&gt;See the full menu on our &lt;a href="menu.html"&gt;menu
+page&lt;/a&gt;, or visit our &lt;a href="https://instagram.com"
+target="_blank"&gt;Instagram page&lt;/a&gt; for daily photos.&lt;/p&gt;</code></pre>
+
+    <div class="exercise">
+      <h3>Exercise — A page about yourself</h3>
+      <p>Open your <strong>my-first-page.html</strong> file from Lesson 1 and add: an <code class="inline">&lt;h1&gt;</code> with your name, an <code class="inline">&lt;h2&gt;</code> called "About Me", two paragraphs about yourself, an <code class="inline">&lt;h2&gt;</code> called "My Favourite Websites", and three links to real websites you like (open them in new tabs). Save and refresh your browser. You now have a real personal page with structure, text and links.</p>
+    </div>
+  </div>
+
+  <button class="btn" data-complete="html-2">Mark as complete</button>
+
+  <div class="lesson-nav">
+    <a class="btn btn-outline btn-small" href="html-1.html">&larr; Lesson 1: Your First Web Page</a>
+    <a class="btn btn-small" href="html-3.html">Next: Images, Lists &amp; Tables &rarr;</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      <a href="https://usmankalera-dev.github.io/portfolio/" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://github.com/Usmankalera-dev" target="_blank" rel="noopener">GitHub</a>
+      <a href="../lessons.html">Lessons</a>
+    </p>
+    <p>By Muhammad Usman (Usman Kalera) — Rakhzaar Tech</p>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WebDev Lab free lesson 3 — Images, Lists & Tables. Learn the img tag with alt text, unordered and ordered lists, and simple HTML tables.">
+<title>Lesson 3: Images, Lists &amp; Tables — WebDev Lab</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="../index.html">WebDev <span>Lab</span></a>
+    <button class="icon-btn menu-btn" id="menuToggle" aria-label="Open menu">&#9776;</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="../index.html">Home</a>
+      <a href="../lessons.html">Lessons</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../index.html#faq">FAQ</a>
+      <a href="../index.html#waitlist" class="cta">Enroll — Rs 999</a>
+    </nav>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle dark or light mode">&#12719;</button>
+  </div>
+</header>
+
+<main class="lesson-wrap">
+  <p class="breadcrumb"><a href="../lessons.html">&larr; All lessons</a> / Module 1 — HTML</p>
+  <h1>Lesson 3: Images, Lists &amp; Tables</h1>
+  <div class="progress-note">
+    <strong>Lesson 3 of 23 — Free preview</strong><br>
+    <span id="progressCount">0 of 23 lessons complete</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <div class="lesson-content">
+    <h2>Images: the img tag</h2>
+    <p>Text alone makes a dull page. Images make it come alive. The <code class="inline">&lt;img&gt;</code> tag adds a picture to your page. It is an empty element — it has no closing tag — and it needs two attributes to do its job:</p>
+    <pre><code>&lt;img src="cat.jpg" alt="A grey cat sleeping in the sun"&gt;</code></pre>
+    <p>The <code class="inline">src</code> attribute (short for "source") says where the image file is. It can be a file in the same folder as your page (<code class="inline">cat.jpg</code>), a file in another folder (<code class="inline">images/cat.jpg</code>), or a full web address (<code class="inline">https://example.com/cat.jpg</code>). The <code class="inline">alt</code> attribute (short for "alternative text") describes the picture in words.</p>
+    <p>The <code class="inline">alt</code> text matters more than beginners think. If the image fails to load, the browser shows the alt text instead. Screen readers read it out loud for blind visitors. Search engines use it to understand what the picture shows. <strong>Every image needs an alt attribute.</strong> If an image is purely decorative, use an empty alt (<code class="inline">alt=""</code>) so screen readers skip it — but never leave the attribute out completely.</p>
+    <p>You can also control the size with the <code class="inline">width</code> and <code class="inline">height</code> attributes, measured in pixels:</p>
+    <pre><code>&lt;img src="team.jpg" alt="Our team at the Lahore office"
+     width="600" height="400"&gt;</code></pre>
+    <p>Setting both width and height also stops the page from jumping around while the image loads, which makes your site feel faster. In the CSS module you will learn a better way to size images, but these attributes are a good start.</p>
+
+    <h2>Lists: ul, ol and li</h2>
+    <p>Lists are everywhere on the web: navigation menus, shopping lists, steps in a recipe, features on a pricing page. HTML has two kinds.</p>
+    <p>An <strong>unordered list</strong> (<code class="inline">&lt;ul&gt;</code>) is for items with no special order. The browser shows a bullet point in front of each item:</p>
+    <pre><code>&lt;ul&gt;
+  &lt;li&gt;Fresh bread&lt;/li&gt;
+  &lt;li&gt;Chocolate cake&lt;/li&gt;
+  &lt;li&gt;Butter biscuits&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+    <p>An <strong>ordered list</strong> (<code class="inline">&lt;ol&gt;</code>) is for items where the order matters — steps, rankings, instructions. The browser numbers each item automatically:</p>
+    <pre><code>&lt;ol&gt;
+  &lt;li&gt;Mix the flour and sugar.&lt;/li&gt;
+  &lt;li&gt;Add the eggs and milk.&lt;/li&gt;
+  &lt;li&gt;Bake for 30 minutes.&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+    <p>Every item in both kinds of list uses the <code class="inline">&lt;li&gt;</code> tag. You can also nest lists — put a whole <code class="inline">&lt;ul&gt;</code> inside one <code class="inline">&lt;li&gt;</code> — to make a list inside a list. That is how multi-level navigation menus are built.</p>
+
+    <h2>Tables: rows and cells</h2>
+    <p>Tables are for data that belongs in rows and columns: a class timetable, a price list, match scores. A table is built from three tags. <code class="inline">&lt;table&gt;</code> is the whole table. <code class="inline">&lt;tr&gt;</code> is a table row. Inside each row, <code class="inline">&lt;th&gt;</code> is a header cell (bold, centred) and <code class="inline">&lt;td&gt;</code> is a normal data cell:</p>
+    <pre><code>&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Day&lt;/th&gt;
+    &lt;th&gt;Class&lt;/th&gt;
+    &lt;th&gt;Time&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Monday&lt;/td&gt;
+    &lt;td&gt;HTML Basics&lt;/td&gt;
+    &lt;td&gt;9:00 AM&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Wednesday&lt;/td&gt;
+    &lt;td&gt;CSS Basics&lt;/td&gt;
+    &lt;td&gt;9:00 AM&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+    <p>Read the code like a grid: each <code class="inline">&lt;tr&gt;</code> is one horizontal line, and the cells inside it are the columns. The first row uses <code class="inline">&lt;th&gt;</code> because it is the header — Day, Class, Time. Every row after that uses <code class="inline">&lt;td&gt;</code>.</p>
+    <p>One warning: tables are only for tabular data. In the early days of the web, people used tables to lay out whole pages, and that was a bad idea — it makes pages slow, hard to change and impossible to read on a phone. For layout, use CSS (you will learn Flexbox in the CSS module). For data, use tables.</p>
+
+    <h2>Putting it together</h2>
+    <p>Images, lists and tables often appear together on one page. A shop page might show a product image, a list of features, and a table of prices. You now know all three tags, so you can build that page already.</p>
+
+    <div class="exercise">
+      <h3>Exercise — Your favourites page</h3>
+      <p>Add a new section to your personal page from Lesson 2: an <code class="inline">&lt;h2&gt;</code> called "My Favourite Foods", an unordered list of three foods, an <code class="inline">&lt;h2&gt;</code> called "My Weekly Schedule", and a table with three rows (Day, Activity, Time). Then add one image — any picture saved in the same folder as your page — with a proper <code class="inline">alt</code> description. Save, refresh, and check that everything shows correctly. If the image does not appear, check the file name in <code class="inline">src</code> — one wrong letter is the most common cause.</p>
+    </div>
+  </div>
+
+  <button class="btn" data-complete="html-3">Mark as complete</button>
+
+  <div class="lesson-nav">
+    <a class="btn btn-outline btn-small" href="html-2.html">&larr; Lesson 2: Headings, Paragraphs &amp; Links</a>
+    <a class="btn btn-small" href="../lessons.html">All lessons &rarr;</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      <a href="https://usmankalera-dev.github.io/portfolio/" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://github.com/Usmankalera-dev" target="_blank" rel="noopener">GitHub</a>
+      <a href="../lessons.html">Lessons</a>
+    </p>
+    <p>By Muhammad Usman (Usman Kalera) — Rakhzaar Tech</p>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>
