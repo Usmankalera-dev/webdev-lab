@@ -20,7 +20,12 @@
   var INDEX = window.TUTOR_INDEX || { items: [] };
   var CHUNKS = INDEX.items || [];
   var KEY_NAME = "webdevlab-tutor-key";
-  var MODEL = "claude-fable-5-2";
+  // Free model on Coarena (2026-11-16): Claude Fable 5.2 left the free
+  // tier, so the tutor uses Gemini 3.8 Flash instead — same free
+  // $5/day, Coarena pays, no card. Other free models: GPT-6 Luna,
+  // DeepSeek V4.1 Flash. If the free tier changes again, change this
+  // one line (and check https://coarena.ai/api/v1/models).
+  var MODEL = "gemini-3-8-flash";
   var API_URL = "https://coarena.ai/api/v1/messages";
   var TOP_N = 4;          // how many passages we use as context
   var MIN_SCORE = 2.5;    // below this, nothing is "relevant"
@@ -217,6 +222,9 @@
       messages: [{ role: "user", content: systemText + "\n\n" + userText }]
     };
     body.output_config = { effort: "low" };
+    // output_config (effort) is an Anthropic-only option: send it only
+    // for Claude Fable models, never for Gemini/GPT/DeepSeek models.
+    if (MODEL.indexOf("claude-fable-") !== 0) delete body.output_config;
     var send = function (b) {
       return fetch(API_URL, {
         method: "POST",
@@ -260,6 +268,9 @@
     }
     if (res && res.status === 429) {
       return "Free limit khatam ho gaya (aaj ke $5) — kal dobara try karo, ya bina key ke lessons dekho.";
+    }
+    if (res && res.status === 402) {
+      return "Ye model ab free nahi raha — Coarena ne free tier badal diya hai. Tutor ka model update karna parega; bina key ke lessons abhi bhi dekh sakte ho.";
     }
     if (res) {
       return "Coarena se jawab nahi mila (error " + res.status +
