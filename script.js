@@ -450,6 +450,7 @@ const WEBDEV_CONFIG = {
       }
     });
     document.querySelectorAll(".lesson-row .open-link").forEach(function (link) {
+      if (link.parentNode.querySelector(".badge-unlocked")) return; /* rows unlocked above already have their badge — no double badge */
       var badge = document.createElement("span");
       badge.className = "badge-unlocked";
       badge.textContent = "✓ Unlocked";
@@ -486,6 +487,76 @@ const WEBDEV_CONFIG = {
       if (noLessonMatch) noLessonMatch.classList.toggle("hidden", anyVisible);
     });
   }
+
+  /* ---------- lessons page: module progress, continue card, quiz badges ---------- */
+  /* Runs only on lessons.html (guarded by the elements below). All numbers
+     come from localStorage/LESSONS/QUIZZES — nothing invented. */
+  (function lessonsEnhancements() {
+    var contCard = document.getElementById("continueCard");
+    var hasModProg = !!document.getElementById("modProgHtml");
+    if (!contCard && !hasModProg) return;
+    var done = getProgress();
+
+    /* Per-module progress in each group heading, e.g. "3 / 5 done". */
+    var MOD_PROG = [
+      { mod: "HTML", el: "modProgHtml" },
+      { mod: "CSS", el: "modProgCss" },
+      { mod: "JavaScript", el: "modProgJs" },
+      { mod: "Mini Projects", el: "modProgProj" }
+    ];
+    MOD_PROG.forEach(function (m) {
+      var el = document.getElementById(m.el);
+      if (!el) return;
+      var total = 0, n = 0;
+      LESSONS.forEach(function (l) {
+        if (l.module === m.mod) {
+          total++;
+          if (done.indexOf(l.id) !== -1) n++;
+        }
+      });
+      el.textContent = n + " / " + total + " done";
+    });
+
+    /* Continue card: only for enrolled students. */
+    if (contCard && hasAccess()) {
+      var next = null;
+      for (var i = 0; i < LESSONS.length; i++) {
+        if (done.indexOf(LESSONS[i].id) === -1) { next = LESSONS[i]; break; }
+      }
+      contCard.classList.remove("hidden");
+      contCard.innerHTML = "";
+      var h = document.createElement("h3");
+      var p = document.createElement("p");
+      p.style.marginBottom = "12px";
+      var a = document.createElement("a");
+      a.className = "btn btn-small";
+      if (next) {
+        h.textContent = "Continue where you left off";
+        p.textContent = "Next: " + next.num + ". " + next.title;
+        a.href = next.href;
+        a.textContent = "Continue \u2192";
+      } else {
+        h.textContent = "Course complete!";
+        p.textContent = "You finished all 23 lessons and projects.";
+        a.href = "certificate.html";
+        a.textContent = "View your certificate \u2192";
+      }
+      contCard.appendChild(h);
+      contCard.appendChild(p);
+      contCard.appendChild(a);
+    }
+
+    /* Per-row quiz best score, only where a score is stored. */
+    var scores = getQuizScores();
+    document.querySelectorAll(".lesson-row[data-lesson]").forEach(function (row) {
+      var lid = row.getAttribute("data-lesson");
+      if (!QUIZZES[lid] || scores[lid] === undefined) return;
+      var badge = document.createElement("span");
+      badge.className = "quiz-badge";
+      badge.textContent = "Quiz " + scores[lid] + "/" + QUIZZES[lid].length;
+      row.appendChild(badge);
+    });
+  })();
 
   /* ---------- enroll page ---------- */
   var enrollForm = document.getElementById("enrollForm");
@@ -682,6 +753,65 @@ const WEBDEV_CONFIG = {
       });
       var quizEl = document.getElementById("dashQuiz");
       if (quizEl) quizEl.textContent = quizTotal + " / " + quizMax;
+
+      /* Progress ring: same real percentage, drawn as a ring. */
+      var ringFg = document.getElementById("dashRingFg");
+      if (ringFg) {
+        var circ = 2 * Math.PI * 52;
+        ringFg.style.strokeDasharray = circ.toFixed(1);
+        ringFg.style.strokeDashoffset = (circ * (1 - doneCount / TOTAL_LESSONS)).toFixed(1);
+      }
+
+      /* Progress by module: real counts from localStorage. */
+      var MOD_BARS = [
+        { mod: "HTML", fill: "modFillHtml", count: "modCountHtml" },
+        { mod: "CSS", fill: "modFillCss", count: "modCountCss" },
+        { mod: "JavaScript", fill: "modFillJs", count: "modCountJs" },
+        { mod: "Mini Projects", fill: "modFillProj", count: "modCountProj" }
+      ];
+      MOD_BARS.forEach(function (m) {
+        var total = 0, n = 0;
+        LESSONS.forEach(function (l) {
+          if (l.module === m.mod) {
+            total++;
+            if (done.indexOf(l.id) !== -1) n++;
+          }
+        });
+        var fillEl = document.getElementById(m.fill);
+        var countEl = document.getElementById(m.count);
+        if (fillEl) fillEl.style.width = (total ? Math.round((n / total) * 100) : 0) + "%";
+        if (countEl) countEl.textContent = n + " / " + total;
+      });
+
+      /* Next lesson card. */
+      var nextCard = document.getElementById("nextLessonCard");
+      if (nextCard) {
+        var nextL = null;
+        for (var ni = 0; ni < LESSONS.length; ni++) {
+          if (done.indexOf(LESSONS[ni].id) === -1) { nextL = LESSONS[ni]; break; }
+        }
+        nextCard.classList.remove("hidden");
+        nextCard.innerHTML = "";
+        var nh = document.createElement("h3");
+        var np = document.createElement("p");
+        np.style.marginBottom = "12px";
+        var na = document.createElement("a");
+        na.className = "btn btn-small";
+        if (nextL) {
+          nh.textContent = "Next lesson";
+          np.textContent = nextL.num + ". " + nextL.title;
+          na.href = nextL.href;
+          na.textContent = "Continue \u2192";
+        } else {
+          nh.textContent = "Course complete!";
+          np.textContent = "You finished all 23 lessons and projects.";
+          na.href = "certificate.html";
+          na.textContent = "View your certificate \u2192";
+        }
+        nextCard.appendChild(nh);
+        nextCard.appendChild(np);
+        nextCard.appendChild(na);
+      }
 
       var MOD_CLASS = { "HTML": "mod-html", "CSS": "mod-css", "JavaScript": "mod-js", "Mini Projects": "mod-proj" };
       var list = document.getElementById("dashLessons");

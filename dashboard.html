@@ -45,6 +45,8 @@
       <div id="dashMain" class="hidden">
         <h2 id="dashWelcome" style="text-align: center;">Welcome!</h2>
 
+        <div id="nextLessonCard" class="card hidden" style="margin-top: 16px;"></div>
+
         <div class="grid grid-3 dash-grid">
           <div class="card dash-card">
             <span class="tag">Access code</span>
@@ -64,7 +66,13 @@
         <div class="grid grid-3 dash-grid">
           <div class="card dash-card">
             <span class="tag">Progress</span>
-            <p class="dash-stat stat-accent" id="dashPct">0%</p>
+            <div class="ring-wrap">
+              <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
+                <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+                <circle class="ring-fg" id="dashRingFg" cx="60" cy="60" r="52"></circle>
+              </svg>
+              <span class="ring-pct" id="dashPct">0%</span>
+            </div>
           </div>
           <div class="card dash-card">
             <span class="tag">Lessons done</span>
@@ -74,6 +82,14 @@
             <span class="tag">Quiz best total</span>
             <p class="dash-stat stat-accent" id="dashQuiz">0 / 45</p>
           </div>
+        </div>
+
+        <div class="card" id="moduleProgressCard" style="margin-top: 20px;">
+          <h3 style="margin-top: 0;">Progress by module</h3>
+          <div class="mod-bar-row"><span class="mod-bar-label">HTML</span><div class="mod-track"><div class="mod-fill" id="modFillHtml"></div></div><span class="mod-bar-count" id="modCountHtml">0 / 5</span></div>
+          <div class="mod-bar-row"><span class="mod-bar-label">CSS</span><div class="mod-track"><div class="mod-fill" id="modFillCss"></div></div><span class="mod-bar-count" id="modCountCss">0 / 5</span></div>
+          <div class="mod-bar-row"><span class="mod-bar-label">JavaScript</span><div class="mod-track"><div class="mod-fill" id="modFillJs"></div></div><span class="mod-bar-count" id="modCountJs">0 / 8</span></div>
+          <div class="mod-bar-row"><span class="mod-bar-label">Mini Projects</span><div class="mod-track"><div class="mod-fill" id="modFillProj"></div></div><span class="mod-bar-count" id="modCountProj">0 / 5</span></div>
         </div>
 
         <div class="alert" id="certBox" style="margin-top: 20px;"></div>
