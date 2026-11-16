@@ -1467,3 +1467,152 @@ a { transition: color 0.15s ease; }
   .theme-picker { margin-left: 4px; }
   .theme-picker-btn { padding: 8px 10px; font-size: 0.95rem; }
 }
+
+/* ---------- Company-grade polish (Fluent / Material feel) ----------
+   Theme-agnostic: only existing CSS variables are used — no palette hex
+   is introduced or changed here, so all 6 themes keep working exactly
+   as before. Design tokens: one radius scale, one soft shadow + one
+   hover lift, one 150-200ms ease, one focus ring. The certificate
+   block above is deliberately untouched. */
+:root {
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(var(--shadow-rgb), 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(var(--shadow-rgb), 0.10);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.14), 0 4px 12px rgba(var(--shadow-rgb), 0.10);
+  --font-sans: "Segoe UI", Roboto, Inter, system-ui, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Typography: professional stack, tight large headings, airy body. */
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+h1, h2, h3 { font-weight: 800; }
+h1 { letter-spacing: -0.025em; line-height: 1.12; }
+h2 { letter-spacing: -0.015em; line-height: 1.2; }
+h3 { letter-spacing: -0.01em; font-weight: 700; }
+::selection { background: rgba(var(--shadow-rgb), 0.25); }
+
+/* Spacing rhythm: 8px grid — roomier sections, wider gutters on desktop. */
+@media (min-width: 700px) {
+  .container { padding: 0 24px; }
+  .section { padding: 64px 0; }
+  .grid { gap: 24px; }
+  .hero { padding: 72px 0 56px; }
+}
+.section-head { margin-bottom: 32px; }
+.section-head h2 { padding-bottom: 16px; }
+.section-head h2::after { width: 64px; margin-top: 16px; }
+.section-head p { line-height: 1.65; }
+
+/* Header: subtle shadow, even 40px icon buttons, steady rhythm. */
+.site-header { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.20), 0 4px 16px rgba(0, 0, 0, 0.12); }
+.header-inner { min-height: 64px; gap: 16px; }
+.logo { letter-spacing: -0.01em; }
+.icon-btn, .menu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  font-size: 1rem;
+  border-radius: 10px;
+  flex: none;
+}
+.theme-picker-btn { width: auto; padding: 8px 12px; }
+.theme-panel { border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+
+/* Buttons: one pill system, one hover lift, one visible focus ring. */
+.btn {
+  border-radius: 999px;
+  padding: 12px 28px;
+  letter-spacing: 0.01em;
+  transition: background 0.18s var(--ease), transform 0.18s var(--ease), box-shadow 0.18s var(--ease), border-color 0.18s var(--ease), color 0.18s var(--ease);
+}
+.btn-small { padding: 8px 18px; }
+.btn-outline { border-width: 1.5px; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible,
+textarea:focus-visible, summary:focus-visible, .theme-option:focus-visible,
+.quiz-opt:focus-visible, .demo-chip:focus-visible, .tab-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.btn:focus-visible, .btn-outline:focus-visible, .icon-btn:focus-visible,
+.tab-btn:focus-visible { outline-offset: 3px; }
+
+/* Cards & surfaces: one radius, one soft shadow, one hover lift. */
+.card, .quiz-box, .checklist-box, .notes-box, .leaderboard-wrap,
+.plan-card, .alert, .pay-method, .form-card .pay-amount {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+.grid .card:hover { box-shadow: var(--shadow-md); }
+.price-card.featured { box-shadow: var(--shadow-md); }
+.lesson-row {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.18s var(--ease), transform 0.18s var(--ease), box-shadow 0.18s var(--ease);
+}
+.lesson-row:hover { box-shadow: var(--shadow-md); }
+.step-num { width: 36px; height: 36px; line-height: 36px; font-size: 1rem; }
+
+/* Hero: balanced spacing, confident headline, even stat cards. */
+.hero h1 { max-width: 820px; margin-left: auto; margin-right: auto; }
+.hero p.lead { line-height: 1.65; max-width: 680px; }
+.hero-cta { gap: 16px; }
+.hero-stats { gap: 16px; margin-top: 40px; align-items: stretch; }
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 88px;
+  padding: 20px 8px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.hero-stat b { letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.badge { letter-spacing: 0.02em; }
+.browser-mock { border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+
+/* Forms: consistent padding/radius, Microsoft-style focus ring. */
+.form-card input, .form-card select, .search-wrap input, .notes-box textarea {
+  border-radius: var(--radius-md);
+  transition: border-color 0.15s var(--ease), box-shadow 0.15s var(--ease);
+}
+.form-card input:focus, .form-card select:focus, .search-wrap input:focus,
+.notes-box textarea:focus, .editor-pane:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(var(--shadow-rgb), 0.22);
+}
+.demo-chip, .quiz-opt { transition: border-color 0.18s var(--ease), background 0.18s var(--ease), box-shadow 0.18s var(--ease); }
+.demo-chip { border-radius: var(--radius-md); }
+.quiz-opt { border-radius: 10px; }
+.quiz-opt:hover { box-shadow: var(--shadow-sm); }
+details.faq { border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+details.faq summary { border-radius: var(--radius-sm); }
+
+/* Dividers + footer: same quiet system. */
+hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+.site-footer { padding: 48px 0 32px; }
+.footer-col h4 { font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 16px; }
+.footer-bottom { margin-top: 32px; padding-top: 20px; }
+.footer-col a { transition: color 0.15s var(--ease); }
+.teacher-photo-wrap { box-shadow: var(--shadow-md); }
+.module-illu-frame { border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+.editor-pane, #previewFrame { border-radius: var(--radius-md); }
+.tab-btn { transition: background 0.18s var(--ease), border-color 0.18s var(--ease), color 0.18s var(--ease); }
+
+@media (prefers-reduced-motion: reduce) {
+  .form-card input, .form-card select, .search-wrap input, .notes-box textarea,
+  .demo-chip, .quiz-opt, .lesson-row, .tab-btn, .footer-col a {
+    transition: none !important;
+  }
+}
+
