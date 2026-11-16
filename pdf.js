@@ -323,11 +323,32 @@
     s += centeredLineAt(o.signature, "F1", 12, 692, 152, NAVY);
     s += centeredLineAt(o.signatureSub, "F2", 9.5, 692, 138, GREY);
 
+    /* QR code (bottom-right corner, inside the inner border). 72pt square
+       with a white quiet zone; it sits below the signature block (lowest
+       signature text is at y=138) and clear of the centred footer lines. */
+    if (o.qrMatrix && o.qrMatrix.rows) {
+      var qn = o.qrMatrix.size || o.qrMatrix.rows.length;
+      var qSize = 72;
+      var qx = 806 - qSize - 8;
+      var qy = 44;
+      s += fillRect(qx - 4, qy - 4, qSize + 8, qSize + 8, "1 1 1");
+      var mod = qSize / qn;
+      for (var qr = 0; qr < qn; qr++) {
+        for (var qc = 0; qc < qn; qc++) {
+          if (o.qrMatrix.rows[qr].charAt(qc) === "1") {
+            s += fillRect(qx + qc * mod, qy + (qn - 1 - qr) * mod, mod + 0.05, mod + 0.05, "0 0 0");
+          }
+        }
+      }
+    }
+
     /* Footer. */
     s += centeredLine("WebDev Lab - Learn HTML, CSS & JavaScript by building real things",
       "F2", 9, 56, LIGHT_GREY);
-    s += centeredLine("Verify at: usmankalera-dev.github.io/webdev-lab/verify.html",
-      "F2", 8.5, 42, LIGHT_GREY);
+    var verifyLine = o.certId
+      ? "Verify at: usmankalera-dev.github.io/webdev-lab/verify.html?id=" + o.certId
+      : "Verify at: usmankalera-dev.github.io/webdev-lab/verify.html";
+    s += centeredLine(verifyLine, "F2", 8.5, 42, LIGHT_GREY);
 
     return s;
   }
@@ -335,13 +356,31 @@
   /* Build the full PDF and return it as a Uint8Array.
      opts: { eyebrow, title, presentedTo, name, bodyLines[], batch,
              dateLabel, date, certId, idLabel, meta (legacy fallback),
-             signature, signatureSub,
+             signature, signatureSub, qrId, qrMatrix,
              logoJpeg (base64 JPEG string, no data: prefix — optional) }
-     When logoJpeg is a valid JPEG it is embedded as a DCTDecode image
-     XObject and drawn at the top; otherwise the drawn "WL" monogram is
-     used. All text is plain ASCII. */
+     qrId is a certificate ID (e.g. "WDL-REG-WEB-1003"); the QR matrix is
+     looked up from qr-data.js when it is loaded, otherwise no QR is drawn.
+     qrMatrix ({ size, rows }) can be passed directly instead. The footer
+     prints the per-certificate verify URL with ?id=<certId> whenever
+     certId is set. When logoJpeg is a valid JPEG it is embedded as a
+     DCTDecode image XObject and drawn at the top; otherwise the drawn
+     "WL" monogram is used. All text is plain ASCII. */
   function buildCertificatePDF(opts) {
     var o = opts || {};
+
+    /* Resolve the QR matrix: direct object first, then qr-data.js. */
+    var qrMatrix = null;
+    if (o.qrMatrix && o.qrMatrix.rows) {
+      qrMatrix = o.qrMatrix;
+    } else if (o.qrId) {
+      var lookup = (typeof root.webdevCertQrMatrix === "function")
+        ? root.webdevCertQrMatrix
+        : ((typeof globalThis !== "undefined" && typeof globalThis.webdevCertQrMatrix === "function")
+          ? globalThis.webdevCertQrMatrix : null);
+      if (lookup) {
+        try { qrMatrix = lookup(o.qrId); } catch (e) { qrMatrix = null; }
+      }
+    }
 
     /* Decode + validate the logo: must be a real JPEG (SOI marker FFD8). */
     var logoBytes = null;
@@ -368,6 +407,7 @@
       meta: o.meta || "",
       signature: o.signature || "Muhammad Usman",
       signatureSub: o.signatureSub || "Founder & CEO, Rakhzaar Tech",
+      qrMatrix: qrMatrix,
       hasLogo: !!logoBytes
     });
 

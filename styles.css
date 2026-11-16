@@ -869,7 +869,7 @@ details.faq p { color: var(--muted); margin: 12px 0 0; }
 
 @page { size: landscape; margin: 12mm; }
 @media print {
-  .site-header, .site-footer, .section-head, .cert-actions, .cert-preview-note { display: none !important; }
+  .site-header, .site-footer, .section-head, .cert-actions, .cert-preview-note, .cert-qr-wrap { display: none !important; }
   body { background: #ffffff; }
   .section { padding: 0; }
   .certificate { border-width: 4px; max-width: none; margin: 0; }
@@ -1789,3 +1789,11 @@ html[data-theme="brown"] .hero-stat, html:not([data-theme]) .hero-stat {
 /* Batch 1 WhatsApp group button (WhatsApp green, same in all themes). */
 .btn-whatsapp { background: #25d366; border-color: #25d366; color: #fff; }
 .btn-whatsapp:hover { background: #1eb856; border-color: #1eb856; color: #fff; }
+
+/* Certificate verify QR ("Scan to verify") + amber not-found state. */
+.cert-qr-wrap { text-align: center; margin-top: 20px; }
+.cert-qr-wrap .note { margin-top: 8px; }
+.cert-qr svg { width: 120px; height: 120px; background: #fff; padding: 8px; border: 1px solid var(--border); border-radius: 12px; }
+.alert-warn { border-left-color: var(--gold); }
+#verifyResult.alert-warn { border: 1px solid var(--gold); border-left-width: 4px; background: rgba(168, 132, 98, 0.08); }
+#verifyResult.alert-warn::before { content: "\26A0  "; color: var(--gold); font-weight: 800; }

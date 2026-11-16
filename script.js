@@ -1066,6 +1066,7 @@ const WEBDEV_CONFIG = {
         document.getElementById("certPreviewNote").classList.remove("hidden");
       }
       certReady.classList.remove("hidden");
+      showCertQr("WDL-" + cacc.code, "certFootVerify");
     } else {
       var remaining = LESSONS.filter(function (l) {
         return certDone.indexOf(l.id) === -1;
@@ -1106,12 +1107,35 @@ const WEBDEV_CONFIG = {
           dateLabel: "Date Issued",
           date: formatDate(pdfDate),
           certId: "WDL-" + (cacc ? cacc.code : ""),
+          qrId: "WDL-" + (cacc ? cacc.code : ""),
           signature: "Muhammad Usman",
           signatureSub: "Founder & CEO, Rakhzaar Tech",
           logoJpeg: (typeof WEBDEV_LAB_LOGO_JPEG !== "undefined" ? WEBDEV_LAB_LOGO_JPEG : null)
         });
         downloadCertificatePDF(bytes, certFileName(cacc ? cacc.name : "Student", "Completion"));
       });
+    }
+  }
+
+  /* ---------- certificate QR on screen ("Scan to verify") ---------- */
+  /* Both certificate pages have a #certQrWrap block (hidden until the
+     certificate is ready). Fill it with the QR for this certificate's ID
+     and point the on-screen footer line at the per-certificate verify URL.
+     If qr-data.js did not load, the block simply stays hidden — the
+     Verify link still works. */
+  function showCertQr(certId, footId) {
+    var wrap = document.getElementById("certQrWrap");
+    if (wrap && typeof webdevCertQrSvg === "function") {
+      var box = document.getElementById("certQr");
+      var svg = webdevCertQrSvg(certId, 120);
+      if (box && svg) {
+        box.innerHTML = svg;
+        wrap.classList.remove("hidden");
+      }
+    }
+    var foot = footId ? document.getElementById(footId) : null;
+    if (foot) {
+      foot.textContent = "Verify at: usmankalera-dev.github.io/webdev-lab/verify.html?id=" + certId;
     }
   }
 
@@ -1200,6 +1224,7 @@ const WEBDEV_CONFIG = {
       document.getElementById("regDate").textContent = formatDate(regDate);
       if (regPreview) document.getElementById("regPreviewNote").classList.remove("hidden");
       regReady.classList.remove("hidden");
+      showCertQr("WDL-REG-" + racc.code, "regFootVerify");
       var regPrintBtn = document.getElementById("regPrintBtn");
       if (regPrintBtn) {
         regPrintBtn.addEventListener("click", function () { window.print(); });
@@ -1221,6 +1246,7 @@ const WEBDEV_CONFIG = {
             date: formatDate(regDate),
             certId: "WDL-REG-" + racc.code,
             idLabel: "Registration ID",
+            qrId: "WDL-REG-" + racc.code,
             signature: "Muhammad Usman",
             signatureSub: "Founder & CEO, Rakhzaar Tech",
             logoJpeg: (typeof WEBDEV_LAB_LOGO_JPEG !== "undefined" ? WEBDEV_LAB_LOGO_JPEG : null)
@@ -1729,35 +1755,82 @@ const WEBDEV_CONFIG = {
   }
 
   /* ---------- certificate verify page ---------- */
+  /* The check is against certificates.json — the real registry of issued
+     certificates. A well-formed ID that is not in the registry is "not
+     found", never valid. If the registry cannot be loaded (offline), no
+     result is claimed at all. */
   (function verifyPage() {
     var form = document.getElementById("verifyForm");
     if (!form) return;
     var input = document.getElementById("verifyInput");
     var result = document.getElementById("verifyResult");
-    function check(raw) {
-      var clean = String(raw || "").toUpperCase().replace(/[\s\-]/g, "");
-      var type = null, code = null;
-      if (clean.indexOf("WDLREG") === 0) { type = "Registration"; code = clean.slice(6); }
-      else if (clean.indexOf("WDL") === 0) { type = "Completion"; code = clean.slice(3); }
-      else return { ok: false };
-      var found = null;
-      for (var i = 0; i < ACCESS_CODES.length; i++) {
-        if (normalizeCode(ACCESS_CODES[i]) === code) { found = ACCESS_CODES[i]; break; }
+    var registryPromise = null;
+    function loadRegistry() {
+      if (!registryPromise) {
+        registryPromise = fetch("certificates.json").then(function (resp) {
+          if (!resp.ok) throw new Error("no registry");
+          return resp.json();
+        }).then(function (data) {
+          var map = {};
+          (data && Array.isArray(data.certificates) ? data.certificates : []).forEach(function (e) {
+            if (e && typeof e.id === "string") map[e.id.toUpperCase()] = e;
+          });
+          return map;
+        });
       }
-      if (!found) return { ok: false };
-      return { ok: true, type: type, code: found };
+      return registryPromise;
+    }
+    /* Parse an ID: { type, code, id } or { error: "format" }. Well-formed
+       means WDL- / WDL-REG- plus a real Batch 1 code (WEB-1001..WEB-1020). */
+    function parseId(raw) {
+      var clean = String(raw || "").toUpperCase().replace(/[\s\-]/g, "");
+      var type = null, rest = null;
+      if (clean.indexOf("WDLREG") === 0) { type = "Registration"; rest = clean.slice(6); }
+      else if (clean.indexOf("WDL") === 0) { type = "Completion"; rest = clean.slice(3); }
+      else return { error: "format" };
+      if (!/^WEB10(0[1-9]|1[0-9]|20)$/.test(rest)) return { error: "format" };
+      var code = "WEB-" + rest.slice(3);
+      var id = (type === "Registration" ? "WDL-REG-" : "WDL-") + code;
+      return { type: type, code: code, id: id };
+    }
+    function escHtml(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     }
     function show(raw) {
-      var r = check(raw);
+      var p = parseId(raw);
       result.classList.remove("hidden");
-      if (r.ok) {
-        result.className = "alert alert-ok";
-        result.innerHTML = "<strong>Valid certificate.</strong> This ID matches a WebDev Lab Batch 1 " +
-          r.type + " certificate — code " + r.code + ".";
-      } else {
+      if (p.error) {
         result.className = "alert alert-err";
         result.textContent = "This is not a valid WebDev Lab certificate ID.";
+        return;
       }
+      result.className = "alert";
+      result.textContent = "Checking the certificate registry…";
+      loadRegistry().then(function (map) {
+        var entry = map[p.id];
+        if (entry) {
+          result.className = "alert alert-ok";
+          result.innerHTML =
+            "<strong>Verified — this is a real WebDev Lab certificate.</strong>" +
+            "<p style=\"margin-top:8px\">" +
+            "Student: <strong>" + escHtml(entry.name) + "</strong><br>" +
+            "Certificate: " + escHtml(entry.type) + "<br>" +
+            "Course: " + escHtml(entry.course) + "<br>" +
+            "Batch: " + escHtml(entry.batch) + "<br>" +
+            "Issued: " + escHtml(entry.issued) + "<br>" +
+            "Certificate ID: " + escHtml(entry.id) + "</p>";
+        } else {
+          result.className = "alert alert-warn";
+          result.innerHTML =
+            "<strong>Not found — no certificate with this ID has been issued.</strong>" +
+            "<p style=\"margin-top:8px\">The ID is in the right format (" + escHtml(p.type) +
+            ", code " + escHtml(p.code) + "), but it is not in the issued-certificate registry. " +
+            "Only certificates handed out by WebDev Lab appear here.</p>";
+        }
+      }, function () {
+        result.className = "alert alert-err";
+        result.textContent = "Verification needs the live site — the certificate registry could not be loaded. Check your connection and try again.";
+      });
     }
     form.addEventListener("submit", function (e) {
       e.preventDefault();

@@ -103,10 +103,14 @@
                 <span class="cert-sign-role">Founder &amp; CEO, Rakhzaar Tech</span>
               </div>
             </div>
-            <p class="cert-foot">WebDev Lab — Learn HTML, CSS &amp; JavaScript by building real things<br>Verify at: usmankalera-dev.github.io/webdev-lab/verify.html</p>
+            <p class="cert-foot">WebDev Lab — Learn HTML, CSS &amp; JavaScript by building real things<br><span id="certFootVerify">Verify at: usmankalera-dev.github.io/webdev-lab/verify.html</span></p>
           </div>
         </div>
         <p class="cert-preview-note hidden" id="certPreviewNote">Preview — complete all 23 items to unlock the real certificate.</p>
+        <div class="cert-qr-wrap hidden" id="certQrWrap">
+          <div class="cert-qr" id="certQr" role="img" aria-label="QR code — scan to verify this certificate"></div>
+          <p class="note">Scan to verify</p>
+        </div>
         <div class="cert-actions">
           <button class="btn" id="certDownloadBtn" type="button">Download Certificate (PDF)</button>
           <button class="btn btn-outline" id="certPrintBtn" type="button">Print</button>
@@ -156,7 +160,8 @@
 </footer>
 
 <script src="logo.js"></script>
-<script src="pdf.js"></script>
-<script src="script.js"></script>
+<script src="qr-data.js?v=1"></script>
+<script src="pdf.js?v=1"></script>
+<script src="script.js?v=1"></script>
 </body>
 </html>
