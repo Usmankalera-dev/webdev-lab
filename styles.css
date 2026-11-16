@@ -1770,3 +1770,18 @@ html[data-theme="brown"] .hero-stat, html:not([data-theme]) .hero-stat {
   .tutor-form { flex-direction: column; }
   .tutor-form .btn { width: 100%; }
 }
+
+/* Chat upgrades: history bar, mic button, copy button. */
+.tutor-chat-bar { display: flex; justify-content: flex-end; margin-bottom: 10px; }
+.tutor-form .tutor-mic-btn { flex: none; width: auto; }
+.tutor-mic-on { background: #b3261e !important; border-color: #b3261e !important; color: #fff !important; }
+.tutor-copy-btn {
+  margin-top: 8px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--muted);
+}

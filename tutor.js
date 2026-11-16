@@ -333,9 +333,119 @@
     var div = document.createElement("div");
     div.className = "tutor-msg tutor-msg-" + kind;
     div.innerHTML = html;
+    if (kind === "ai") {
+      var copy = document.createElement("button");
+      copy.type = "button";
+      copy.className = "tutor-copy-btn";
+      copy.textContent = "📋 Copy";
+      div.appendChild(copy);
+    }
     chatEl.appendChild(div);
     chatEl.scrollTop = chatEl.scrollHeight;
     return div;
+  }
+
+  // Welcome text, kept in JS so "New chat" can bring it back.
+  var WELCOME_HTML =
+    "<p>Assalam-o-Alaikum! 👋 Main WebDev Lab ka AI Tutor hoon. Mujh se " +
+    "course ke baare mein kuch bhi pooch lo — jaise \"Flexbox kya hai?\" " +
+    "ya \"JavaScript mein function kya hota hai?\"</p>" +
+    "<p>Jawab hamesha 23 lessons mein se aata hai, link ke saath. Agar " +
+    "sawal lessons mein nahi hai, to main saaf keh dunga.</p>";
+
+  /* ---------- chat history (this browser only) ----------
+     Every question + AI answer is saved in localStorage, so the chat
+     is still there when the student comes back. Only our own escaped
+     HTML is stored, never the key. */
+  var HISTORY_NAME = "webdevlab-tutor-history";
+  var HISTORY_MAX = 20;
+
+  function loadHistory() {
+    try {
+      var list = JSON.parse(localStorage.getItem(HISTORY_NAME) || "[]");
+      return Array.isArray(list) ? list : [];
+    } catch (e) { return []; }
+  }
+
+  function saveExchange(question, aiHtml) {
+    try {
+      var list = loadHistory();
+      list.push({ q: question, a: aiHtml });
+      while (list.length > HISTORY_MAX) list.shift();
+      localStorage.setItem(HISTORY_NAME, JSON.stringify(list));
+    } catch (e) {}
+  }
+
+  // Add an AI answer AND save the exchange to history.
+  function addAi(html, question) {
+    var div = addMessage("ai", html);
+    if (question) saveExchange(question, html);
+    return div;
+  }
+
+  function clearChat() {
+    try { localStorage.removeItem(HISTORY_NAME); } catch (e) {}
+    chatEl.innerHTML = "";
+    var div = document.createElement("div");
+    div.className = "tutor-msg tutor-msg-ai";
+    div.innerHTML = WELCOME_HTML;
+    chatEl.appendChild(div);
+  }
+
+  function fallbackCopy(text) {
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    } catch (e) {}
+  }
+
+  /* ---------- voice input (Chrome / Android) ----------
+     The mic fills the question box from speech. If the browser has
+     no speech recognition, the mic says so plainly instead of
+     failing silently. */
+  function setupVoice() {
+    var micBtn = document.getElementById("tutorMicBtn");
+    if (!micBtn) return;
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) {
+      micBtn.addEventListener("click", function () {
+        addMessage("ai", "<p>Voice is browser mein nahi chalta — Chrome " +
+          "(Android ya computer) mein try karo, ya sawal type kar lo.</p>");
+      });
+      return;
+    }
+    var rec = new SR();
+    rec.lang = "en-US";
+    rec.interimResults = true;
+    rec.maxAlternatives = 1;
+    var listening = false;
+    rec.onresult = function (e) {
+      var text = "";
+      for (var i = e.resultIndex; i < e.results.length; i++) {
+        text += e.results[i][0].transcript;
+      }
+      inputEl.value = text;
+    };
+    var stopMic = function () {
+      listening = false;
+      micBtn.classList.remove("tutor-mic-on");
+      micBtn.textContent = "🎤";
+    };
+    rec.onend = stopMic;
+    rec.onerror = stopMic;
+    micBtn.addEventListener("click", function () {
+      if (listening) { try { rec.stop(); } catch (e) {} return; }
+      try {
+        rec.start();
+        listening = true;
+        micBtn.classList.add("tutor-mic-on");
+        micBtn.textContent = "🔴";
+      } catch (e) {}
+    });
   }
 
   function lessonLabel(chunk) {
@@ -400,7 +510,7 @@
     // Nothing relevant in the lessons: say so plainly, never guess.
     if (!hits.length) {
       setLoading(false);
-      addMessage("ai", noMatchHtml());
+      addAi(noMatchHtml(), question);
       return;
     }
 
@@ -412,7 +522,7 @@
         "<strong>Settings</strong> mein apni key save karo. " +
         "Filhal ye lessons dekho, jawab inhi mein hai:</p>" +
         hits.map(passageHtml).join("");
-      addMessage("ai", html);
+      addAi(html, question);
       return;
     }
 
@@ -443,13 +553,13 @@
           return;
         }
         var html = renderAnswer(escapeHtml(answer)) + sourcesHtml(hits);
-        addMessage("ai", html);
+        addAi(html, question);
       })
       .catch(function (err) {
         setLoading(false);
         var res = err && err.res ? err.res : null;
-        addMessage("ai", "<p>" + escapeHtml(friendlyError(err, res)) +
-          "</p>" + sourcesHtml(hits));
+        addAi("<p>" + escapeHtml(friendlyError(err, res)) +
+          "</p>" + sourcesHtml(hits), question);
       });
   }
 
@@ -520,11 +630,43 @@
     document.getElementById("tutorSaveKey").addEventListener("click", saveKey);
     document.getElementById("tutorTestKey").addEventListener("click", testKey);
     document.getElementById("tutorRemoveKey").addEventListener("click", removeKey);
+    document.getElementById("tutorNewChat").addEventListener("click", clearChat);
+    setupVoice();
+
+    // Copy button on every AI answer (event delegation, one listener).
+    chatEl.addEventListener("click", function (e) {
+      var btn = e.target.closest ? e.target.closest(".tutor-copy-btn") : null;
+      if (!btn) return;
+      var clone = btn.parentElement.cloneNode(true);
+      var copyBtn = clone.querySelector(".tutor-copy-btn");
+      if (copyBtn) copyBtn.remove();
+      var text = clone.innerText || clone.textContent || "";
+      var done = function () {
+        btn.textContent = "✓ Copied";
+        setTimeout(function () { btn.textContent = "📋 Copy"; }, 1500);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () {
+          fallbackCopy(text); done();
+        });
+      } else { fallbackCopy(text); done(); }
+    });
 
     var chips = document.querySelectorAll("[data-question]");
     chips.forEach(function (chip) {
       chip.addEventListener("click", function () { ask(chip.dataset.question); });
     });
+
+    // Restore the saved chat (this browser only).
+    var history = loadHistory();
+    if (history.length) {
+      var welcome = document.getElementById("tutorWelcome");
+      if (welcome) welcome.remove();
+      history.forEach(function (ex) {
+        addMessage("user", escapeHtml(ex.q));
+        addMessage("ai", ex.a || "");
+      });
+    }
 
     refreshKeyStatus();
   }
