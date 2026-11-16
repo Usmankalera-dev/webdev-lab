@@ -848,6 +848,27 @@ const WEBDEV_CONFIG = {
     }
   })();
 
+  /* ---------- home page module illustrations ---------- */
+  /* Each roadmap card shows its real illustration from illustrations.js.
+     If an illustration did not load, its frame stays hidden — never a
+     broken image. Runs on every page; on non-home pages the elements
+     simply do not exist. */
+  (function setModuleIllustrations() {
+    function setOne(frameId, imgId, data) {
+      var frame = document.getElementById(frameId);
+      var img = document.getElementById(imgId);
+      if (!frame || !img) return;
+      if (typeof data === "string" && data.length > 1000) {
+        img.src = "data:image/jpeg;base64," + data;
+        frame.classList.remove("hidden");
+      }
+    }
+    setOne("illuHtmlFrame", "illuHtml", typeof ILLU_HTML !== "undefined" ? ILLU_HTML : null);
+    setOne("illuCssFrame", "illuCss", typeof ILLU_CSS !== "undefined" ? ILLU_CSS : null);
+    setOne("illuJsFrame", "illuJs", typeof ILLU_JS !== "undefined" ? ILLU_JS : null);
+    setOne("illuProjectsFrame", "illuProjects", typeof ILLU_PROJECTS !== "undefined" ? ILLU_PROJECTS : null);
+  })();
+
   /* ---------- registration certificate page ---------- */
   var regLocked = document.getElementById("regLocked");
   var regReady = document.getElementById("regReady");

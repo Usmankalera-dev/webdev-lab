@@ -261,35 +261,35 @@
       s += diamond(c[0], c[1], 3.5, NAVY);
     });
 
-    /* Logo: the real image when supplied (64pt square, centred where the
+    /* Logo: the real image when supplied (88pt square, centred where the
        drawn monogram was); otherwise the drawn gold-ringed "WL" monogram. */
     if (o.hasLogo) {
-      s += "q 64 0 0 64 " + f1(CX - 32) + " 490 cm /Im1 Do Q\n";
+      s += "q 88 0 0 88 " + f1(CX - 44) + " 464 cm /Im1 Do Q\n";
     } else {
-      s += circle(CX, 522, 25, 2, GOLD);
-      s += circle(CX, 522, 20, 0.75, NAVY);
-      s += centeredLine("WL", "F1", 19, 515, NAVY);
+      s += circle(CX, 508, 34, 2, GOLD);
+      s += circle(CX, 508, 27, 0.75, NAVY);
+      s += centeredLine("WL", "F1", 26, 499, NAVY);
     }
 
     /* Institution name, letter-spaced, + tagline. */
-    s += spacedCentered("WEBDEV LAB", "F1", 15, 480, NAVY, 4);
-    s += centeredLine("Learn HTML, CSS & JavaScript by Building Real Things", "F2", 9.5, 464, GREY);
+    s += spacedCentered("WEBDEV LAB", "F1", 15, 447, NAVY, 4);
+    s += centeredLine("Learn HTML, CSS & JavaScript by Building Real Things", "F2", 9.5, 431, GREY);
 
     /* Title, letter-spaced, auto-fit so it never overflows. */
     var titleSize = 30;
     while (titleSize > 20 && spacedWidth(o.title, "F1", titleSize, 1.5) > 700) titleSize -= 1;
-    s += spacedCentered(o.title, "F1", titleSize, 428, NAVY, 1.5);
-    s += hline(CX - 70, CX + 70, 414, 1.5, GOLD);
+    s += spacedCentered(o.title, "F1", titleSize, 395, NAVY, 1.5);
+    s += hline(CX - 70, CX + 70, 381, 1.5, GOLD);
 
     /* Presented to + name (script-style italic, gold underline). */
-    s += centeredLine(o.presentedTo, "F2", 12.5, 390, GREY);
+    s += centeredLine(o.presentedTo, "F2", 12.5, 357, GREY);
     var nameSize = fitSize(o.name, "F3", 34, 660, 18);
     var nameW = textWidth(o.name, "F3", nameSize);
-    s += centeredLine(o.name, "F3", nameSize, 354, NAVY);
-    s += hline(CX - nameW / 2 - 14, CX + nameW / 2 + 14, 346, 1.5, GOLD);
+    s += centeredLine(o.name, "F3", nameSize, 321, NAVY);
+    s += hline(CX - nameW / 2 - 14, CX + nameW / 2 + 14, 313, 1.5, GOLD);
 
     /* Body lines. */
-    var y = 320;
+    var y = 287;
     (o.bodyLines || []).forEach(function (line) {
       s += centeredLine(line, "F2", 13.5, y, NAVY);
       y -= 22;

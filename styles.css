@@ -617,9 +617,9 @@ details.faq p { color: var(--muted); margin: 10px 0 0; }
 }
 .cert-inner > *:not(.cert-corner):not(.cert-watermark) { position: relative; z-index: 1; }
 .cert-logo {
-  width: 56px;
-  height: 56px;
-  margin: 0 auto 10px;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 12px;
   border: 2px solid #c9a227;
   border-radius: 50%;
   display: flex;
@@ -627,7 +627,7 @@ details.faq p { color: var(--muted); margin: 10px 0 0; }
   justify-content: center;
   font-family: Georgia, "Times New Roman", serif;
   font-weight: 800;
-  font-size: 1.25rem;
+  font-size: 1.75rem;
   color: #1a2a4a;
   box-shadow: inset 0 0 0 2px #fdfbf5, inset 0 0 0 3.5px #1a2a4a;
   overflow: hidden;
@@ -738,6 +738,23 @@ details.faq p { color: var(--muted); margin: 10px 0 0; }
 
 /* ---------- Loop 4: free demo strip ---------- */
 .demo-strip { text-align: center; color: var(--muted); margin-top: 18px; }
+
+/* ---------- Module illustrations (home page roadmap cards) ---------- */
+/* The illustrations sit on white, so the frame is always white — the art
+   looks right in both dark and light themes. */
+.module-illu-frame {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px;
+  margin-bottom: 14px;
+}
+.module-illu-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
 
 /* ---------- Loop 4: mobile lesson rows ---------- */
 @media (max-width: 699px) {
