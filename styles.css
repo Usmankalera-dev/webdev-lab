@@ -1616,3 +1616,47 @@ hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
   }
 }
 
+
+/* ---------- Warm wood — Brown theme only ----------
+   Default Brown gets a subtle polished-walnut grain + warm shade on its
+   dark surfaces (hero, header, footer, hero stat cards). The other 5
+   themes are untouched: these rules are scoped to data-theme="brown"
+   (plus html:not([data-theme]), which is the pre-JS default-brown paint
+   before script.js sets the attribute). Palette hexes are NOT changed;
+   the grain is a feTurbulence SVG data-URI in the existing tan/ink tones,
+   so it adapts to nothing else and cannot leak into other themes. */
+:root {
+  --wood-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008 0.14' numOctaves='4' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.72 0 0 0 0 0.58 0 0 0 0 0.42 0.12 0 0 0 -0.005'/%3E%3C/filter%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.09' numOctaves='3' seed='21'/%3E%3CfeColorMatrix values='0 0 0 0 0.04 0 0 0 0 0.03 0 0 0 0 0.02 0.55 0 0 0 -0.10'/%3E%3C/filter%3E%3Crect width='600' height='600' filter='url(%23a)'/%3E%3Crect width='600' height='600' filter='url(%23b)'/%3E%3C/svg%3E");
+}
+
+/* Hero: warm glow low (below the heading, so the heading sits on dark
+   wood), darker wood-shade vignette at the edges, grain over the ink base. */
+html[data-theme="brown"] .hero, html:not([data-theme]) .hero {
+  background:
+    radial-gradient(95% 65% at 50% 108%, rgba(168, 132, 98, 0.20), rgba(168, 132, 98, 0) 65%),
+    radial-gradient(120% 105% at 50% 45%, rgba(0, 0, 0, 0) 55%, rgba(8, 5, 3, 0.45) 100%),
+    var(--wood-grain),
+    var(--ink);
+  background-size: auto, auto, 600px 600px, auto;
+  background-repeat: no-repeat, no-repeat, repeat, no-repeat;
+}
+
+/* Header + footer: the same grain, very subtle, over the ink base. */
+html[data-theme="brown"] .site-header, html:not([data-theme]) .site-header,
+html[data-theme="brown"] .site-footer, html:not([data-theme]) .site-footer {
+  background-image: var(--wood-grain);
+  background-size: 600px 600px;
+  background-repeat: repeat;
+  background-color: var(--ink);
+}
+
+/* Hero stat cards: grain over the ink base (not ink-2). The tan stat
+   numbers only reach 4.5:1 on the darker ink base, so the cards are
+   darkened behind the text as the contrast rule requires; the accent
+   border still defines the card against the hero. */
+html[data-theme="brown"] .hero-stat, html:not([data-theme]) .hero-stat {
+  background-image: var(--wood-grain);
+  background-size: 600px 600px;
+  background-repeat: repeat;
+  background-color: var(--ink);
+}
