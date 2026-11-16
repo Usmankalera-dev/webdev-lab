@@ -38,6 +38,26 @@
       .replace(/[\r\n]/g, " ");
   }
 
+  /* Decode a base64 string to a byte array. Works in the browser and Node
+     (no atob / Buffer dependency). Padding ("=") stops the group. */
+  function b64ToBytes(b64) {
+    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    var clean = String(b64 || "").replace(/[^A-Za-z0-9+/=]/g, "");
+    var bytes = [];
+    var i, a, b, c, d;
+    for (i = 0; i + 3 < clean.length; i += 4) {
+      a = chars.indexOf(clean.charAt(i));
+      b = chars.indexOf(clean.charAt(i + 1));
+      c = chars.indexOf(clean.charAt(i + 2));
+      d = chars.indexOf(clean.charAt(i + 3));
+      if (a < 0 || b < 0) break;
+      bytes.push((a << 2) | (b >> 4));
+      if (c >= 0) bytes.push(((b & 15) << 4) | (c >> 2));
+      if (d >= 0) bytes.push(((c & 3) << 6) | d);
+    }
+    return bytes;
+  }
+
   function widthTable(font) {
     if (font === "F1") return TIMES_BOLD;
     if (font === "F3") return TIMES_ITALIC;
@@ -241,10 +261,15 @@
       s += diamond(c[0], c[1], 3.5, NAVY);
     });
 
-    /* Logo monogram: gold-ringed circle with "WL". */
-    s += circle(CX, 522, 25, 2, GOLD);
-    s += circle(CX, 522, 20, 0.75, NAVY);
-    s += centeredLine("WL", "F1", 19, 515, NAVY);
+    /* Logo: the real image when supplied (64pt square, centred where the
+       drawn monogram was); otherwise the drawn gold-ringed "WL" monogram. */
+    if (o.hasLogo) {
+      s += "q 64 0 0 64 " + f1(CX - 32) + " 490 cm /Im1 Do Q\n";
+    } else {
+      s += circle(CX, 522, 25, 2, GOLD);
+      s += circle(CX, 522, 20, 0.75, NAVY);
+      s += centeredLine("WL", "F1", 19, 515, NAVY);
+    }
 
     /* Institution name, letter-spaced, + tagline. */
     s += spacedCentered("WEBDEV LAB", "F1", 15, 480, NAVY, 4);
@@ -308,9 +333,25 @@
   /* Build the full PDF and return it as a Uint8Array.
      opts: { eyebrow, title, presentedTo, name, bodyLines[], batch,
              dateLabel, date, certId, idLabel, meta (legacy fallback),
-             signature, signatureSub } — all plain ASCII text. */
+             signature, signatureSub,
+             logoJpeg (base64 JPEG string, no data: prefix — optional) }
+     When logoJpeg is a valid JPEG it is embedded as a DCTDecode image
+     XObject and drawn at the top; otherwise the drawn "WL" monogram is
+     used. All text is plain ASCII. */
   function buildCertificatePDF(opts) {
     var o = opts || {};
+
+    /* Decode + validate the logo: must be a real JPEG (SOI marker FFD8). */
+    var logoBytes = null;
+    if (o.logoJpeg) {
+      try {
+        var decoded = b64ToBytes(o.logoJpeg);
+        if (decoded.length > 1000 && decoded[0] === 0xff && decoded[1] === 0xd8) {
+          logoBytes = decoded;
+        }
+      } catch (e) { logoBytes = null; }
+    }
+
     var content = buildContent({
       eyebrow: o.eyebrow || "WEBDEV LAB",
       title: o.title || "Certificate",
@@ -324,18 +365,32 @@
       idLabel: o.idLabel || (/Registration/i.test(o.title || "") ? "Registration ID" : "Certificate ID"),
       meta: o.meta || "",
       signature: o.signature || "Muhammad Usman",
-      signatureSub: o.signatureSub || "Founder & CEO, Rakhzaar Tech"
+      signatureSub: o.signatureSub || "Founder & CEO, Rakhzaar Tech",
+      hasLogo: !!logoBytes
     });
 
+    var pageRes = "<< /Font << /F1 4 0 R /F2 5 0 R /F3 6 0 R >>" +
+      (logoBytes ? " /XObject << /Im1 8 0 R >>" : "") + " >>";
     var objs = [
       "<< /Type /Catalog /Pages 2 0 R >>",
       "<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
-      "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 4 0 R /F2 5 0 R /F3 6 0 R >> >> /Contents 7 0 R >>",
+      "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources " + pageRes + " /Contents 7 0 R >>",
       "<< /Type /Font /Subtype /Type1 /BaseFont /Times-Bold /Encoding /WinAnsiEncoding >>",
       "<< /Type /Font /Subtype /Type1 /BaseFont /Times-Roman /Encoding /WinAnsiEncoding >>",
       "<< /Type /Font /Subtype /Type1 /BaseFont /Times-Italic /Encoding /WinAnsiEncoding >>",
       "<< /Length " + content.length + " >>\nstream\n" + content + "\nendstream"
     ];
+
+    /* Object 8 (only when a logo is embedded): the JPEG image XObject.
+       Raw bytes go in as a binary string — every char is 0-255, so string
+       length still equals byte length and the xref offsets stay exact. */
+    if (logoBytes) {
+      var bin = "";
+      for (var bi = 0; bi < logoBytes.length; bi++) bin += String.fromCharCode(logoBytes[bi]);
+      objs.push("<< /Type /XObject /Subtype /Image /Width 480 /Height 480 " +
+        "/ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode " +
+        "/Length " + logoBytes.length + " >>\nstream\n" + bin + "\nendstream");
+    }
 
     var out = "%PDF-1.4\n";
     var offsets = [];

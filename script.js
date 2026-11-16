@@ -825,12 +825,28 @@ const WEBDEV_CONFIG = {
           date: formatDate(pdfDate),
           certId: "WDL-" + (cacc ? cacc.code : ""),
           signature: "Muhammad Usman",
-          signatureSub: "Founder & CEO, Rakhzaar Tech"
+          signatureSub: "Founder & CEO, Rakhzaar Tech",
+          logoJpeg: (typeof WEBDEV_LAB_LOGO_JPEG !== "undefined" ? WEBDEV_LAB_LOGO_JPEG : null)
         });
         downloadCertificatePDF(bytes, certFileName(cacc ? cacc.name : "Student", "Completion"));
       });
     }
   }
+
+  /* ---------- certificate logo: real image when available ---------- */
+  /* On both certificate pages the <img id="certLogo"> shows the real logo
+     from logo.js. If the logo did not load, the img stays hidden and the
+     drawn "WL" monogram behind it stays visible — never a broken image. */
+  (function setCertLogo() {
+    var img = document.getElementById("certLogo");
+    if (!img) return;
+    if (typeof WEBDEV_LAB_LOGO_JPEG === "string" && WEBDEV_LAB_LOGO_JPEG.length > 1000) {
+      img.src = "data:image/jpeg;base64," + WEBDEV_LAB_LOGO_JPEG;
+      img.classList.remove("hidden");
+      var fb = img.parentNode ? img.parentNode.querySelector(".cert-logo-fallback") : null;
+      if (fb) fb.classList.add("hidden");
+    }
+  })();
 
   /* ---------- registration certificate page ---------- */
   var regLocked = document.getElementById("regLocked");
@@ -873,7 +889,8 @@ const WEBDEV_CONFIG = {
             certId: "WDL-REG-" + racc.code,
             idLabel: "Registration ID",
             signature: "Muhammad Usman",
-            signatureSub: "Founder & CEO, Rakhzaar Tech"
+            signatureSub: "Founder & CEO, Rakhzaar Tech",
+            logoJpeg: (typeof WEBDEV_LAB_LOGO_JPEG !== "undefined" ? WEBDEV_LAB_LOGO_JPEG : null)
           });
           downloadCertificatePDF(bytes, certFileName(racc.name, "Registration"));
         });
