@@ -20,6 +20,7 @@
       <a href="dashboard.html">Dashboard</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
+      <a href="index.html#demo">Free Demo</a>
       <a href="enroll.html?plan=earlybird" class="cta">Enroll — Rs 999</a>
     </nav>
     <button class="icon-btn" id="themeToggle" aria-label="Toggle dark or light mode">&#12719;</button>
@@ -257,6 +258,51 @@ greet();  // runs it again</code></pre>
     </div>
   </section>
 
+  <!-- MORE FROM WEBDEV LAB -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <h2>More from WebDev Lab</h2>
+        <p>Free tools and extras for every student.</p>
+      </div>
+      <div class="grid grid-3">
+        <div class="card"><h3>Verify a certificate</h3><p>Check any WebDev Lab certificate ID to see if it is real.</p><a class="btn btn-outline btn-small" href="verify.html">Verify &rarr;</a></div>
+        <div class="card"><h3>Leaderboard</h3><p>See how Batch 1 students are doing — lessons and quiz scores.</p><a class="btn btn-outline btn-small" href="leaderboard.html">View leaderboard &rarr;</a></div>
+        <div class="card"><h3>Cheat Sheets</h3><p>HTML, CSS and JavaScript quick references — free PDF downloads.</p><a class="btn btn-outline btn-small" href="cheatsheets.html">Get cheat sheets &rarr;</a></div>
+        <div class="card"><h3>Final Project</h3><p>Build a complete business landing page and submit it for review.</p><a class="btn btn-outline btn-small" href="final-project.html">See the project &rarr;</a></div>
+        <div class="card"><h3>Free Demo Class</h3><p>Try one free demo class before you enroll — pick a day and time.</p><a class="btn btn-outline btn-small" href="#demo">Book a demo &rarr;</a></div>
+        <div class="card"><h3>Live Code Editor</h3><p>Write HTML, CSS and JavaScript and see the result instantly.</p><a class="btn btn-outline btn-small" href="editor.html">Open editor &rarr;</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FREE DEMO -->
+  <section class="section" id="demo">
+    <div class="container">
+      <div class="section-head">
+        <h2>Book a free demo class</h2>
+        <p>Not sure yet? Try one free demo class first — pick a day and a time that suits you.</p>
+      </div>
+      <div class="card form-card" id="demoSection">
+        <label for="demoName">Your name</label>
+        <input type="text" id="demoName" placeholder="e.g. Ali Raza" autocomplete="name">
+        <label for="demoPhone">WhatsApp number</label>
+        <input type="tel" id="demoPhone" placeholder="e.g. 03001234567" autocomplete="tel">
+        <label for="demoDate">Preferred date</label>
+        <input type="date" id="demoDate">
+        <p style="margin: 12px 0 5px; font-weight: 600;">Time preference</p>
+        <div class="demo-chips">
+          <button type="button" class="demo-chip" data-time="Morning">Morning</button>
+          <button type="button" class="demo-chip" data-time="Afternoon">Afternoon</button>
+          <button type="button" class="demo-chip" data-time="Evening">Evening</button>
+        </div>
+        <p class="form-msg" id="demoMsg"></p>
+        <a class="btn" id="demoWaBtn" href="#demo">Book on WhatsApp</a>
+        <p class="note" style="margin-top: 12px;">Usman will confirm the exact time on WhatsApp.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- FAQ -->
   <section class="section section-alt" id="faq">
     <div class="container">
@@ -335,6 +381,10 @@ greet();  // runs it again</code></pre>
           <li><a href="editor.html">Editor</a></li>
           <li><a href="enroll.html">Enroll</a></li>
           <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="verify.html">Verify Certificate</a></li>
+          <li><a href="leaderboard.html">Leaderboard</a></li>
+          <li><a href="cheatsheets.html">Cheat Sheets</a></li>
+          <li><a href="final-project.html">Final Project</a></li>
         </ul>
       </div>
       <div class="footer-col">

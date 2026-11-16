@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WebDev Lab — Cheat sheets for HTML, CSS and JavaScript: everything from the lessons, on one page each, free to download as PDF.">
+<title>Cheat Sheets — WebDev Lab</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html"><img class="site-logo-img" alt="WebDev Lab logo">WebDev <span>Lab</span></a>
+    <button class="icon-btn menu-btn" id="menuToggle" aria-label="Open menu">&#9776;</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="editor.html">Editor</a>
+      <a href="enroll.html">Enroll</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="index.html#demo">Free Demo</a>
+      <a href="enroll.html?plan=earlybird" class="cta">Enroll — Rs 999</a>
+    </nav>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle dark or light mode">&#12719;</button>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Cheat Sheets</h2>
+        <p>Quick references for HTML, CSS and JavaScript — everything from the lessons, on one page each.</p>
+      </div>
+
+      <p class="note" style="max-width: 640px; margin: 0 auto 24px; text-align: center;">Free for everyone — no enrollment needed. Download any sheet as a PDF to keep or print.</p>
+
+      <div class="grid grid-3" id="cheatSheetsList"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand-col">
+        <p class="footer-brand"><img class="site-logo-img footer-logo-img" alt="WebDev Lab logo">WebDev Lab</p>
+        <p class="footer-tagline">Learn HTML, CSS &amp; JavaScript by building real things</p>
+      </div>
+      <div class="footer-col">
+        <h4>Course</h4>
+        <ul>
+          <li><a href="lessons.html">Lessons</a></li>
+          <li><a href="editor.html">Editor</a></li>
+          <li><a href="enroll.html">Enroll</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="verify.html">Verify Certificate</a></li>
+          <li><a href="leaderboard.html">Leaderboard</a></li>
+          <li><a href="cheatsheets.html">Cheat Sheets</a></li>
+          <li><a href="final-project.html">Final Project</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://usmankalera-dev.github.io/portfolio/" target="_blank" rel="noopener">Portfolio</a></li>
+          <li><a href="https://github.com/Usmankalera-dev" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://wa.me/923187579301">WhatsApp 03187579301</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 WebDev Lab &middot; Batch 1 — 1 December 2026</p>
+      <p>By Muhammad Usman (Usman Kalera) — Rakhzaar Tech</p>
+    </div>
+  </div>
+</footer>
+
+<script src="logo.js"></script>
+<script src="cheatsheet-pdf.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

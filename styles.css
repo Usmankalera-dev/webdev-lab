@@ -1163,3 +1163,81 @@ a { transition: color 0.15s ease; }
   }
   .btn:hover, .grid .card:hover, .lesson-row:hover, .plan-card:hover { transform: none; }
 }
+
+/* ---------- notes + bookmarks ---------- */
+.notes-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-top: 24px;
+}
+.notes-box h2 { margin-top: 0; }
+.notes-box textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-soft);
+  color: var(--text);
+  font: inherit;
+  resize: vertical;
+}
+.notes-box textarea:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
+.bookmark-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* ---------- leaderboard ---------- */
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.leaderboard-table th { background: var(--card-2); font-weight: 800; }
+.leaderboard-table tr:last-child td { border-bottom: none; }
+
+/* ---------- share my progress ---------- */
+.share-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+
+/* ---------- free demo booking ---------- */
+.demo-chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 4px; }
+.demo-chip {
+  padding: 10px 18px;
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.demo-chip.selected { border-color: var(--accent); background: var(--card-2); color: var(--accent); }
+
+/* ---------- cheat sheets ---------- */
+.cheat-card h4 { margin: 18px 0 8px; }
+.cheat-list { list-style: none; padding: 0; margin: 0 0 16px; }
+.cheat-list li { padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+.cheat-list li:last-child { border-bottom: none; }
+.cheat-list code {
+  background: var(--card-2);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.9em;
+}

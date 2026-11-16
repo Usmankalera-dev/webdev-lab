@@ -24,6 +24,8 @@ const WEBDEV_CONFIG = {
   var REGISTERED_KEY = "webdevlab-registered-date";
   var COMPLETED_KEY = "webdevlab-completed-date";
   var QUIZ_KEY = "webdevlab-quiz-scores";
+  var NOTES_KEY = "webdevlab-notes";
+  var BOOKMARKS_KEY = "webdevlab-bookmarks";
   var TOTAL_LESSONS = 23;
 
   /* ---------- access codes: WEB-1001 to WEB-1020 (Batch 1, 20 seats) ---------- */
@@ -306,6 +308,7 @@ const WEBDEV_CONFIG = {
     "proj-3": { html: "<header class=\"navbar\">\n  <a class=\"logo\" href=\"#\">My Bakery</a>\n  <nav>\n    <a href=\"#\">Home</a>\n    <a href=\"#\">Menu</a>\n    <a href=\"#\">About</a>\n    <a href=\"#\">Contact</a>\n  </nav>\n</header>\n<p style=\"padding: 16px;\">Scroll down — the navbar stays at the top.</p>", css: ".navbar {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 12px 20px;\n  background: #111827;\n  position: sticky;\n  top: 0;\n  z-index: 50;\n}\n.navbar nav { display: flex; gap: 20px; }\n.navbar a { color: #f9fafb; text-decoration: none; }\n.navbar .logo { font-size: 1.3rem; font-weight: 800; color: #f59e0b; }\n.navbar nav a { padding: 8px 10px; border-radius: 8px; }\n.navbar nav a:hover { background: #374151; }\n@media (max-width: 600px) {\n  .navbar { flex-wrap: wrap; gap: 8px; }\n  .navbar nav { gap: 8px; }\n}", js: "" },
     "proj-4": { html: "<div class=\"gallery\">\n  <figure><div class=\"photo\" style=\"background: #f59e0b;\">Hunza</div><figcaption>Hunza valley in autumn</figcaption></figure>\n  <figure><div class=\"photo\" style=\"background: #3b82f6;\">Sea</div><figcaption>The sea at Clifton beach</figcaption></figure>\n  <figure><div class=\"photo\" style=\"background: #10b981;\">Hills</div><figcaption>Green hills after rain</figcaption></figure>\n  <figure><div class=\"photo\" style=\"background: #ef4444;\">Desert</div><figcaption>Desert sunset</figcaption></figure>\n</div>", css: ".gallery {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));\n  gap: 16px;\n}\n.gallery figure { margin: 0; transition: transform 0.2s ease; }\n.gallery figure:hover { transform: translateY(-4px); }\n.photo {\n  height: 160px;\n  border-radius: 12px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  font-weight: bold;\n  font-size: 1.2rem;\n}\n.gallery figcaption { text-align: center; margin-top: 8px; color: #4b5563; }", js: "" },
     "proj-5": { html: "<div class=\"todo-app\">\n  <h2>My Tasks</h2>\n  <input id=\"taskInput\" placeholder=\"New task...\">\n  <button id=\"addBtn\">Add</button>\n  <p id=\"counter\">0 tasks left</p>\n  <ul id=\"taskList\"></ul>\n  <button id=\"clearBtn\">Clear completed</button>\n</div>", css: ".todo-app { max-width: 480px; margin: 0 auto; background: #ffffff; padding: 24px; border-radius: 16px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); }\n#taskList { list-style: none; padding: 0; }\n#taskList li { padding: 10px; border-bottom: 1px solid #e5e7eb; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }\n#taskList li.done { text-decoration: line-through; color: #9ca3af; }", js: "let tasks = [];\nlet input = document.getElementById(\"taskInput\");\nlet list = document.getElementById(\"taskList\");\nlet counter = document.getElementById(\"counter\");\nfunction saveAndRender() {\n  localStorage.setItem(\"todo-tasks\", JSON.stringify(tasks));\n  render();\n}\nfunction render() {\n  list.innerHTML = \"\";\n  let left = 0;\n  tasks.forEach(function (task, index) {\n    if (!task.done) left++;\n    let li = document.createElement(\"li\");\n    li.textContent = task.text;\n    if (task.done) li.classList.add(\"done\");\n    li.addEventListener(\"click\", function () {\n      task.done = !task.done;\n      saveAndRender();\n    });\n    let del = document.createElement(\"button\");\n    del.textContent = \"Delete\";\n    del.addEventListener(\"click\", function (e) {\n      e.stopPropagation();\n      tasks.splice(index, 1);\n      saveAndRender();\n    });\n    li.appendChild(del);\n    list.appendChild(li);\n  });\n  counter.textContent = left + \" task\" + (left === 1 ? \"\" : \"s\") + \" left\";\n}\ndocument.getElementById(\"addBtn\").addEventListener(\"click\", function () {\n  let text = input.value.trim();\n  if (text === \"\") return;\n  tasks.push({ text: text, done: false });\n  input.value = \"\";\n  saveAndRender();\n});\ndocument.getElementById(\"clearBtn\").addEventListener(\"click\", function () {\n  tasks = tasks.filter(function (task) { return !task.done; });\n  saveAndRender();\n});\nlet saved = localStorage.getItem(\"todo-tasks\");\nif (saved) tasks = JSON.parse(saved);\nrender();" },
+    "final": { html: "<header class=\"navbar\">\n  <a class=\"logo\" href=\"#\">My Bakery</a>\n  <nav>\n    <a href=\"#\">Home</a>\n    <a href=\"#\">Menu</a>\n    <a href=\"#\">Contact</a>\n  </nav>\n  <button id=\"themeBtn\">Dark mode</button>\n</header>\n<main>\n  <section class=\"hero\">\n    <h1>Fresh bread, every morning</h1>\n    <p>Warm bread, cakes and biscuits — baked at 5am.</p>\n    <a class=\"btn\" href=\"#contact\">Order now</a>\n  </section>\n  <section class=\"services\">\n    <h2>What we bake</h2>\n    <div class=\"cards\">\n      <div class=\"card\"><h3>Bread</h3><p>Fresh white and wholemeal loaves.</p></div>\n      <div class=\"card\"><h3>Cakes</h3><p>Birthday and wedding cakes to order.</p></div>\n      <div class=\"card\"><h3>Biscuits</h3><p>Crunchy biscuits in six flavours.</p></div>\n    </div>\n  </section>\n  <section id=\"contact\">\n    <h2>Contact us</h2>\n    <form id=\"contactForm\">\n      <label for=\"cName\">Your name</label>\n      <input type=\"text\" id=\"cName\" required>\n      <label for=\"cEmail\">Email</label>\n      <input type=\"email\" id=\"cEmail\" required>\n      <label for=\"cMsg\">Message</label>\n      <textarea id=\"cMsg\" rows=\"4\" required></textarea>\n      <button type=\"submit\">Send message</button>\n      <p id=\"formMsg\"></p>\n    </form>\n  </section>\n</main>", css: "body { font-family: sans-serif; margin: 0; }\n.navbar { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: #111827; }\n.navbar a { color: white; text-decoration: none; }\n.logo { color: #f59e0b !important; font-weight: bold; }\n.hero { text-align: center; padding: 48px 16px; background: #fef3c7; }\n.btn { display: inline-block; padding: 12px 24px; background: #f59e0b; color: #111827; text-decoration: none; border-radius: 8px; font-weight: bold; }\n.services { padding: 24px 16px; }\n.cards { display: flex; gap: 16px; }\n.card { flex: 1; padding: 16px; border: 1px solid #d1d5db; border-radius: 12px; }\nform { max-width: 480px; margin: 0 auto; }\nlabel { display: block; font-weight: bold; margin: 12px 0 4px; }\ninput, textarea { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; }\nbutton[type=\"submit\"] { width: 100%; margin-top: 16px; padding: 12px; background: #f59e0b; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }\nbody.dark { background: #111827; color: #f9fafb; }\nbody.dark .hero { background: #1f2937; }\nbody.dark .card { border-color: #374151; }\n@media (max-width: 700px) { .cards { flex-direction: column; } }", js: "document.getElementById(\"themeBtn\").addEventListener(\"click\", function () {\n  document.body.classList.toggle(\"dark\");\n});\nlet form = document.getElementById(\"contactForm\");\nlet msg = document.getElementById(\"formMsg\");\nform.addEventListener(\"submit\", function (e) {\n  e.preventDefault();\n  let text = document.getElementById(\"cMsg\").value.trim();\n  if (text.length < 10) {\n    msg.textContent = \"Please write a message of at least 10 characters.\";\n    msg.style.color = \"red\";\n    return;\n  }\n  msg.textContent = \"Thank you! Your message has been sent.\";\n  msg.style.color = \"green\";\n  form.reset();\n});" },
   };
 
   var PLAN_LABELS = {
@@ -610,6 +613,17 @@ const WEBDEV_CONFIG = {
       badge.className = "quiz-badge";
       badge.textContent = "Quiz " + scores[lid] + "/" + QUIZZES[lid].length;
       row.appendChild(badge);
+    });
+
+    /* Bookmarked rows show a "★ Bookmarked" badge. */
+    var marks = getBookmarks();
+    document.querySelectorAll(".lesson-row[data-lesson]").forEach(function (row) {
+      var lid = row.getAttribute("data-lesson");
+      if (marks.indexOf(lid) === -1) return;
+      var bm = document.createElement("span");
+      bm.className = "bookmark-badge";
+      bm.textContent = "★ Bookmarked";
+      row.appendChild(bm);
     });
   })();
 
@@ -920,6 +934,42 @@ const WEBDEV_CONFIG = {
         list.appendChild(row);
       });
 
+      /* Bookmarked lessons section. */
+      var bmList = document.getElementById("bookmarkList");
+      if (bmList) {
+        var bmIds = getBookmarks();
+        bmList.innerHTML = "";
+        if (!bmIds.length) {
+          var bmEmpty = document.createElement("p");
+          bmEmpty.className = "note";
+          bmEmpty.textContent = "No bookmarks yet — tap ☆ on any lesson to save it here.";
+          bmList.appendChild(bmEmpty);
+        } else {
+          LESSONS.forEach(function (l) {
+            if (bmIds.indexOf(l.id) === -1) return;
+            var bmRow = document.createElement("div");
+            bmRow.className = "lesson-row";
+            var bmNum = document.createElement("span");
+            bmNum.className = "num";
+            bmNum.textContent = l.num;
+            var bmName = document.createElement("span");
+            bmName.className = "lname";
+            bmName.textContent = l.title;
+            bmRow.appendChild(bmNum);
+            bmRow.appendChild(bmName);
+            var bmLink = document.createElement("a");
+            bmLink.className = "open-link";
+            bmLink.href = l.href;
+            bmLink.textContent = "Open →";
+            bmRow.appendChild(bmLink);
+            bmList.appendChild(bmRow);
+          });
+        }
+      }
+
+      /* Share my progress card: real numbers only, from localStorage. */
+      renderShareCard(document.getElementById("shareCard"), doneCount, quizTotal, quizMax, dacc);
+
       var certBox = document.getElementById("certBox");
       var regLine = "<div style=\"margin-top: 10px;\">Registration Certificate — <a href=\"registration-certificate.html\">Download (PDF)</a></div>";
       if (doneCount >= TOTAL_LESSONS) {
@@ -965,6 +1015,8 @@ const WEBDEV_CONFIG = {
     } else if (certCompletedAll || preview) {
       document.getElementById("certName").textContent = cacc.name;
       document.getElementById("certId").textContent = "WDL-" + cacc.code;
+      var certVerifyLink = document.getElementById("verifyCertLink");
+      if (certVerifyLink) certVerifyLink.href = "verify.html?id=" + encodeURIComponent("WDL-" + cacc.code);
       document.getElementById("certBatch").textContent = WEBDEV_CONFIG.batch;
       var completedDate = null;
       try { completedDate = localStorage.getItem(COMPLETED_KEY); } catch (e) {}
@@ -1092,6 +1144,8 @@ const WEBDEV_CONFIG = {
       var regDate = getRegisteredDate(racc);
       document.getElementById("regName").textContent = racc.name;
       document.getElementById("regId").textContent = "WDL-REG-" + racc.code;
+      var regVerifyLink = document.getElementById("verifyCertLink");
+      if (regVerifyLink) regVerifyLink.href = "verify.html?id=" + encodeURIComponent("WDL-REG-" + racc.code);
       document.getElementById("regBatch").textContent = WEBDEV_CONFIG.batch;
       document.getElementById("regDate").textContent = formatDate(regDate);
       if (regPreview) document.getElementById("regPreviewNote").classList.remove("hidden");
@@ -1494,4 +1548,406 @@ const WEBDEV_CONFIG = {
     loadStarter();
     runPreview();
   }
+
+  /* ---------- notes + bookmarks (lesson pages) ---------- */
+  function getNotes() {
+    try {
+      var n = JSON.parse(localStorage.getItem(NOTES_KEY) || "{}");
+      return n && typeof n === "object" ? n : {};
+    } catch (e) { return {}; }
+  }
+  function getBookmarks() {
+    try {
+      var b = JSON.parse(localStorage.getItem(BOOKMARKS_KEY) || "[]");
+      return Array.isArray(b) ? b : [];
+    } catch (e) { return []; }
+  }
+  function saveBookmarks(list) {
+    try { localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(list)); } catch (e) {}
+  }
+  (function lessonNotes() {
+    var box = document.getElementById("notesBox");
+    if (!box) return;
+    var qb = document.getElementById("quizBox");
+    var lid = qb ? qb.getAttribute("data-lesson") : null;
+    if (!lid) return;
+    var ta = document.getElementById("lessonNotes");
+    var savedEl = document.getElementById("notesSaved");
+    if (ta) {
+      ta.value = getNotes()[lid] || "";
+      var saveTimer = null;
+      ta.addEventListener("input", function () {
+        var notes = getNotes();
+        notes[lid] = ta.value;
+        try { localStorage.setItem(NOTES_KEY, JSON.stringify(notes)); } catch (e) {}
+        if (savedEl) savedEl.textContent = "Saved ✓";
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(function () {
+          if (savedEl) savedEl.textContent = "";
+        }, 2000);
+      });
+    }
+    var bmBtn = document.getElementById("bookmarkBtn");
+    if (bmBtn) {
+      function refreshBm() {
+        var on = getBookmarks().indexOf(lid) !== -1;
+        bmBtn.textContent = on ? "★ Bookmarked" : "☆ Bookmark this lesson";
+      }
+      bmBtn.addEventListener("click", function () {
+        var list = getBookmarks();
+        var pos = list.indexOf(lid);
+        if (pos === -1) list.push(lid); else list.splice(pos, 1);
+        saveBookmarks(list);
+        refreshBm();
+      });
+      refreshBm();
+    }
+  })();
+
+  /* ---------- share my progress (dashboard + leaderboard) ---------- */
+  function shareProgressText(doneCount, quizTotal, quizMax) {
+    var pct = Math.round((doneCount / TOTAL_LESSONS) * 100);
+    return "I've completed " + doneCount + "/23 lessons in WebDev Lab (Batch 1) — " +
+      "Quiz best " + quizTotal + "/" + quizMax + " (" + pct + "%)! " +
+      "Learn HTML, CSS & JavaScript: https://usmankalera-dev.github.io/webdev-lab/";
+  }
+  function renderShareCard(container, doneCount, quizTotal, quizMax, acc) {
+    if (!container) return;
+    container.innerHTML = "";
+    var h = document.createElement("h3");
+    h.style.marginTop = "0";
+    h.textContent = "Share my progress";
+    container.appendChild(h);
+    var p = document.createElement("p");
+    p.textContent = "Lessons " + doneCount + " / 23 · Quiz best " + quizTotal + " / " + quizMax +
+      " · " + Math.round((doneCount / TOTAL_LESSONS) * 100) + "% complete";
+    container.appendChild(p);
+    var row = document.createElement("div");
+    row.className = "share-actions";
+    var wa = document.createElement("a");
+    wa.className = "btn btn-small";
+    if (container.getAttribute("data-share") === "leaderboard") {
+      var name = acc && acc.name ? acc.name : "Student";
+      wa.href = "https://wa.me/" + WEBDEV_CONFIG.whatsapp + "?text=" + encodeURIComponent(
+        "Hi Usman, here are my WebDev Lab scores for the leaderboard. My name is " + name +
+        ". Lessons " + doneCount + "/23, quiz best " + quizTotal + "/" + quizMax +
+        ". Please add me to the leaderboard.");
+      wa.textContent = "Send scores to Usman";
+    } else {
+      wa.href = "https://wa.me/?text=" + encodeURIComponent(shareProgressText(doneCount, quizTotal, quizMax));
+      wa.target = "_blank";
+      wa.rel = "noopener";
+      wa.textContent = "Share on WhatsApp";
+    }
+    row.appendChild(wa);
+    var copyBtn = document.createElement("button");
+    copyBtn.className = "btn btn-outline btn-small";
+    copyBtn.type = "button";
+    copyBtn.textContent = "Copy for Instagram";
+    copyBtn.addEventListener("click", function () {
+      var text = shareProgressText(doneCount, quizTotal, quizMax);
+      function done() {
+        copyBtn.textContent = "Copied ✓";
+        setTimeout(function () { copyBtn.textContent = "Copy for Instagram"; }, 2000);
+      }
+      function fail() { copyBtn.textContent = "Copy failed — select the text and copy it by hand."; }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fail);
+      } else { fail(); }
+    });
+    row.appendChild(copyBtn);
+    container.appendChild(row);
+  }
+
+  /* ---------- certificate verify page ---------- */
+  (function verifyPage() {
+    var form = document.getElementById("verifyForm");
+    if (!form) return;
+    var input = document.getElementById("verifyInput");
+    var result = document.getElementById("verifyResult");
+    function check(raw) {
+      var clean = String(raw || "").toUpperCase().replace(/[\s\-]/g, "");
+      var type = null, code = null;
+      if (clean.indexOf("WDLREG") === 0) { type = "Registration"; code = clean.slice(6); }
+      else if (clean.indexOf("WDL") === 0) { type = "Completion"; code = clean.slice(3); }
+      else return { ok: false };
+      var found = null;
+      for (var i = 0; i < ACCESS_CODES.length; i++) {
+        if (normalizeCode(ACCESS_CODES[i]) === code) { found = ACCESS_CODES[i]; break; }
+      }
+      if (!found) return { ok: false };
+      return { ok: true, type: type, code: found };
+    }
+    function show(raw) {
+      var r = check(raw);
+      result.classList.remove("hidden");
+      if (r.ok) {
+        result.className = "alert alert-ok";
+        result.innerHTML = "<strong>Valid certificate.</strong> This ID matches a WebDev Lab Batch 1 " +
+          r.type + " certificate — code " + r.code + ".";
+      } else {
+        result.className = "alert alert-err";
+        result.textContent = "This is not a valid WebDev Lab certificate ID.";
+      }
+    }
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      show(input.value);
+    });
+    /* prefill from ?id= (certificate pages link here with their ID) */
+    try {
+      var id = new URLSearchParams(window.location.search).get("id");
+      if (id) { input.value = id; show(id); }
+    } catch (e) {}
+  })();
+
+  /* ---------- leaderboard page (manual list — no server) ---------- */
+  (function leaderboardPage() {
+    var list = document.getElementById("leaderboardList");
+    if (!list) return;
+    var done = getProgress();
+    var scores = getQuizScores();
+    var qt = 0, qm = 0;
+    Object.keys(QUIZZES).forEach(function (id) {
+      qm += QUIZZES[id].length;
+      if (scores[id] !== undefined) qt += scores[id];
+    });
+    renderShareCard(document.getElementById("shareCard"), done.length, qt, qm, getAccess());
+    function emptyState() {
+      list.innerHTML = "";
+      var p = document.createElement("p");
+      p.className = "note";
+      p.textContent = "No scores yet — Batch 1 starts 1 December 2026. Share your progress with Usman on WhatsApp and your name will appear here.";
+      list.appendChild(p);
+    }
+    fetch("leaderboard.json").then(function (resp) {
+      if (!resp.ok) throw new Error("no file");
+      return resp.json();
+    }).then(function (data) {
+      var entries = (data && Array.isArray(data.entries)) ? data.entries : [];
+      entries = entries.filter(function (e) {
+        return e && typeof e.name === "string" && typeof e.lessonsDone === "number" && typeof e.quizBest === "number";
+      });
+      if (!entries.length) { emptyState(); return; }
+      entries.sort(function (a, b) {
+        if (b.lessonsDone !== a.lessonsDone) return b.lessonsDone - a.lessonsDone;
+        return b.quizBest - a.quizBest;
+      });
+      var table = document.createElement("table");
+      table.className = "leaderboard-table";
+      var head = document.createElement("tr");
+      ["Rank", "Name", "Lessons", "Quiz best"].forEach(function (t) {
+        var th = document.createElement("th");
+        th.textContent = t;
+        head.appendChild(th);
+      });
+      table.appendChild(head);
+      entries.forEach(function (e, i) {
+        var tr = document.createElement("tr");
+        var rank = document.createElement("td"); rank.textContent = i + 1;
+        var name = document.createElement("td"); name.textContent = e.name;
+        var lessons = document.createElement("td"); lessons.textContent = e.lessonsDone + " / 23";
+        var quiz = document.createElement("td"); quiz.textContent = e.quizBest + " / " + qm;
+        tr.appendChild(rank); tr.appendChild(name); tr.appendChild(lessons); tr.appendChild(quiz);
+        table.appendChild(tr);
+      });
+      list.innerHTML = "";
+      list.appendChild(table);
+    }).catch(function () { emptyState(); });
+  })();
+
+  /* ---------- final project page ---------- */
+  (function finalProjectPage() {
+    var wrap = document.getElementById("finalProject");
+    if (!wrap) return;
+    var acc = getAccess();
+    var done = getProgress();
+    var doneCount = 0;
+    LESSONS.forEach(function (l) { if (done.indexOf(l.id) !== -1) doneCount++; });
+    var lockEl = document.getElementById("finalLock");
+    var bodyEl = document.getElementById("finalBody");
+    if (!acc) {
+      if (lockEl) lockEl.classList.remove("hidden");
+      if (bodyEl) bodyEl.classList.add("hidden");
+      return;
+    }
+    if (lockEl) lockEl.classList.add("hidden");
+    if (bodyEl) bodyEl.classList.remove("hidden");
+    var submitWrap = document.getElementById("finalSubmit");
+    if (submitWrap) {
+      submitWrap.innerHTML = "";
+      if (doneCount >= TOTAL_LESSONS) {
+        var a = document.createElement("a");
+        a.className = "btn";
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.href = "https://wa.me/" + WEBDEV_CONFIG.whatsapp + "?text=" + encodeURIComponent(
+          "Hi Usman, I finished my WebDev Lab Final Project! My name is " + acc.name +
+          " (code " + acc.code + "). I built a complete business landing page with HTML, CSS and JavaScript.");
+        a.textContent = "Submit my project";
+        submitWrap.appendChild(a);
+      } else {
+        var p = document.createElement("p");
+        p.className = "note";
+        p.textContent = "Complete all 23 lessons to submit your Final Project. You have completed " + doneCount + " of 23.";
+        submitWrap.appendChild(p);
+      }
+    }
+    /* student showcase (manual list — no server) */
+    var showList = document.getElementById("showcaseList");
+    if (showList) {
+      fetch("showcase.json").then(function (resp) {
+        if (!resp.ok) throw new Error("no file");
+        return resp.json();
+      }).then(function (data) {
+        var entries = (data && Array.isArray(data.entries)) ? data.entries : [];
+        entries = entries.filter(function (e) {
+          return e && typeof e.name === "string" && typeof e.projectTitle === "string" && typeof e.link === "string";
+        });
+        showList.innerHTML = "";
+        if (!entries.length) {
+          var ep = document.createElement("p");
+          ep.className = "note";
+          ep.textContent = "Student projects will appear here after Batch 1 graduates.";
+          showList.appendChild(ep);
+          return;
+        }
+        var grid = document.createElement("div");
+        grid.className = "grid grid-3";
+        entries.forEach(function (e) {
+          var card = document.createElement("div");
+          card.className = "card";
+          var h = document.createElement("h3");
+          h.textContent = e.projectTitle;
+          var n = document.createElement("p");
+          n.textContent = "by " + e.name;
+          var link = document.createElement("a");
+          link.className = "btn btn-small";
+          link.href = e.link;
+          link.target = "_blank";
+          link.rel = "noopener";
+          link.textContent = "View project →";
+          card.appendChild(h); card.appendChild(n); card.appendChild(link);
+          grid.appendChild(card);
+        });
+        showList.appendChild(grid);
+      }).catch(function () {
+        showList.innerHTML = "";
+        var ep2 = document.createElement("p");
+        ep2.className = "note";
+        ep2.textContent = "Student projects will appear here after Batch 1 graduates.";
+        showList.appendChild(ep2);
+      });
+    }
+  })();
+
+  /* ---------- free demo class booking (home page) ---------- */
+  (function demoBooking() {
+    var section = document.getElementById("demoSection");
+    if (!section) return;
+    var dateInput = document.getElementById("demoDate");
+    var nameInput = document.getElementById("demoName");
+    var phoneInput = document.getElementById("demoPhone");
+    var msg = document.getElementById("demoMsg");
+    var btn = document.getElementById("demoWaBtn");
+    var chosen = null;
+    if (dateInput) {
+      var today = new Date();
+      var max = new Date();
+      max.setDate(max.getDate() + 14);
+      function iso(d) {
+        var m = d.getMonth() + 1, day = d.getDate();
+        return d.getFullYear() + "-" + (m < 10 ? "0" : "") + m + "-" + (day < 10 ? "0" : "") + day;
+      }
+      dateInput.min = iso(today);
+      dateInput.max = iso(max);
+    }
+    var chips = section.querySelectorAll(".demo-chip");
+    chips.forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        chips.forEach(function (c) { c.classList.remove("selected"); });
+        chip.classList.add("selected");
+        chosen = chip.getAttribute("data-time");
+        refreshBtn();
+      });
+    });
+    function valid() {
+      return dateInput && dateInput.value && chosen &&
+        nameInput && nameInput.value.trim() &&
+        phoneInput && phoneInput.value.replace(/[\s\-()]/g, "").length >= 10 &&
+        /^[0-9+]+$/.test(phoneInput.value.replace(/[\s\-()]/g, ""));
+    }
+    function refreshBtn() {
+      if (!btn) return;
+      if (valid()) {
+        var text = "Hello! I want to book a free demo class at WebDev Lab. My name is " +
+          nameInput.value.trim() + ". WhatsApp: " + phoneInput.value.trim() +
+          ". Preferred date: " + formatDate(dateInput.value) + " (" + chosen + ").";
+        btn.href = "https://wa.me/" + WEBDEV_CONFIG.whatsapp + "?text=" + encodeURIComponent(text);
+        if (msg) msg.textContent = "";
+      } else {
+        btn.href = "#demo";
+      }
+    }
+    [dateInput, nameInput, phoneInput].forEach(function (el) {
+      if (el) el.addEventListener("input", refreshBtn);
+    });
+    if (btn) btn.addEventListener("click", function (e) {
+      if (!valid()) {
+        e.preventDefault();
+        if (msg) {
+          msg.textContent = "Please fill in your name, WhatsApp number, a date and a time preference first.";
+          msg.className = "form-msg err";
+        }
+      }
+    });
+  })();
+
+  /* ---------- cheat sheets page (data lives in cheatsheet-pdf.js) ---------- */
+  (function cheatSheetsPage() {
+    var list = document.getElementById("cheatSheetsList");
+    if (!list) return;
+    if (typeof CHEATSHEETS === "undefined" || !CHEATSHEETS.length) {
+      list.innerHTML = "<p class=\"note\">Cheat sheets are on their way.</p>";
+      return;
+    }
+    CHEATSHEETS.forEach(function (sheet) {
+      var card = document.createElement("div");
+      card.className = "card cheat-card";
+      var h = document.createElement("h3");
+      h.textContent = sheet.title;
+      card.appendChild(h);
+      var desc = document.createElement("p");
+      desc.textContent = sheet.description;
+      card.appendChild(desc);
+      sheet.sections.forEach(function (sec) {
+        var sh = document.createElement("h4");
+        sh.textContent = sec.heading;
+        card.appendChild(sh);
+        var ul = document.createElement("ul");
+        ul.className = "cheat-list";
+        sec.rows.forEach(function (row) {
+          var li = document.createElement("li");
+          var code = document.createElement("code");
+          code.className = "inline";
+          code.textContent = row.code;
+          li.appendChild(code);
+          li.appendChild(document.createTextNode(" — " + row.desc));
+          ul.appendChild(li);
+        });
+        card.appendChild(ul);
+      });
+      var btn = document.createElement("button");
+      btn.className = "btn btn-small";
+      btn.type = "button";
+      btn.textContent = "Download PDF";
+      btn.addEventListener("click", function () {
+        if (typeof downloadCheatSheetPDF === "function") {
+          downloadCheatSheetPDF(sheet.id);
+        }
+      });
+      card.appendChild(btn);
+      list.appendChild(card);
+    });
+  })();
 })();

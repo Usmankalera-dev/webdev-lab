@@ -326,6 +326,8 @@
     /* Footer. */
     s += centeredLine("WebDev Lab - Learn HTML, CSS & JavaScript by building real things",
       "F2", 9, 56, LIGHT_GREY);
+    s += centeredLine("Verify at: usmankalera-dev.github.io/webdev-lab/verify.html",
+      "F2", 8.5, 42, LIGHT_GREY);
 
     return s;
   }
