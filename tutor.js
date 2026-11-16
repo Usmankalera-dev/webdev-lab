@@ -297,6 +297,38 @@
       .replace(/>/g, "&gt;");
   }
 
+  /* Small safe Markdown for AI answers: **bold**, `code`, "- " lists.
+     The text is HTML-escaped FIRST, so no tag can sneak in — these
+     replacements only add <strong>, <code> and <ul>/<li> of our own.
+     Code spans are hidden while bold runs, so ** inside code stays. */
+  function inlineMd(text) {
+    var codes = [];
+    text = text.replace(/`([^`]+)`/g, function (m, c) {
+      codes.push(c);
+      return "\u0001" + (codes.length - 1) + "\u0001";
+    });
+    text = text.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    text = text.replace(/\u0001(\d+)\u0001/g, function (m, i) {
+      return "<code>" + codes[+i] + "</code>";
+    });
+    return text;
+  }
+
+  // Paragraphs become <p>; a block of "- " lines becomes a <ul>.
+  function renderAnswer(text) {
+    return text.split(/\n\s*\n/).map(function (block) {
+      if (/^\s*-\s+/m.test(block)) {
+        var items = block.split("\n")
+          .filter(function (line) { return /^\s*-\s+/.test(line); })
+          .map(function (line) {
+            return "<li>" + inlineMd(line.replace(/^\s*-\s+/, "")) + "</li>";
+          }).join("");
+        return "<ul>" + items + "</ul>";
+      }
+      return "<p>" + block.split("\n").map(inlineMd).join("<br>") + "</p>";
+    }).join("");
+  }
+
   function addMessage(kind, html) {
     var div = document.createElement("div");
     div.className = "tutor-msg tutor-msg-" + kind;
@@ -410,10 +442,7 @@
           addMessage("ai", "<p>Jawab khaali aaya — dobara try karo.</p>");
           return;
         }
-        var html = "<p>" +
-          escapeHtml(answer).replace(/\n\n/g, "</p><p>")
-            .replace(/\n/g, "<br>") + "</p>" +
-          sourcesHtml(hits);
+        var html = renderAnswer(escapeHtml(answer)) + sourcesHtml(hits);
         addMessage("ai", html);
       })
       .catch(function (err) {
