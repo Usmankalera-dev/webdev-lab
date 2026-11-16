@@ -848,6 +848,19 @@ const WEBDEV_CONFIG = {
     }
   })();
 
+  /* ---------- header + footer logos ---------- */
+  /* Every .site-logo-img (header on all pages, footer brand column) shows
+     the real logo from logo.js. If the logo did not load, the imgs stay
+     hidden and the "WebDev Lab" text still shows — never a broken image. */
+  (function setSiteLogos() {
+    if (typeof WEBDEV_LAB_LOGO_JPEG !== "string" || WEBDEV_LAB_LOGO_JPEG.length <= 1000) return;
+    var imgs = document.querySelectorAll(".site-logo-img");
+    for (var i = 0; i < imgs.length; i++) {
+      imgs[i].src = "data:image/jpeg;base64," + WEBDEV_LAB_LOGO_JPEG;
+      imgs[i].classList.add("show");
+    }
+  })();
+
   /* ---------- home page module illustrations ---------- */
   /* Each roadmap card shows its real illustration from illustrations.js.
      If an illustration did not load, its frame stays hidden — never a
