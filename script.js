@@ -1450,6 +1450,14 @@ const WEBDEV_CONFIG = {
   document.querySelectorAll("[data-checklist]").forEach(function (box) {
     var pid = box.getAttribute("data-checklist");
     var saved = getChecklists()[pid] || [];
+    function refreshCount() {
+      var el = box.querySelector(".checklist-count");
+      if (!el) return;
+      var boxes = box.querySelectorAll("input[type=checkbox]");
+      var n = 0;
+      boxes.forEach(function (cb) { if (cb.checked) n++; });
+      el.textContent = n + " of " + boxes.length + " done";
+    }
     box.querySelectorAll("input[type=checkbox]").forEach(function (cb, idx) {
       cb.checked = saved.indexOf(idx) !== -1;
       cb.addEventListener("change", function () {
@@ -1460,8 +1468,10 @@ const WEBDEV_CONFIG = {
         if (!cb.checked && pos !== -1) cur.splice(pos, 1);
         lists[pid] = cur;
         try { localStorage.setItem(CHECK_KEY, JSON.stringify(lists)); } catch (e) {}
+        refreshCount();
       });
     });
+    refreshCount();
   });
 
   /* ---------- Loop 3: code editor ---------- */
@@ -1592,6 +1602,7 @@ const WEBDEV_CONFIG = {
       function refreshBm() {
         var on = getBookmarks().indexOf(lid) !== -1;
         bmBtn.textContent = on ? "★ Bookmarked" : "☆ Bookmark this lesson";
+        bmBtn.classList.toggle("bookmarked", on);
       }
       bmBtn.addEventListener("click", function () {
         var list = getBookmarks();
@@ -1614,10 +1625,18 @@ const WEBDEV_CONFIG = {
   function renderShareCard(container, doneCount, quizTotal, quizMax, acc) {
     if (!container) return;
     container.innerHTML = "";
+    var head = document.createElement("div");
+    head.className = "share-head";
+    var mark = document.createElement("span");
+    mark.className = "share-mark";
+    mark.setAttribute("aria-hidden", "true");
+    mark.textContent = "\u2197";
+    head.appendChild(mark);
     var h = document.createElement("h3");
-    h.style.marginTop = "0";
+    h.style.margin = "0";
     h.textContent = "Share my progress";
-    container.appendChild(h);
+    head.appendChild(h);
+    container.appendChild(head);
     var p = document.createElement("p");
     p.textContent = "Lessons " + doneCount + " / 23 · Quiz best " + quizTotal + " / " + quizMax +
       " · " + Math.round((doneCount / TOTAL_LESSONS) * 100) + "% complete";
@@ -1715,10 +1734,28 @@ const WEBDEV_CONFIG = {
     renderShareCard(document.getElementById("shareCard"), done.length, qt, qm, getAccess());
     function emptyState() {
       list.innerHTML = "";
+      var card = document.createElement("div");
+      card.className = "card empty-state";
+      var podium = document.createElement("div");
+      podium.className = "podium";
+      [[2, "podium-rank-2", false], [1, "podium-rank-1", true], [3, "podium-rank-3", false]].forEach(function (slot) {
+        var s = document.createElement("div");
+        s.className = "podium-slot" + (slot[2] ? " podium-first" : "");
+        var r = document.createElement("span");
+        r.className = "podium-rank " + slot[1];
+        r.textContent = slot[0];
+        var n = document.createElement("span");
+        n.className = "podium-name";
+        n.textContent = "—";
+        s.appendChild(r);
+        s.appendChild(n);
+        podium.appendChild(s);
+      });
+      card.appendChild(podium);
       var p = document.createElement("p");
-      p.className = "note";
       p.textContent = "No scores yet — Batch 1 starts 1 December 2026. Share your progress with Usman on WhatsApp and your name will appear here.";
-      list.appendChild(p);
+      card.appendChild(p);
+      list.appendChild(card);
     }
     fetch("leaderboard.json").then(function (resp) {
       if (!resp.ok) throw new Error("no file");
@@ -1733,26 +1770,40 @@ const WEBDEV_CONFIG = {
         if (b.lessonsDone !== a.lessonsDone) return b.lessonsDone - a.lessonsDone;
         return b.quizBest - a.quizBest;
       });
+      var wrap = document.createElement("div");
+      wrap.className = "leaderboard-wrap";
       var table = document.createElement("table");
       table.className = "leaderboard-table";
       var head = document.createElement("tr");
-      ["Rank", "Name", "Lessons", "Quiz best"].forEach(function (t) {
+      ["Rank", "Name", "Lessons", "Quiz best"].forEach(function (t, hi) {
         var th = document.createElement("th");
+        if (hi === 0) th.className = "rank-cell";
+        if (hi >= 2) th.className = "num-cell";
         th.textContent = t;
         head.appendChild(th);
       });
       table.appendChild(head);
       entries.forEach(function (e, i) {
         var tr = document.createElement("tr");
-        var rank = document.createElement("td"); rank.textContent = i + 1;
+        var rank = document.createElement("td");
+        rank.className = "rank-cell";
+        if (i < 3) {
+          var b = document.createElement("span");
+          b.className = "rank-badge rank-" + (i + 1);
+          b.textContent = i + 1;
+          rank.appendChild(b);
+        } else {
+          rank.textContent = i + 1;
+        }
         var name = document.createElement("td"); name.textContent = e.name;
-        var lessons = document.createElement("td"); lessons.textContent = e.lessonsDone + " / 23";
-        var quiz = document.createElement("td"); quiz.textContent = e.quizBest + " / " + qm;
+        var lessons = document.createElement("td"); lessons.className = "num-cell"; lessons.textContent = e.lessonsDone + " / 23";
+        var quiz = document.createElement("td"); quiz.className = "num-cell"; quiz.textContent = e.quizBest + " / " + qm;
         tr.appendChild(rank); tr.appendChild(name); tr.appendChild(lessons); tr.appendChild(quiz);
         table.appendChild(tr);
       });
       list.innerHTML = "";
-      list.appendChild(table);
+      wrap.appendChild(table);
+      list.appendChild(wrap);
     }).catch(function () { emptyState(); });
   })();
 
@@ -1914,12 +1965,39 @@ const WEBDEV_CONFIG = {
     CHEATSHEETS.forEach(function (sheet) {
       var card = document.createElement("div");
       card.className = "card cheat-card";
+      var illu = { html: (typeof ILLU_HTML !== "undefined" ? ILLU_HTML : null), css: (typeof ILLU_CSS !== "undefined" ? ILLU_CSS : null), js: (typeof ILLU_JS !== "undefined" ? ILLU_JS : null) }[sheet.id];
+      if (typeof illu === "string" && illu.length > 1000) {
+        var frame = document.createElement("div");
+        frame.className = "module-illu-frame";
+        var img = document.createElement("img");
+        img.className = "module-illu";
+        img.src = "data:image/jpeg;base64," + illu;
+        img.alt = sheet.title + " illustration";
+        frame.appendChild(img);
+        card.appendChild(frame);
+      }
       var h = document.createElement("h3");
       h.textContent = sheet.title;
       card.appendChild(h);
       var desc = document.createElement("p");
       desc.textContent = sheet.description;
       card.appendChild(desc);
+      function pdfBtn() {
+        var btn = document.createElement("button");
+        btn.className = "btn btn-small";
+        btn.type = "button";
+        btn.textContent = "Download PDF";
+        btn.addEventListener("click", function () {
+          if (typeof downloadCheatSheetPDF === "function") {
+            downloadCheatSheetPDF(sheet.id);
+          }
+        });
+        return btn;
+      }
+      var topRow = document.createElement("div");
+      topRow.className = "cheat-actions";
+      topRow.appendChild(pdfBtn());
+      card.appendChild(topRow);
       sheet.sections.forEach(function (sec) {
         var sh = document.createElement("h4");
         sh.textContent = sec.heading;
@@ -1932,21 +2010,15 @@ const WEBDEV_CONFIG = {
           code.className = "inline";
           code.textContent = row.code;
           li.appendChild(code);
-          li.appendChild(document.createTextNode(" — " + row.desc));
+          li.appendChild(document.createTextNode(row.desc));
           ul.appendChild(li);
         });
         card.appendChild(ul);
       });
-      var btn = document.createElement("button");
-      btn.className = "btn btn-small";
-      btn.type = "button";
-      btn.textContent = "Download PDF";
-      btn.addEventListener("click", function () {
-        if (typeof downloadCheatSheetPDF === "function") {
-          downloadCheatSheetPDF(sheet.id);
-        }
-      });
-      card.appendChild(btn);
+      var botRow = document.createElement("div");
+      botRow.className = "cheat-actions";
+      botRow.appendChild(pdfBtn());
+      card.appendChild(botRow);
       list.appendChild(card);
     });
   })();

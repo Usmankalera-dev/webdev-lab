@@ -284,21 +284,33 @@ greet();  // runs it again</code></pre>
         <p>Not sure yet? Try one free demo class first — pick a day and a time that suits you.</p>
       </div>
       <div class="card form-card" id="demoSection">
-        <label for="demoName">Your name</label>
-        <input type="text" id="demoName" placeholder="e.g. Ali Raza" autocomplete="name">
-        <label for="demoPhone">WhatsApp number</label>
-        <input type="tel" id="demoPhone" placeholder="e.g. 03001234567" autocomplete="tel">
-        <label for="demoDate">Preferred date</label>
-        <input type="date" id="demoDate">
-        <p style="margin: 12px 0 5px; font-weight: 600;">Time preference</p>
-        <div class="demo-chips">
-          <button type="button" class="demo-chip" data-time="Morning">Morning</button>
-          <button type="button" class="demo-chip" data-time="Afternoon">Afternoon</button>
-          <button type="button" class="demo-chip" data-time="Evening">Evening</button>
+        <div class="form-row">
+          <div>
+            <label for="demoName">Your name</label>
+            <input type="text" id="demoName" placeholder="e.g. Ali Raza" autocomplete="name">
+          </div>
+          <div>
+            <label for="demoPhone">WhatsApp number</label>
+            <input type="tel" id="demoPhone" placeholder="e.g. 03001234567" autocomplete="tel">
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="demoDate">Preferred date</label>
+            <input type="date" id="demoDate">
+          </div>
+          <div>
+            <p class="field-label">Time preference</p>
+            <div class="demo-chips">
+              <button type="button" class="demo-chip" data-time="Morning">Morning</button>
+              <button type="button" class="demo-chip" data-time="Afternoon">Afternoon</button>
+              <button type="button" class="demo-chip" data-time="Evening">Evening</button>
+            </div>
+          </div>
         </div>
         <p class="form-msg" id="demoMsg"></p>
         <a class="btn" id="demoWaBtn" href="#demo">Book on WhatsApp</a>
-        <p class="note" style="margin-top: 12px;">Usman will confirm the exact time on WhatsApp.</p>
+        <p class="note demo-note">Usman will confirm the exact time on WhatsApp.</p>
       </div>
     </div>
   </section>

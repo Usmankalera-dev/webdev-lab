@@ -36,6 +36,7 @@
       </div>
 
       <div class="card form-card">
+        <div class="verify-mark" aria-hidden="true"><span>&#10003;</span></div>
         <form id="verifyForm" novalidate>
           <label for="verifyInput">Certificate ID</label>
           <input type="text" id="verifyInput" class="code-input" placeholder="e.g. WDL-WEB-1002" autocomplete="off" required>
@@ -43,8 +44,8 @@
           <p class="form-msg" id="verifyMsg"></p>
         </form>
         <div class="alert hidden" id="verifyResult" style="margin-top: 16px;"></div>
-        <p class="note" style="margin-top: 16px;">Completion certificates start with <strong>WDL-</strong>, registration certificates with <strong>WDL-REG-</strong>.</p>
-        <p class="note">This check confirms the ID format and batch code only. The student's name and details are printed on the certificate itself. There is no online registry of students.</p>
+        <p class="note verify-note" style="margin-top: 16px;">Completion certificates start with <strong>WDL-</strong>, registration certificates with <strong>WDL-REG-</strong>.</p>
+        <p class="note verify-note">This check confirms the ID format and batch code only. The student's name and details are printed on the certificate itself. There is no online registry of students.</p>
       </div>
     </div>
   </section>
