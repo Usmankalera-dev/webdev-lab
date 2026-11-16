@@ -1129,6 +1129,21 @@ const WEBDEV_CONFIG = {
     setOne("illuProjectsFrame", "illuProjects", typeof ILLU_PROJECTS !== "undefined" ? ILLU_PROJECTS : null);
   })();
 
+  /* ---------- home page teacher photo ---------- */
+  /* The "Your teacher" section shows the real studio portrait from
+     teacher.js. If the photo did not load, the whole gold ring stays
+     hidden — never a broken image. Runs on every page; on non-home
+     pages the elements simply do not exist. */
+  (function setTeacherPhoto() {
+    var wrap = document.getElementById("teacherPhotoWrap");
+    var img = document.getElementById("teacherPhoto");
+    if (!wrap || !img) return;
+    if (typeof WEBDEV_TEACHER_PHOTO_JPEG === "string" && WEBDEV_TEACHER_PHOTO_JPEG.length > 1000) {
+      img.src = "data:image/jpeg;base64," + WEBDEV_TEACHER_PHOTO_JPEG;
+      wrap.classList.remove("hidden");
+    }
+  })();
+
   /* ---------- registration certificate page ---------- */
   var regLocked = document.getElementById("regLocked");
   var regReady = document.getElementById("regReady");
