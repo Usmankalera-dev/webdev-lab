@@ -16,11 +16,62 @@
   --ink-2: #3a2418;
   --tan: #a88462;
   --beige: #d5c4ae;
+  --shadow-rgb: 107, 74, 46;
   --radius: 14px;
   --max: 1100px;
 }
 
-/* Single theme: warm brown palette (2026-11-16 retheme). No dark/light toggle. */
+/* ---------- Colour themes (Colour setting picker) ----------
+   Default (no data-theme saved) is brown: the :root values above.
+   Each block maps its 6 palette colours to the same roles:
+   darkest -> --ink (hero/header/footer/headings), dark -> --ink-2/--accent-dark,
+   medium -> --accent (buttons), accent -> --tan, light -> --beige/page tints,
+   6th colour -> body text when dark enough, otherwise the --gold accent pop
+   (ocean/berry/teal: their 6th colour is a bright accent, so body text uses
+   the darkest colour instead for readability). Page tints are the light
+   colour mixed toward white at the same ratios as the brown defaults. */
+html[data-theme="brown"], body[data-theme="brown"] {
+  --bg: #f6f1e8; --bg-soft: #ede3d0; --card: #fffdf8; --card-2: #eae0ce;
+  --text: #4a4a46; --muted: rgba(74, 74, 70, 0.72);
+  --accent: #6b4a2e; --accent-dark: #3a2418; --accent-text: #f6f1e8;
+  --border: #d8c9b0; --ink: #1a120e; --ink-2: #3a2418;
+  --tan: #a88462; --beige: #d5c4ae; --gold: #a88462; --shadow-rgb: 107, 74, 46;
+}
+html[data-theme="forest"], body[data-theme="forest"] {
+  --bg: #f2f3ee; --bg-soft: #e4e6dc; --card: #fcfcfb; --card-2: #e1e3d9;
+  --text: #3d4337; --muted: rgba(61, 67, 55, 0.72);
+  --accent: #3e5a3f; --accent-dark: #1e3a2e; --accent-text: #f2f3ee;
+  --border: #cbcfbe; --ink: #0f1f17; --ink-2: #1e3a2e;
+  --tan: #6b7f67; --beige: #c7cbb8; --gold: #6b7f67; --shadow-rgb: 62, 90, 63;
+}
+html[data-theme="ocean"], body[data-theme="ocean"] {
+  --bg: #fcf5ec; --bg-soft: #faebd8; --card: #fefdfb; --card-2: #f9e9d4;
+  --text: #0b132b; --muted: rgba(11, 19, 43, 0.72);
+  --accent: #3a506b; --accent-dark: #1c2541; --accent-text: #fcf5ec;
+  --border: #f5d9b6; --ink: #0b132b; --ink-2: #1c2541;
+  --tan: #5bc0de; --beige: #f4d6b0; --gold: #d97706; --shadow-rgb: 58, 80, 107;
+}
+html[data-theme="grape"], body[data-theme="grape"] {
+  --bg: #f2f0f8; --bg-soft: #e5e1f1; --card: #fcfcfe; --card-2: #e2def0;
+  --text: #3a3a52; --muted: rgba(58, 58, 82, 0.72);
+  --accent: #5a3b8c; --accent-dark: #2a1e4d; --accent-text: #f2f0f8;
+  --border: #cdc7e5; --ink: #0e0b1d; --ink-2: #2a1e4d;
+  --tan: #8b7cc7; --beige: #c9c2e3; --gold: #8b7cc7; --shadow-rgb: 90, 59, 140;
+}
+html[data-theme="berry"], body[data-theme="berry"] {
+  --bg: #fcf5f5; --bg-soft: #faebea; --card: #fefdfd; --card-2: #f9e9e8;
+  --text: #1a0f2e; --muted: rgba(26, 15, 46, 0.72);
+  --accent: #7a2e6f; --accent-dark: #3b1b4f; --accent-text: #fcf5f5;
+  --border: #f5dad7; --ink: #1a0f2e; --ink-2: #3b1b4f;
+  --tan: #d6598f; --beige: #f4d7d4; --gold: #ff6b6b; --shadow-rgb: 122, 46, 111;
+}
+html[data-theme="teal"], body[data-theme="teal"] {
+  --bg: #faf7f2; --bg-soft: #f5eee4; --card: #fefdfc; --card-2: #f4ece1;
+  --text: #0a0f14; --muted: rgba(10, 15, 20, 0.72);
+  --accent: #2e6f73; --accent-dark: #0f3d3e; --accent-text: #faf7f2;
+  --border: #ecdfcc; --ink: #0a0f14; --ink-2: #0f3d3e;
+  --tan: #7fb3b8; --beige: #eadcc8; --gold: #c6601f; --shadow-rgb: 46, 111, 115;
+}
 
 * { box-sizing: border-box; }
 
@@ -58,10 +109,10 @@ p { margin: 0 0 16px; }
 .header-inner {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   min-height: 60px;
 }
-.logo { display: inline-flex; align-items: center; gap: 8px; font-size: 1.25rem; font-weight: 800; color: #f6f1e8; flex: none; }
+.logo { display: inline-flex; align-items: center; gap: 8px; font-size: 1.25rem; font-weight: 800; color: var(--accent-text); flex: none; }
 .site-header .logo span { color: var(--tan); }
 .logo span { color: var(--accent); }
 .logo:hover { text-decoration: none; }
@@ -74,11 +125,11 @@ p { margin: 0 0 16px; }
 /* Anchored sections (#pricing, #faq) must land below the 60px sticky header. */
 section[id] { scroll-margin-top: 76px; }
 
-.main-nav { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+.main-nav { margin-left: auto; display: flex; align-items: center; gap: 2px; }
 .main-nav a {
   color: var(--beige);
   font-weight: 600;
-  padding: 8px 10px;
+  padding: 8px 7px;
   border-radius: 8px;
   /* Never wrap or shrink: at 1280px the CTA ("Enroll — Rs 999") and
      "Free Demo" wrapped onto two lines when the nav was squeezed. */
@@ -108,7 +159,7 @@ section[id] { scroll-margin-top: 76px; }
 
 /* ---------- hero ---------- */
 .hero { padding: 56px 0 40px; text-align: center; }
-.hero h1 { font-size: 2.4rem; margin-bottom: 16px; color: #f6f1e8; }
+.hero h1 { font-size: 2.4rem; margin-bottom: 16px; color: var(--accent-text); }
 .hero h1 .hl { color: var(--tan); }
 .hero p.lead { font-size: 1.15rem; color: var(--beige); max-width: 640px; margin: 0 auto 24px; }
 .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
@@ -351,16 +402,16 @@ details.faq p { color: var(--muted); margin: 12px 0 0; }
   grid-template-columns: 1.4fr 1fr 1fr;
   gap: 32px;
 }
-.footer-col h4 { color: #f6f1e8; font-size: 0.95rem; margin: 0 0 12px; }
+.footer-col h4 { color: var(--accent-text); font-size: 0.95rem; margin: 0 0 12px; }
 .footer-col ul { list-style: none; margin: 0; padding: 0; }
 .footer-col li { margin-bottom: 8px; }
 .footer-col a { color: var(--beige); }
-.footer-col a:hover { color: #f6f1e8; }
+.footer-col a:hover { color: var(--accent-text); }
 .footer-brand {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #f6f1e8;
+  color: var(--accent-text);
   font-weight: 700;
   font-size: 1.1rem;
   margin-bottom: 8px;
@@ -843,7 +894,8 @@ details.faq p { color: var(--muted); margin: 12px 0 0; }
 .testimonial-name { font-weight: 700; color: var(--accent); margin-top: 12px; margin-bottom: 0; }
 
 /* ---------- Loop 4: free demo strip ---------- */
-.demo-strip { text-align: center; color: var(--muted); margin-top: 16px; }
+.demo-strip { text-align: center; color: var(--beige); opacity: 0.85; margin-top: 16px; }
+.demo-strip a { color: var(--beige); text-decoration: underline; }
 
 /* ---------- Module illustrations (home page roadmap cards) ---------- */
 /* The illustrations sit on white, so the frame is always white — the art
@@ -959,7 +1011,7 @@ details.faq p { color: var(--muted); margin: 12px 0 0; }
 }
 .hero-stat {
   background: var(--ink-2);
-  border: 1px solid #6b4a2e;
+  border: 1px solid var(--accent);
   border-radius: 12px;
   padding: 16px 8px;
 }
@@ -970,7 +1022,7 @@ details.faq p { color: var(--muted); margin: 12px 0 0; }
   color: var(--tan);
 }
 .hero-stat span { font-size: 0.9rem; color: var(--beige); }
-.hero-trust { margin-top: 16px; font-size: 0.95rem; color: rgba(213, 196, 174, 0.85); }
+.hero-trust { margin-top: 16px; font-size: 0.95rem; color: var(--beige); opacity: 0.85; }
 
 /* Section headings: one amber accent, consistent spacing. */
 .section-head h2 { padding-bottom: 14px; }
@@ -988,7 +1040,7 @@ details.faq p { color: var(--muted); margin: 12px 0 0; }
 .btn {
   transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
-.btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(107, 74, 46, 0.30); }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(var(--shadow-rgb), 0.30); }
 .btn:active { transform: translateY(0); box-shadow: none; }
 .btn:focus-visible, .btn-outline:focus-visible, .icon-btn:focus-visible {
   outline: 2px solid var(--accent);
@@ -1010,14 +1062,14 @@ details.faq p { color: var(--muted); margin: 12px 0 0; }
   transform: translateY(-1px);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
-.lesson-row.mod-html { border-left-color: #6b4a2e; }
-.lesson-row.mod-html .num { color: #6b4a2e; }
-.lesson-row.mod-css { border-left-color: #a88462; }
-.lesson-row.mod-css .num { color: #a88462; }
-.lesson-row.mod-js { border-left-color: #3a2418; }
-.lesson-row.mod-js .num { color: #3a2418; }
-.lesson-row.mod-proj { border-left-color: #1a120e; }
-.lesson-row.mod-proj .num { color: #1a120e; }
+.lesson-row.mod-html { border-left-color: var(--accent); }
+.lesson-row.mod-html .num { color: var(--accent); }
+.lesson-row.mod-css { border-left-color: var(--tan); }
+.lesson-row.mod-css .num { color: var(--tan); }
+.lesson-row.mod-js { border-left-color: var(--accent-dark); }
+.lesson-row.mod-js .num { color: var(--accent-dark); }
+.lesson-row.mod-proj { border-left-color: var(--ink); }
+.lesson-row.mod-proj .num { color: var(--ink); }
 .lesson-row.done { border-color: var(--green); }
 .lesson-row a.open-link {
   background: var(--accent);
@@ -1034,7 +1086,7 @@ details.faq p { color: var(--muted); margin: 12px 0 0; }
 /* Enroll / payment: method cards look like real payment options. */
 .plan-card { transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease; }
 .plan-card:hover { transform: translateY(-1px); }
-.plan-card.selected { box-shadow: 0 0 0 2px rgba(107, 74, 46, 0.35); }
+.plan-card.selected { box-shadow: 0 0 0 2px rgba(var(--shadow-rgb), 0.35); }
 .pay-method { border-width: 2px; padding: 16px; }
 .pay-method .pay-name { color: #ffffff; padding: 6px 12px; border-radius: 8px; font-size: 0.95rem; }
 .pay-method:nth-child(1) .pay-name { background: #dc2626; }
@@ -1283,7 +1335,7 @@ a { transition: color 0.15s ease; }
 .podium-rank { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--border); color: var(--muted); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.05rem; font-variant-numeric: tabular-nums; }
 .podium-rank-1 { width: 56px; height: 56px; border-color: var(--gold); color: var(--gold); font-size: 1.25rem; }
 .podium-rank-2 { border-color: #9ca3af; color: #9ca3af; }
-.podium-rank-3 { border-color: #6b4a2e; color: #6b4a2e; }
+.podium-rank-3 { border-color: var(--accent); color: var(--accent); }
 .podium-name { color: var(--muted); font-size: 0.95rem; }
 .leaderboard-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
 .leaderboard-table { border: none; border-radius: 0; }
@@ -1292,9 +1344,9 @@ a { transition: color 0.15s ease; }
 .leaderboard-table .rank-cell { width: 56px; text-align: center; }
 .leaderboard-table .num-cell { text-align: right; }
 .rank-badge { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; font-weight: 700; font-size: 0.95rem; font-variant-numeric: tabular-nums; }
-.rank-badge.rank-1 { background: var(--gold); color: #1a120e; }
-.rank-badge.rank-2 { background: #9ca3af; color: #1a120e; }
-.rank-badge.rank-3 { background: #6b4a2e; color: #ffffff; }
+.rank-badge.rank-1 { background: var(--gold); color: var(--ink); }
+.rank-badge.rank-2 { background: #9ca3af; color: var(--ink); }
+.rank-badge.rank-3 { background: var(--accent); color: #ffffff; }
 
 /* Cheat sheets: one wide reference column, term/definition rows, illustration headers. */
 #cheatSheetsList { max-width: 760px; margin: 0 auto; display: grid; gap: 24px; }
@@ -1365,4 +1417,53 @@ a { transition: color 0.15s ease; }
   .teacher-photo-wrap { width: 180px; height: 180px; }
   .teacher-stats { justify-content: center; }
   .teacher-links { justify-content: center; }
+}
+
+/* ---------- Colour setting picker ---------- */
+.theme-picker { position: relative; flex: none; }
+.theme-picker-btn { white-space: nowrap; padding: 8px 10px; font-size: 0.95rem; }
+.theme-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 60;
+  width: 248px;
+  max-width: calc(100vw - 32px);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+  padding: 8px;
+}
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.theme-option:hover { background: var(--card-2); }
+.theme-option[aria-checked="true"] { background: var(--card-2); }
+.theme-dots { display: inline-flex; gap: 3px; flex: none; }
+.theme-dots i {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  display: block;
+}
+.theme-name { flex: 1; }
+.theme-check { color: var(--accent); font-weight: 800; visibility: hidden; flex: none; }
+.theme-option[aria-checked="true"] .theme-check { visibility: visible; }
+@media (max-width: 699px) {
+  .theme-picker { margin-left: 4px; }
+  .theme-picker-btn { padding: 8px 10px; font-size: 0.95rem; }
 }

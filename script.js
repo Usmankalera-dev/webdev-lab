@@ -382,6 +382,64 @@ const WEBDEV_CONFIG = {
     });
   }
 
+  /* ---------- colour themes (Colour setting picker) ---------- */
+  var THEME_KEY = "webdevlab-theme";
+  var THEMES = ["brown", "forest", "ocean", "grape", "berry", "teal"];
+  function markActiveTheme(name) {
+    document.querySelectorAll(".theme-option").forEach(function (opt) {
+      opt.setAttribute("aria-checked", opt.getAttribute("data-theme") === name ? "true" : "false");
+    });
+  }
+  function applyTheme(name, save) {
+    if (THEMES.indexOf(name) === -1) name = "brown";
+    document.documentElement.setAttribute("data-theme", name);
+    document.body.setAttribute("data-theme", name);
+    if (save) { try { localStorage.setItem(THEME_KEY, name); } catch (e) {} }
+    markActiveTheme(name);
+    var panel = document.getElementById("themePanel");
+    var btn = document.getElementById("themePickerBtn");
+    if (panel) panel.hidden = true;
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  (function initTheme() {
+    var saved = null;
+    try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
+    if (!saved) saved = document.documentElement.getAttribute("data-theme");
+    if (THEMES.indexOf(saved) === -1) saved = "brown";
+    document.documentElement.setAttribute("data-theme", saved);
+    document.body.setAttribute("data-theme", saved);
+    markActiveTheme(saved);
+  })();
+  var themeBtn = document.getElementById("themePickerBtn");
+  var themePanel = document.getElementById("themePanel");
+  var themePicker = document.getElementById("themePicker");
+  if (themeBtn && themePanel) {
+    themeBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var open = themePanel.hidden;
+      themePanel.hidden = !open;
+      themeBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    themePanel.addEventListener("click", function (e) {
+      var opt = e.target.closest(".theme-option");
+      if (!opt) return;
+      applyTheme(opt.getAttribute("data-theme"), true);
+    });
+    document.addEventListener("click", function (e) {
+      if (themePicker && !themePicker.contains(e.target) && !themePanel.hidden) {
+        themePanel.hidden = true;
+        themeBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !themePanel.hidden) {
+        themePanel.hidden = true;
+        themeBtn.setAttribute("aria-expanded", "false");
+        themeBtn.focus();
+      }
+    });
+  }
+
   /* ---------- smooth scrolling for anchor links ---------- */
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
     a.addEventListener("click", function (e) {

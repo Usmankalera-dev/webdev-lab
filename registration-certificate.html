@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="WebDev Lab — Your registration certificate: proof that you are registered for Batch 1. Download it as a PDF.">
 <title>Registration Certificate — WebDev Lab</title>
+<script>try{var t=localStorage.getItem("webdevlab-theme");if(t){document.documentElement.setAttribute("data-theme",t);}}catch(e){}</script>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -23,6 +24,17 @@
       <a href="index.html#demo">Free Demo</a>
       <a href="enroll.html?plan=earlybird" class="cta">Enroll — Rs 999</a>
     </nav>
+    <div class="theme-picker" id="themePicker">
+      <button class="icon-btn theme-picker-btn" id="themePickerBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="themePanel">🎨 Colour</button>
+      <div class="theme-panel" id="themePanel" role="menu" hidden>
+      <button type="button" class="theme-option" data-theme="brown" role="menuitemradio" aria-checked="true"><span class="theme-dots"><i style="background:#1A120E"></i><i style="background:#3A2418"></i><i style="background:#6B4A2E"></i><i style="background:#A88462"></i><i style="background:#D5C4AE"></i><i style="background:#4A4A46"></i></span><span class="theme-name">Brown (Default)</span><span class="theme-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="theme-option" data-theme="forest" role="menuitemradio" aria-checked="false"><span class="theme-dots"><i style="background:#0F1F17"></i><i style="background:#1E3A2E"></i><i style="background:#3E5A3F"></i><i style="background:#6B7F67"></i><i style="background:#C7CBB8"></i><i style="background:#3D4337"></i></span><span class="theme-name">Forest</span><span class="theme-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="theme-option" data-theme="ocean" role="menuitemradio" aria-checked="false"><span class="theme-dots"><i style="background:#0B132B"></i><i style="background:#1C2541"></i><i style="background:#3A506B"></i><i style="background:#5BC0DE"></i><i style="background:#F4D6B0"></i><i style="background:#D97706"></i></span><span class="theme-name">Ocean</span><span class="theme-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="theme-option" data-theme="grape" role="menuitemradio" aria-checked="false"><span class="theme-dots"><i style="background:#0E0B1D"></i><i style="background:#2A1E4D"></i><i style="background:#5A3B8C"></i><i style="background:#8B7CC7"></i><i style="background:#C9C2E3"></i><i style="background:#3A3A52"></i></span><span class="theme-name">Grape</span><span class="theme-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="theme-option" data-theme="berry" role="menuitemradio" aria-checked="false"><span class="theme-dots"><i style="background:#1A0F2E"></i><i style="background:#3B1B4F"></i><i style="background:#7A2E6F"></i><i style="background:#D6598F"></i><i style="background:#F4D7D4"></i><i style="background:#FF6B6B"></i></span><span class="theme-name">Berry</span><span class="theme-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="theme-option" data-theme="teal" role="menuitemradio" aria-checked="false"><span class="theme-dots"><i style="background:#0A0F14"></i><i style="background:#0F3D3E"></i><i style="background:#2E6F73"></i><i style="background:#7FB3B8"></i><i style="background:#EADCC8"></i><i style="background:#C6601F"></i></span><span class="theme-name">Teal</span><span class="theme-check" aria-hidden="true">✓</span></button>
+      </div>
+    </div>
   </div>
 </header>
 
