@@ -1660,3 +1660,102 @@ html[data-theme="brown"] .hero-stat, html:not([data-theme]) .hero-stat {
   background-repeat: repeat;
   background-color: var(--ink);
 }
+
+/* ============================================================
+   AI Tutor (tutor.html) — chat UI.
+   Uses the theme variables only, so all 6 themes restyle it.
+   ============================================================ */
+.tutor-how { margin-bottom: 24px; }
+.tutor-steps { margin: 0 0 12px; padding-left: 22px; }
+.tutor-steps li { margin-bottom: 8px; line-height: 1.6; }
+
+.tutor-card { padding: 20px; }
+.tutor-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 480px;
+  overflow-y: auto;
+  padding: 4px 2px 12px;
+}
+.tutor-msg {
+  max-width: 88%;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  line-height: 1.6;
+}
+.tutor-msg p { margin: 0 0 8px; }
+.tutor-msg p:last-child { margin-bottom: 0; }
+.tutor-msg-user {
+  align-self: flex-end;
+  background: var(--accent);
+  color: var(--accent-text);
+}
+.tutor-msg-ai {
+  align-self: flex-start;
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+.tutor-msg-loading { color: var(--muted); font-style: italic; }
+
+/* Three bouncing dots while the tutor is thinking. */
+.tutor-dots i {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 3px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: tutor-bounce 1.2s infinite ease-in-out;
+}
+.tutor-dots i:nth-child(2) { animation-delay: 0.15s; }
+.tutor-dots i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes tutor-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+.tutor-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.tutor-chip {
+  display: inline-block;
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.tutor-chip:hover { border-color: var(--accent); background: var(--bg-soft); }
+
+.tutor-form { display: flex; gap: 10px; }
+.tutor-form input { flex: 1; min-width: 0; }
+
+/* A retrieved lesson passage: real lesson text + its link. */
+.tutor-passage {
+  margin: 10px 0;
+  padding: 10px 12px;
+  border-left: 3px solid var(--accent);
+  background: var(--bg-soft);
+  border-radius: 0 8px 8px 0;
+}
+.tutor-passage-head { font-size: 0.85rem; font-weight: 700; }
+.tutor-sources-label { margin: 14px 0 8px; font-size: 0.9rem; font-weight: 700; }
+
+.tutor-settings { margin-top: 24px; }
+.tutor-settings input { width: 100%; max-width: 420px; }
+.tutor-key-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+
+@media (max-width: 640px) {
+  .tutor-msg { max-width: 96%; }
+  .tutor-form { flex-direction: column; }
+  .tutor-form .btn { width: 100%; }
+}
