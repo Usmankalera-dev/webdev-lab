@@ -166,6 +166,21 @@ const WEBDEV_CONFIG = {
 
   /* ---------- Loop 3: quizzes ---------- */
   var QUIZZES = {
+    "html-1": [
+      { q: "What does HTML stand for?", options: ["HyperText Markup Language", "HighText Machine Language", "Hyperlink Text Mode Language", "Home Tool Markup Language"], answer: 0, why: "HTML stands for HyperText Markup Language \u2014 it builds the structure of every web page." },
+      { q: "Which tag is the main heading of a page?", options: ["<p>", "<h1>", "<head>", "<title>"], answer: 1, why: "The <h1> tag is the main heading of the page." },
+      { q: "What goes inside the <head> of a page?", options: ["Everything visitors see", "Information about the page, like the title", "The page footer", "Images only"], answer: 1, why: "The <head> holds information about the page that visitors do not see, like the title in the browser tab." }
+    ],
+    "html-2": [
+      { q: "How many heading levels does HTML have?", options: ["Three", "Six", "Ten", "One"], answer: 1, why: "HTML gives you six heading levels, from <h1> (biggest) to <h6> (smallest)." },
+      { q: "Which attribute says where a link goes?", options: ["src", "link", "href", "target"], answer: 2, why: "The href attribute of the <a> tag says where the link goes." },
+      { q: "How do you link to a section on the same page?", options: ["With a relative link to another file", "Give the section an id and link to #id", "With target=\"_blank\"", "With an absolute link"], answer: 1, why: "Give the section an id, then link to it with a hash in front of the name, like #menu." }
+    ],
+    "html-3": [
+      { q: "Which two attributes does every <img> tag need?", options: ["src and alt", "width and height", "href and target", "class and id"], answer: 0, why: "src says where the image file is; alt describes the picture in words." },
+      { q: "Which tag makes an ordered (numbered) list?", options: ["<ul>", "<ol>", "<li>", "<list>"], answer: 1, why: "<ol> is an ordered list \u2014 the browser numbers each item automatically." },
+      { q: "In a table, which tag is a header cell?", options: ["<td>", "<tr>", "<th>", "<table>"], answer: 2, why: "<th> is a header cell (bold, centred); <td> is a normal data cell." }
+    ],
     "html-4": [
       { q: "Which input type should you use for an email address?", options: ["type=\"text\"", "type=\"email\"", "type=\"number\"", "type=\"date\""], answer: 1, why: "type=\"email\" makes the browser check that the text looks like an email address." },
       { q: "What does the label tag's for attribute do?", options: ["It sets the label's colour", "It links the label to an input by its id", "It makes the field required", "It hides the label"], answer: 1, why: "for must match the input's id — then clicking the label focuses the field." },
@@ -241,6 +256,31 @@ const WEBDEV_CONFIG = {
       { q: "How do you save an array in localStorage?", options: ["localStorage.setItem(\"key\", array)", "localStorage.setItem(\"key\", JSON.stringify(array))", "localStorage.save(array)", "localStorage.store(array)"], answer: 1, why: "localStorage only stores strings, so the array must be turned into JSON text first." },
       { q: "Which DOM method creates a new element in JavaScript?", options: ["document.createElement()", "document.newElement()", "document.make()", "document.build()"], answer: 0, why: "document.createElement(\"li\") builds a new element, which appendChild then puts on the page." },
     ],
+    "proj-1": [
+      { q: "How do you make a square image round with CSS?", options: ["border: 50%", "border-radius: 50%", "shape: circle", "radius: 50px"], answer: 1, why: "Make the image square, then border-radius: 50% turns it into a circle." },
+      { q: "What does object-fit: cover do?", options: ["It hides the image", "It crops the photo to fill the box without stretching it", "It makes the image bigger", "It adds a border"], answer: 1, why: "object-fit: cover crops the photo to fill the square instead of stretching it, so faces never look squashed." },
+      { q: "What does margin: 40px auto do to the card?", options: ["It adds a shadow", "It centres the card on the page", "It makes the card round", "It hides the card"], answer: 1, why: "margin: 40px auto centres a fixed-width block \u2014 the browser splits the leftover space equally on both sides." }
+    ],
+    "proj-2": [
+      { q: "What does e.preventDefault() do in the submit handler?", options: ["It clears the form", "It stops the page from reloading so JavaScript stays in control", "It sends the form", "It hides the button"], answer: 1, why: "Without preventDefault(), the browser would try to send the form and reload the page." },
+      { q: "Which check makes sure the message is at least 10 characters long?", options: ["text.length < 10", "text.size < 10", "text.count < 10", "text.words < 10"], answer: 0, why: "The code checks text.length < 10 and shows an error if the message is too short." },
+      { q: "What does form.reset() do after a successful send?", options: ["It closes the form", "It clears all the fields", "It reloads the page", "It shows an error"], answer: 1, why: "form.reset() clears all the fields after a successful send." }
+    ],
+    "proj-3": [
+      { q: "Which property pushes the logo to the left and the nav to the right?", options: ["align-items: center", "justify-content: space-between", "display: block", "text-align: right"], answer: 1, why: "justify-content: space-between pushes the logo to the left and the nav to the right." },
+      { q: "What does position: sticky with top: 0 do?", options: ["It hides the bar", "The bar scrolls normally, then stops at the top and stays there", "It fixes the bar at the bottom", "It centres the bar"], answer: 1, why: "position: sticky means 'scroll normally, but stop at the top of the screen and stay there'." },
+      { q: "Why does the navbar use z-index: 50?", options: ["To make it wider", "So the bar floats above the page content instead of sliding underneath it", "To change its colour", "To make it sticky"], answer: 1, why: "z-index: 50 makes sure the bar floats above the page content instead of sliding underneath it." }
+    ],
+    "proj-4": [
+      { q: "What does repeat(auto-fill, minmax(200px, 1fr)) do?", options: ["It makes one fixed column", "It makes as many columns as fit, each at least 200px wide", "It hides the grid on phones", "It makes the pictures bigger"], answer: 1, why: "It means 'make as many columns as fit, each at least 200px wide, sharing the space equally'." },
+      { q: "Which tag holds a picture's caption?", options: ["<caption>", "<figcaption>", "<label>", "<title>"], answer: 1, why: "Each picture is a <figure> with a <figcaption> underneath it." },
+      { q: "What does transform: translateY(-4px) do on hover?", options: ["It moves the figure 4 pixels up", "It moves the figure 4 pixels down", "It hides the figure", "It rotates the figure"], answer: 0, why: "transform: translateY(-4px) moves the whole figure 4 pixels up \u2014 and transforms do not disturb the layout around them." }
+    ],
+    "proj-5": [
+      { q: "What does filter do in the Clear completed button?", options: ["It deletes all tasks", "It returns a new array with only the items that pass a test", "It sorts the tasks", "It saves the tasks"], answer: 1, why: "filter takes a test function, runs it on every item, and keeps only the ones where the test returns true." },
+      { q: "Why is the task list saved with JSON.stringify?", options: ["localStorage only stores strings", "It makes the list faster", "It hides the tasks", "JSON is required by the browser"], answer: 0, why: "localStorage only stores strings, so the array must be turned into JSON text first." },
+      { q: "Which CSS rule puts a line through a finished task?", options: ["#taskList li.done { text-decoration: line-through; }", "#taskList li { color: red; }", ".todo-app { text-decoration: line-through; }", "li.done { display: none; }"], answer: 0, why: "#taskList li.done gives finished tasks a line-through style \u2014 the visual signal that a task is done." }
+    ],
   };
 
   /* ---------- Loop 3: editor starter code ---------- */
@@ -300,6 +340,32 @@ const WEBDEV_CONFIG = {
     try {
       localStorage.setItem(PROGRESS_KEY, JSON.stringify(list));
     } catch (e) { /* storage unavailable — ignore */ }
+  }
+
+  /* ---------- sequential unlock: a lesson opens after the previous test is passed ---------- */
+  function lessonIndex(id) {
+    for (var i = 0; i < LESSONS.length; i++) {
+      if (LESSONS[i].id === id) return i;
+    }
+    return -1;
+  }
+  function prevLesson(id) {
+    var i = lessonIndex(id);
+    return i > 0 ? LESSONS[i - 1] : null;
+  }
+  function nextLesson(id) {
+    var i = lessonIndex(id);
+    return i >= 0 && i < LESSONS.length - 1 ? LESSONS[i + 1] : null;
+  }
+  function isLessonAvailable(id) {
+    var i = lessonIndex(id);
+    if (i <= 0) return true;
+    return getProgress().indexOf(LESSONS[i - 1].id) !== -1;
+  }
+  function lessonHrefFromHere(href) {
+    /* LESSONS hrefs are root-relative ("lessons/html-2.html"); from a lesson
+       page (inside lessons/) the same target is the bare file name. */
+    return href.replace("lessons/", "");
   }
 
   /* ---------- dark / light theme ---------- */
@@ -379,26 +445,6 @@ const WEBDEV_CONFIG = {
     });
   }
 
-  /* ---------- mark lesson as complete ---------- */
-  var completeBtns = document.querySelectorAll("[data-complete]");
-  completeBtns.forEach(function (btn) {
-    var id = btn.getAttribute("data-complete");
-    if (getProgress().indexOf(id) !== -1) {
-      btn.textContent = "\u2713 Completed";
-      btn.disabled = true;
-    }
-    btn.addEventListener("click", function () {
-      var done = getProgress();
-      if (done.indexOf(id) === -1) {
-        done.push(id);
-        saveProgress(done);
-      }
-      btn.textContent = "\u2713 Completed";
-      btn.disabled = true;
-      updateProgressBar();
-    });
-  });
-
   /* ---------- progress bar on lesson pages ---------- */
   function updateProgressBar() {
     var fill = document.getElementById("progressFill");
@@ -432,6 +478,15 @@ const WEBDEV_CONFIG = {
         for (var li = 0; li < LESSONS.length; li++) {
           if (LESSONS[li].id === lid) { lesson = LESSONS[li]; break; }
         }
+      }
+      /* sequential unlock: the next lesson opens only after the previous test is passed */
+      if (lid && !isLessonAvailable(lid)) {
+        var prev = prevLesson(lid);
+        var seqNote = document.createElement("span");
+        seqNote.className = "lock";
+        seqNote.textContent = "🔒 Complete " + (prev ? prev.title : "the previous lesson") + "'s test to unlock";
+        lock.replaceWith(seqNote);
+        return;
       }
       var badge = document.createElement("span");
       badge.className = "badge-unlocked";
@@ -836,6 +891,16 @@ const WEBDEV_CONFIG = {
         row.appendChild(num);
         row.appendChild(name);
         if (done.indexOf(l.id) !== -1) row.classList.add("done");
+        /* sequential unlock: the next lesson opens only after the previous test is passed */
+        if (!isLessonAvailable(l.id)) {
+          var prev = prevLesson(l.id);
+          var seqNote = document.createElement("span");
+          seqNote.className = "lock";
+          seqNote.textContent = "🔒 Complete " + (prev ? prev.title : "the previous lesson") + "'s test to unlock";
+          row.appendChild(seqNote);
+          list.appendChild(row);
+          return;
+        }
         if (l.href) {
           var a = document.createElement("a");
           a.className = "open-link";
@@ -1066,14 +1131,51 @@ const WEBDEV_CONFIG = {
   var lockBox = document.getElementById("lockBox");
   var lessonBody = document.getElementById("lessonBody");
   if (lockBox && lessonBody) {
-    if (hasAccess()) {
-      lockBox.classList.add("hidden");
-      lessonBody.classList.remove("hidden");
-    } else {
+    var quizBoxEl = document.getElementById("quizBox");
+    var lockLid = quizBoxEl ? quizBoxEl.getAttribute("data-lesson") : null;
+    var needsEnroll = lockLid ? lessonIndex(lockLid) >= 3 : false;
+    if (!hasAccess() && needsEnroll) {
+      /* not enrolled and this lesson needs enrollment — show the enroll lock */
       lockBox.classList.remove("hidden");
       lessonBody.classList.add("hidden");
+    } else if (lockLid && !isLessonAvailable(lockLid)) {
+      /* enrolled (or free lesson) but the previous test is not passed yet */
+      var lockPrev = prevLesson(lockLid);
+      lockBox.innerHTML =
+        "<h3>\uD83D\uDD12 Complete " + (lockPrev ? lockPrev.title : "the previous lesson") + "'s test to unlock this lesson</h3>" +
+        "<p>Pass the test in \"" + (lockPrev ? lockPrev.num + ". " + lockPrev.title : "the previous lesson") +
+        "\" first \u2014 then this lesson opens.</p>" +
+        (lockPrev ? "<a class=\"btn\" href=\"" + lessonHrefFromHere(lockPrev.href) + "\">Go to the previous lesson \u2192</a>" : "");
+      lockBox.classList.remove("hidden");
+      lessonBody.classList.add("hidden");
+    } else {
+      lockBox.classList.add("hidden");
+      lessonBody.classList.remove("hidden");
     }
   }
+
+  /* hide the static "Next" link in the lesson nav while the next lesson is still locked
+     (a failed test must not show a Next button that only leads to a lock box) */
+  function updateLessonNavNext(lid) {
+    var nav = document.querySelector(".lesson-nav");
+    if (!nav || !lid) return;
+    var next = nextLesson(lid);
+    var links = nav.querySelectorAll("a");
+    for (var i = 0; i < links.length; i++) {
+      var href = links[i].getAttribute("href") || "";
+      if (href.indexOf("lessons.html") === -1 && href.slice(-5) === ".html") {
+        if (next && isLessonAvailable(next.id)) {
+          links[i].classList.remove("hidden");
+        } else {
+          links[i].classList.add("hidden");
+        }
+      }
+    }
+  }
+  (function () {
+    var qb = document.getElementById("quizBox");
+    if (qb) updateLessonNavNext(qb.getAttribute("data-lesson"));
+  })();
 
   /* ---------- Loop 3: quizzes ---------- */
   function getQuizScores() {
@@ -1090,6 +1192,79 @@ const WEBDEV_CONFIG = {
     }
     return scores[id];
   }
+  /* ---------- congratulations overlay + flower shower (only when a test is passed) ---------- */
+  function showCelebration(lid, score, total) {
+    var lesson = null;
+    for (var i = 0; i < LESSONS.length; i++) {
+      if (LESSONS[i].id === lid) { lesson = LESSONS[i]; break; }
+    }
+    var overlay = document.createElement("div");
+    overlay.className = "celebration-overlay";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-label", "Congratulations");
+
+    var flowers = document.createElement("div");
+    flowers.className = "celebration-flowers";
+    var emojis = ["\uD83C\uDF38", "\uD83C\uDF3C", "\uD83C\uDF3A", "\uD83C\uDF37", "\uD83D\uDCAE"];
+    for (var f = 0; f < 40; f++) {
+      var flower = document.createElement("span");
+      flower.className = "flower";
+      flower.textContent = emojis[f % emojis.length];
+      /* denser streams from the left and right edges, a few in the middle */
+      var band = f % 10;
+      var left;
+      if (band < 3) left = Math.random() * 18;            /* left edge stream */
+      else if (band < 6) left = 82 + Math.random() * 18;  /* right edge stream */
+      else left = 18 + Math.random() * 64;                /* middle scatter */
+      flower.style.left = left.toFixed(1) + "%";
+      flower.style.fontSize = (18 + Math.floor(Math.random() * 23)) + "px";
+      flower.style.animationDuration = (2.2 + Math.random() * 1.0).toFixed(2) + "s, " +
+        (0.5 + Math.random() * 0.5).toFixed(2) + "s";
+      flower.style.animationDelay = (Math.random() * 1.0).toFixed(2) + "s, 0s";
+      flowers.appendChild(flower);
+    }
+    overlay.appendChild(flowers);
+
+    var card = document.createElement("div");
+    card.className = "celebration-card";
+    var closeBtn = document.createElement("button");
+    closeBtn.className = "celebration-close";
+    closeBtn.setAttribute("aria-label", "Close");
+    closeBtn.textContent = "\u00D7";
+    closeBtn.addEventListener("click", function () {
+      if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    });
+    card.appendChild(closeBtn);
+    var title = document.createElement("h2");
+    title.textContent = "\uD83C\uDF89 Congratulations!";
+    card.appendChild(title);
+    var msg = document.createElement("p");
+    msg.textContent = "You passed the " + (lesson ? lesson.title : "lesson") + " test!";
+    card.appendChild(msg);
+    var scoreEl = document.createElement("p");
+    scoreEl.className = "celebration-score";
+    scoreEl.textContent = "Score: " + score + "/" + total;
+    card.appendChild(scoreEl);
+    var next = nextLesson(lid);
+    var nextBtn = document.createElement("a");
+    nextBtn.className = "btn";
+    if (next) {
+      nextBtn.href = lessonHrefFromHere(next.href);
+      nextBtn.textContent = "Next Lesson \u2192";
+    } else {
+      nextBtn.href = "../certificate.html";
+      nextBtn.textContent = "View your certificate \u2192";
+    }
+    card.appendChild(nextBtn);
+    overlay.appendChild(card);
+    document.body.appendChild(overlay);
+
+    /* the flowers stop after about 4 seconds; the card stays until closed or Next is clicked */
+    setTimeout(function () {
+      if (flowers.parentNode) flowers.parentNode.removeChild(flowers);
+    }, 4500);
+  }
+
   (function renderQuiz() {
     var box = document.getElementById("quizBox");
     if (!box) return;
@@ -1159,11 +1334,51 @@ const WEBDEV_CONFIG = {
       scoreP.className = "quiz-score";
       scoreP.textContent = "You scored " + score + " out of " + quiz.length + ". Best score: " + best + "/" + quiz.length + ".";
       resultEl.appendChild(scoreP);
-      var retake = document.createElement("button");
-      retake.className = "btn btn-outline btn-small";
-      retake.textContent = "Retake quiz";
-      retake.addEventListener("click", build);
-      resultEl.appendChild(retake);
+      var actions = document.createElement("div");
+      actions.className = "quiz-actions";
+      if (score >= 2) {
+        /* pass: the lesson is complete and the next lesson opens */
+        var done = getProgress();
+        if (done.indexOf(lid) === -1) {
+          done.push(lid);
+          saveProgress(done);
+        }
+        updateProgressBar();
+        updateLessonNavNext(lid); /* the static nav Next link appears now that the next lesson is unlocked */
+        var passP = document.createElement("p");
+        passP.className = "quiz-pass";
+        passP.textContent = "\u2713 You passed! This lesson is complete.";
+        resultEl.appendChild(passP);
+        var next = nextLesson(lid);
+        var nextBtn = document.createElement("a");
+        nextBtn.className = "btn";
+        if (next) {
+          nextBtn.href = lessonHrefFromHere(next.href);
+          nextBtn.textContent = "Next Lesson \u2192";
+        } else {
+          nextBtn.href = "../certificate.html";
+          nextBtn.textContent = "View your certificate \u2192";
+        }
+        actions.appendChild(nextBtn);
+        var retakePass = document.createElement("button");
+        retakePass.className = "btn btn-outline btn-small";
+        retakePass.textContent = "Retake quiz";
+        retakePass.addEventListener("click", build);
+        actions.appendChild(retakePass);
+        resultEl.appendChild(actions);
+        showCelebration(lid, score, quiz.length);
+      } else {
+        var failP = document.createElement("p");
+        failP.className = "quiz-fail-note";
+        failP.textContent = "You need 2 out of 3 to pass. Read the lesson again and try as many times as you like.";
+        resultEl.appendChild(failP);
+        var retake = document.createElement("button");
+        retake.className = "btn btn-outline btn-small";
+        retake.textContent = "Retake quiz";
+        retake.addEventListener("click", build);
+        actions.appendChild(retake);
+        resultEl.appendChild(actions);
+      }
       submitBtn.classList.add("hidden");
       showBest();
       resultEl.scrollIntoView({ behavior: "smooth" });
