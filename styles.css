@@ -1797,3 +1797,35 @@ html[data-theme="brown"] .hero-stat, html:not([data-theme]) .hero-stat {
 .alert-warn { border-left-color: var(--gold); }
 #verifyResult.alert-warn { border: 1px solid var(--gold); border-left-width: 4px; background: rgba(168, 132, 98, 0.08); }
 #verifyResult.alert-warn::before { content: "\26A0  "; color: var(--gold); font-weight: 800; }
+
+/* ---------- Student ID card (brown in all themes, like the certificates) ---------- */
+.id-card { background: #1a120e; color: #f6f1e8; border-radius: 20px; padding: 28px 32px; max-width: 680px; margin: 0 auto; border: 2px solid #a88462; box-shadow: 0 12px 32px rgba(26, 18, 14, 0.35); }
+.id-card-head { display: flex; gap: 16px; align-items: center; }
+.id-logo { width: 64px; height: 64px; border-radius: 14px; flex: none; }
+.id-logo-fallback { width: 64px; height: 64px; border-radius: 14px; flex: none; display: flex; align-items: center; justify-content: center; background: #a88462; color: #1a120e; font-weight: 800; font-size: 1.5rem; }
+.id-brand { font-size: 1.5rem; font-weight: 800; letter-spacing: 2px; margin: 0; color: #f6f1e8; }
+.id-sub { color: #a88462; letter-spacing: 4px; font-size: 0.8rem; margin: 2px 0 0; font-weight: 700; }
+.id-card-body { display: flex; gap: 24px; margin-top: 24px; align-items: flex-start; border-top: 2px solid #a88462; padding-top: 24px; }
+.id-photo-wrap { flex: none; width: 120px; height: 120px; border-radius: 50%; overflow: hidden; border: 3px solid #a88462; background: #3a2418; position: relative; }
+.id-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+.id-initials { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 2.4rem; font-weight: 800; color: #f6f1e8; }
+.id-details { flex: 1; min-width: 0; }
+.id-name { font-size: 1.4rem; font-weight: 800; margin: 0 0 10px; color: #f6f1e8; overflow-wrap: break-word; }
+.id-label { font-size: 0.72rem; letter-spacing: 2px; color: #a88462; margin: 10px 0 2px; font-weight: 700; }
+.id-value { margin: 0; font-weight: 700; color: #d5c4ae; }
+.id-value-sm { font-size: 0.95rem; }
+.id-qr-wrap { flex: none; text-align: center; }
+.id-qr svg { width: 104px; height: 104px; background: #fff; padding: 6px; border-radius: 10px; }
+.id-qr-cap { font-size: 0.75rem; color: #a88462; margin: 6px 0 0; }
+.id-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
+@media (max-width: 560px) {
+  .id-card { padding: 20px; }
+  .id-card-body { flex-wrap: wrap; }
+  .id-photo-wrap { width: 96px; height: 96px; }
+  .id-initials { font-size: 1.9rem; }
+  .id-qr-wrap { flex: 1 1 100%; margin-top: 8px; }
+}
+@media print {
+  .id-actions, .id-note, #idLocked { display: none !important; }
+  .id-card { box-shadow: none; max-width: none; }
+}

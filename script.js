@@ -1139,6 +1139,325 @@ const WEBDEV_CONFIG = {
     }
   }
 
+  /* ---------- student ID card page ---------- */
+  /* Enrolled-only digital ID card (id-card.html). Photo resolution order:
+     (1) a photo the student uploaded in this browser (localStorage
+     "webdevlab-id-photo"), (2) the site photo photos/<CODE>.jpg when one
+     exists for this student, (3) initials fallback. The PNG download draws
+     the same card on a 1050x660 canvas, photo included. */
+  var ID_PHOTO_KEY = "webdevlab-id-photo";
+  var ID_CARD_W = 1050, ID_CARD_H = 660;
+
+  function idInitials(name) {
+    var parts = String(name || "").trim().split(/\s+/).filter(Boolean);
+    if (!parts.length) return "?";
+    var first = parts[0].charAt(0);
+    var second = parts.length > 1 ? parts[1].charAt(0) : (parts[0].charAt(1) || "");
+    return (first + second).toUpperCase();
+  }
+
+  function idLoadImage(src) {
+    return new Promise(function (resolve) {
+      var img = new Image();
+      img.onload = function () { resolve(img); };
+      img.onerror = function () { resolve(null); };
+      img.src = src;
+    });
+  }
+
+  function idCoverDraw(ctx, img, cx, cy, r) {
+    /* draw the image cover-fit inside a circle centred (cx, cy), radius r */
+    var s = Math.max((r * 2) / img.width, (r * 2) / img.height);
+    var dw = img.width * s, dh = img.height * s;
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.drawImage(img, cx - dw / 2, cy - dh / 2, dw, dh);
+    ctx.restore();
+  }
+
+  (function idCardPage() {
+    var card = document.getElementById("idCard");
+    if (!card) return;
+    var locked = document.getElementById("idLocked");
+    var main = document.getElementById("idMain");
+    var acc = getAccess();
+    if (!acc) {
+      if (locked) locked.classList.remove("hidden");
+      return;
+    }
+    if (main) main.classList.remove("hidden");
+
+    var regId = "WDL-REG-" + acc.code;
+    var batchShort = String(WEBDEV_CONFIG.batch || "Batch 1").split("—")[0].trim() || "Batch 1";
+
+    document.getElementById("idName").textContent = acc.name;
+    document.getElementById("idCode").textContent = acc.code;
+    document.getElementById("idBatch").textContent = batchShort + " • Starts 1 December 2026";
+    document.getElementById("idInitials").textContent = idInitials(acc.name);
+
+    /* logo: real image when available, else the WL fallback */
+    var logoImg = document.getElementById("idLogo");
+    var logoFb = document.getElementById("idLogoFallback");
+    if (typeof WEBDEV_LAB_LOGO_JPEG === "string" && WEBDEV_LAB_LOGO_JPEG.length > 1000) {
+      logoImg.src = "data:image/jpeg;base64," + WEBDEV_LAB_LOGO_JPEG;
+      logoImg.classList.remove("hidden");
+      if (logoFb) logoFb.classList.add("hidden");
+    }
+
+    /* QR for this student's registration */
+    var qrWrap = document.getElementById("idQrWrap");
+    var qrBox = document.getElementById("idQr");
+    if (qrBox && typeof webdevCertQrSvg === "function") {
+      var svg = webdevCertQrSvg(regId, 104);
+      if (svg) qrBox.innerHTML = svg;
+      else if (qrWrap) qrWrap.classList.add("hidden");
+    } else if (qrWrap) qrWrap.classList.add("hidden");
+
+    /* ---- photo resolution: upload > site photo > initials ---- */
+    var photoImg = document.getElementById("idPhoto");
+    var initialsEl = document.getElementById("idInitials");
+    var removeBtn = document.getElementById("idRemovePhoto");
+    var currentPhoto = { kind: "none", src: null }; /* kind: upload|site|none */
+
+    function showPhotoState() {
+      if (currentPhoto.kind === "none") {
+        photoImg.classList.add("hidden");
+        photoImg.removeAttribute("src");
+        initialsEl.classList.remove("hidden");
+      } else {
+        initialsEl.classList.add("hidden");
+        photoImg.classList.remove("hidden");
+      }
+      if (removeBtn) removeBtn.classList.toggle("hidden", currentPhoto.kind !== "upload");
+    }
+
+    photoImg.onerror = function () {
+      currentPhoto = { kind: "none", src: null };
+      showPhotoState();
+    };
+
+    function resolvePhoto() {
+      var uploaded = null;
+      try { uploaded = localStorage.getItem(ID_PHOTO_KEY); } catch (e) {}
+      if (uploaded) {
+        currentPhoto = { kind: "upload", src: uploaded };
+        photoImg.src = uploaded;
+        showPhotoState();
+        return;
+      }
+      /* site photo photos/<CODE>.jpg — show it only when it really loads */
+      var siteSrc = "photos/" + acc.code + ".jpg";
+      var probe = new Image();
+      probe.onload = function () {
+        if (currentPhoto.kind !== "upload") {
+          currentPhoto = { kind: "site", src: siteSrc };
+          photoImg.src = siteSrc;
+          showPhotoState();
+        }
+      };
+      probe.onerror = function () {
+        if (currentPhoto.kind !== "upload") {
+          currentPhoto = { kind: "none", src: null };
+          showPhotoState();
+        }
+      };
+      probe.src = siteSrc;
+      showPhotoState(); /* initials until the probe answers */
+    }
+
+    resolvePhoto();
+
+    /* upload: square-crop to 256px JPEG (~0.85) and keep it in this browser */
+    var fileInput = document.getElementById("idPhotoInput");
+    if (fileInput) {
+      fileInput.addEventListener("change", function () {
+        var file = fileInput.files && fileInput.files[0];
+        if (!file) return;
+        if (file.type.indexOf("image/") !== 0) return;
+        var reader = new FileReader();
+        reader.onload = function () {
+          var srcImg = new Image();
+          srcImg.onload = function () {
+            var c = document.createElement("canvas");
+            c.width = 256; c.height = 256;
+            var cctx = c.getContext("2d");
+            var s = Math.max(256 / srcImg.width, 256 / srcImg.height);
+            var dw = srcImg.width * s, dh = srcImg.height * s;
+            cctx.drawImage(srcImg, (256 - dw) / 2, (256 - dh) / 2, dw, dh);
+            var dataUrl = c.toDataURL("image/jpeg", 0.85);
+            try { localStorage.setItem(ID_PHOTO_KEY, dataUrl); } catch (e) {}
+            currentPhoto = { kind: "upload", src: dataUrl };
+            photoImg.src = dataUrl;
+            showPhotoState();
+          };
+          srcImg.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+        fileInput.value = "";
+      });
+    }
+
+    /* remove the uploaded photo -> back to the site photo (or initials) */
+    if (removeBtn) {
+      removeBtn.addEventListener("click", function () {
+        try { localStorage.removeItem(ID_PHOTO_KEY); } catch (e) {}
+        currentPhoto = { kind: "none", src: null };
+        resolvePhoto();
+      });
+    }
+
+    /* ---- PNG download: the same card on a 1050x660 canvas ---- */
+    var dlBtn = document.getElementById("idDownloadBtn");
+    if (dlBtn) {
+      dlBtn.addEventListener("click", function () {
+        dlBtn.disabled = true;
+        var oldText = dlBtn.textContent;
+        dlBtn.textContent = "Preparing…";
+        drawIdCardPng(acc, currentPhoto.src).then(function (blob) {
+          dlBtn.disabled = false;
+          dlBtn.textContent = oldText;
+          if (!blob) return;
+          var url = (window.URL || window.webkitURL).createObjectURL(blob);
+          var a = document.createElement("a");
+          a.href = url;
+          a.download = "WebDev-Lab-ID-Card-" + String(acc.name || "Student").replace(/[^A-Za-z0-9]+/g, "-") + ".png";
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(function () {
+            (window.URL || window.webkitURL).revokeObjectURL(url);
+            if (a.parentNode) a.parentNode.removeChild(a);
+          }, 1000);
+        });
+      });
+    }
+
+    var printBtn = document.getElementById("idPrintBtn");
+    if (printBtn) printBtn.addEventListener("click", function () { window.print(); });
+
+    function drawIdCardPng(acc, photoSrc) {
+      var canvas = document.createElement("canvas");
+      canvas.width = ID_CARD_W; canvas.height = ID_CARD_H;
+      var ctx = canvas.getContext("2d");
+      var reg = "WDL-REG-" + acc.code;
+      var batch = batchShort;
+
+      /* base + borders */
+      ctx.fillStyle = "#1a120e";
+      ctx.fillRect(0, 0, ID_CARD_W, ID_CARD_H);
+      ctx.strokeStyle = "#a88462"; ctx.lineWidth = 3;
+      ctx.strokeRect(10, 10, ID_CARD_W - 20, ID_CARD_H - 20);
+      ctx.strokeStyle = "rgba(168,132,98,0.45)"; ctx.lineWidth = 1;
+      ctx.strokeRect(24, 24, ID_CARD_W - 48, ID_CARD_H - 48);
+
+      var need = [];
+      if (typeof WEBDEV_LAB_LOGO_JPEG === "string" && WEBDEV_LAB_LOGO_JPEG.length > 1000) {
+        need.push(idLoadImage("data:image/jpeg;base64," + WEBDEV_LAB_LOGO_JPEG));
+      } else need.push(Promise.resolve(null));
+      need.push(photoSrc ? idLoadImage(photoSrc) : Promise.resolve(null));
+
+      return Promise.all(need).then(function (imgs) {
+        var logo = imgs[0], photo = imgs[1];
+
+        /* logo 96x96 top-left */
+        if (logo) ctx.drawImage(logo, 48, 42, 96, 96);
+        else {
+          ctx.fillStyle = "#a88462";
+          ctx.font = "800 44px Georgia, serif";
+          ctx.textAlign = "center"; ctx.textBaseline = "middle";
+          ctx.fillText("WL", 96, 92);
+          ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
+        }
+
+        /* brand */
+        ctx.fillStyle = "#f6f1e8";
+        ctx.font = "800 46px Georgia, serif";
+        ctx.fillText("WEBDEV LAB", 164, 96);
+        ctx.fillStyle = "#a88462";
+        ctx.font = "700 20px Georgia, serif";
+        try { ctx.letterSpacing = "6px"; } catch (e) {}
+        ctx.fillText("STUDENT ID CARD", 166, 132);
+        try { ctx.letterSpacing = "0px"; } catch (e) {}
+
+        /* divider */
+        ctx.strokeStyle = "#a88462"; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(48, 168); ctx.lineTo(1002, 168); ctx.stroke();
+
+        /* photo circle (centre 128,398 r 86) or initials */
+        ctx.save();
+        ctx.beginPath(); ctx.arc(128, 398, 86, 0, Math.PI * 2);
+        ctx.strokeStyle = "#a88462"; ctx.lineWidth = 3; ctx.stroke();
+        ctx.clip();
+        if (photo) {
+          idCoverDraw(ctx, photo, 128, 398, 86);
+        } else {
+          ctx.fillStyle = "#a88462";
+          ctx.fillRect(42, 312, 172, 172);
+          ctx.fillStyle = "#1a120e";
+          ctx.font = "800 56px Georgia, serif";
+          ctx.textAlign = "center"; ctx.textBaseline = "middle";
+          ctx.fillText(idInitials(acc.name), 128, 400);
+          ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
+        }
+        ctx.restore();
+
+        /* details */
+        ctx.fillStyle = "#f6f1e8";
+        ctx.font = "800 40px Georgia, serif";
+        ctx.fillText(acc.name, 252, 318);
+        ctx.font = "700 16px Georgia, serif";
+        ctx.fillStyle = "#a88462";
+        ctx.fillText("STUDENT ID", 252, 372);
+        ctx.fillStyle = "#d5c4ae";
+        ctx.font = "700 28px Georgia, serif";
+        ctx.fillText(acc.code, 252, 406);
+        ctx.font = "700 16px Georgia, serif";
+        ctx.fillStyle = "#a88462";
+        ctx.fillText("COURSE", 252, 452);
+        ctx.fillStyle = "#d5c4ae";
+        ctx.font = "400 22px Georgia, serif";
+        ctx.fillText("Full Course — HTML, CSS & JavaScript", 252, 482);
+        ctx.font = "700 16px Georgia, serif";
+        ctx.fillStyle = "#a88462";
+        ctx.fillText("BATCH", 252, 530);
+        ctx.fillStyle = "#d5c4ae";
+        ctx.font = "400 22px Georgia, serif";
+        ctx.fillText(batch + " • Starts 1 December 2026", 252, 560);
+
+        /* QR white box + modules (integer 4px cells, 37 modules) */
+        var qr = (typeof webdevCertQrMatrix === "function") ? webdevCertQrMatrix(reg) : null;
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(836, 296, 172, 172);
+        if (qr) {
+          var cell = 4, off = 836 + (172 - qr.size * cell) / 2;
+          var offY = 296 + (172 - qr.size * cell) / 2;
+          ctx.fillStyle = "#000000";
+          for (var r = 0; r < qr.size; r++) {
+            for (var c = 0; c < qr.size; c++) {
+              if (qr.rows[r].charAt(c) === "1") ctx.fillRect(off + c * cell, offY + r * cell, cell, cell);
+            }
+          }
+        }
+        ctx.fillStyle = "#a88462";
+        ctx.font = "400 16px Georgia, serif";
+        ctx.textAlign = "center";
+        ctx.fillText("Scan to verify", 922, 500);
+        ctx.textAlign = "left";
+
+        /* footer */
+        ctx.fillStyle = "rgba(213,196,174,0.75)";
+        ctx.font = "400 14px Georgia, serif";
+        ctx.fillText("WebDev Lab — usmankalera-dev.github.io/webdev-lab", 48, 626);
+
+        return new Promise(function (resolve) {
+          if (canvas.toBlob) canvas.toBlob(function (b) { resolve(b); }, "image/png");
+          else resolve(null);
+        });
+      });
+    }
+  })();
+
   /* ---------- certificate logo: real image when available ---------- */
   /* On both certificate pages the <img id="certLogo"> shows the real logo
      from logo.js. If the logo did not load, the img stays hidden and the
