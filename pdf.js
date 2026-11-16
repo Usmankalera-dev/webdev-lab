@@ -2,7 +2,7 @@
    No libraries, no CDN, no server. It writes a valid PDF file by hand
    (header, objects, xref table, trailer) using only the standard built-in
    PDF fonts (Times-Bold F1, Times-Roman F2, Times-Italic F3). All text is
-   plain ASCII. A4 landscape 842 x 595 pt, ivory paper, navy + gold design:
+   plain ASCII. A4 landscape 842 x 595 pt, beige-tinted paper, dark-brown + tan design:
    double border with corner diamonds, logo monogram, letter-spaced title,
    script-style name, diagonal watermark, round seal with circular text
    and a 5-point star, and a three-part bottom row (date / seal / signature).
@@ -235,17 +235,17 @@
 
   /* ---------- the certificate layout ---------- */
   function buildContent(o) {
-    var NAVY = "0.10 0.16 0.29";      /* #1a2a4a */
-    var GOLD = "0.79 0.64 0.15";      /* #c9a227 */
-    var DARK_GOLD = "0.72 0.53 0.04"; /* #b8860b */
-    var GREY = "0.29 0.33 0.39";
+    var NAVY = "0.10 0.07 0.05";      /* #1a120e */
+    var GOLD = "0.66 0.52 0.38";      /* #a88462 */
+    var DARK_GOLD = "0.42 0.29 0.18"; /* #6b4a2e */
+    var GREY = "0.29 0.29 0.27";      /* #4a4a46 */
     var LIGHT_GREY = "0.45 0.45 0.45";
-    var WATER = "0.93 0.92 0.89";     /* very light watermark grey */
+    var WATER = "0.90 0.86 0.80";     /* very light watermark beige */
 
     var s = "";
 
-    /* Ivory paper. */
-    s += fillRect(0, 0, PAGE_W, PAGE_H, "0.99 0.98 0.96");
+    /* Beige-tinted paper. */
+    s += fillRect(0, 0, PAGE_W, PAGE_H, "0.97 0.95 0.91");
 
     /* Watermark first, so everything else draws over it. */
     s += rotatedText("WEBDEV LAB", "F1", 64, CX, 300, -30, WATER);

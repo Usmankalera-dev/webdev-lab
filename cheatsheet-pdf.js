@@ -337,9 +337,9 @@ var CHEATSHEETS = [
 
   /* Build the content streams (one per page) for one cheat sheet. */
   function buildPages(sheet) {
-    var NAVY = "0.10 0.16 0.29";
-    var GOLD = "0.79 0.64 0.15";
-    var GREY = "0.29 0.33 0.39";
+    var NAVY = "0.10 0.07 0.05";      /* #1a120e */
+    var GOLD = "0.66 0.52 0.38";      /* #a88462 */
+    var GREY = "0.29 0.29 0.27";      /* #4a4a46 */
     var LIGHT_GREY = "0.45 0.45 0.45";
     var pages = [];
     var s = "";

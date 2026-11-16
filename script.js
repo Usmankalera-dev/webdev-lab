@@ -15,7 +15,6 @@ const WEBDEV_CONFIG = {
 (function () {
   "use strict";
 
-  var THEME_KEY = "webdevlab-theme";
   var PROGRESS_KEY = "webdevlab-progress";
   var WAITLIST_KEY = "webdevlab-waitlist";
   var ACCESS_KEY = "webdevlab-access";
@@ -369,28 +368,6 @@ const WEBDEV_CONFIG = {
     /* LESSONS hrefs are root-relative ("lessons/html-2.html"); from a lesson
        page (inside lessons/) the same target is the bare file name. */
     return href.replace("lessons/", "");
-  }
-
-  /* ---------- dark / light theme ---------- */
-  var themeBtn = document.getElementById("themeToggle");
-  function applyTheme(theme) {
-    if (theme === "light") {
-      document.body.classList.add("light");
-      if (themeBtn) themeBtn.textContent = "\u2600\uFE0F";
-    } else {
-      document.body.classList.remove("light");
-      if (themeBtn) themeBtn.textContent = "\uD83C\uDF19";
-    }
-  }
-  var savedTheme = null;
-  try { savedTheme = localStorage.getItem(THEME_KEY); } catch (e) {}
-  applyTheme(savedTheme === "light" ? "light" : "dark");
-  if (themeBtn) {
-    themeBtn.addEventListener("click", function () {
-      var next = document.body.classList.contains("light") ? "dark" : "light";
-      try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
-      applyTheme(next);
-    });
   }
 
   /* ---------- mobile menu ---------- */
