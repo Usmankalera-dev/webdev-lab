@@ -821,7 +821,9 @@ const WEBDEV_CONFIG = {
           name: cacc ? cacc.name : "Student",
           bodyLines: ["has successfully completed", "WebDev Lab - HTML, CSS & JavaScript"],
           batch: WEBDEV_CONFIG.batch,
-          meta: "Completed on " + formatDate(pdfDate) + "  |  Certificate ID: WDL-" + (cacc ? cacc.code : ""),
+          dateLabel: "Date Issued",
+          date: formatDate(pdfDate),
+          certId: "WDL-" + (cacc ? cacc.code : ""),
           signature: "Muhammad Usman",
           signatureSub: "Founder & CEO, Rakhzaar Tech"
         });
@@ -866,7 +868,10 @@ const WEBDEV_CONFIG = {
             name: racc.name,
             bodyLines: ["is registered for", "WebDev Lab - HTML, CSS & JavaScript"],
             batch: WEBDEV_CONFIG.batch,
-            meta: "Registered on " + formatDate(regDate) + "  |  Registration ID: WDL-REG-" + racc.code,
+            dateLabel: "Date Registered",
+            date: formatDate(regDate),
+            certId: "WDL-REG-" + racc.code,
+            idLabel: "Registration ID",
             signature: "Muhammad Usman",
             signatureSub: "Founder & CEO, Rakhzaar Tech"
           });

@@ -45,17 +45,43 @@
       <div id="regReady" class="hidden">
         <div class="certificate" id="registrationCard">
           <div class="cert-inner">
+            <span class="cert-corner cert-corner-tl" aria-hidden="true"></span>
+            <span class="cert-corner cert-corner-tr" aria-hidden="true"></span>
+            <span class="cert-corner cert-corner-bl" aria-hidden="true"></span>
+            <span class="cert-corner cert-corner-br" aria-hidden="true"></span>
+            <span class="cert-watermark" aria-hidden="true">WEBDEV LAB</span>
+            <div class="cert-logo" aria-hidden="true">WL</div>
             <p class="cert-eyebrow">WebDev Lab</p>
+            <p class="cert-tagline">Learn HTML, CSS &amp; JavaScript by Building Real Things</p>
             <h2>Certificate of Registration</h2>
+            <div class="cert-title-rule" aria-hidden="true"></div>
             <p class="cert-presented">This certificate is proudly presented to</p>
             <p class="cert-name" id="regName">—</p>
             <p class="cert-body">is registered for <strong>WebDev Lab — HTML, CSS &amp; JavaScript</strong></p>
             <p class="cert-batch" id="regBatch">Batch 1 — 1 December 2026</p>
-            <div class="cert-meta">
-              <span>Registered on <strong id="regDate">—</strong></span>
-              <span>Registration ID: <strong id="regId">—</strong></span>
+            <p class="cert-idline">Registration ID: <strong id="regId">—</strong></p>
+            <div class="cert-bottom">
+              <div class="cert-date-block">
+                <span class="cert-label">Date Registered</span>
+                <strong id="regDate">—</strong>
+                <span class="cert-date-rule" aria-hidden="true"></span>
+              </div>
+              <div class="cert-seal" aria-hidden="true">
+                <svg class="cert-seal-svg" viewBox="0 0 96 96">
+                  <defs><path id="sealCirclePath" d="M 48 14 A 34 34 0 1 1 47.9 14" fill="none"></path></defs>
+                  <circle cx="48" cy="48" r="46" fill="none" stroke="#c9a227" stroke-width="1.5"></circle>
+                  <circle cx="48" cy="48" r="40" fill="none" stroke="#1a2a4a" stroke-width="0.75"></circle>
+                  <text font-size="9" font-weight="700" fill="#1a2a4a" letter-spacing="1.5"><textPath href="#sealCirclePath" textLength="205" lengthAdjust="spacing">WEBDEV LAB * EST. 2026 *</textPath></text>
+                  <polygon points="48,32 51.8,42.7 63.2,43.1 54.2,50 57.4,60.9 48,54.5 38.6,60.9 41.8,50 32.8,43.1 44.2,42.7" fill="#c9a227"></polygon>
+                </svg>
+              </div>
+              <div class="cert-sign-block">
+                <span class="cert-sign-line" aria-hidden="true"></span>
+                <span class="cert-sign-name">Muhammad Usman</span>
+                <span class="cert-sign-role">Founder &amp; CEO, Rakhzaar Tech</span>
+              </div>
             </div>
-            <p class="cert-sign">Muhammad Usman, Founder &amp; CEO, Rakhzaar Tech</p>
+            <p class="cert-foot">WebDev Lab — Learn HTML, CSS &amp; JavaScript by building real things</p>
           </div>
         </div>
         <p class="cert-preview-note hidden" id="regPreviewNote">Preview — this is your registration certificate design.</p>
@@ -71,11 +97,19 @@
 
 <footer class="site-footer">
   <div class="container">
-    <p>
+    <p class="footer-brand"><strong>WebDev Lab</strong> — Learn HTML, CSS &amp; JavaScript by building real things</p>
+    <p class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="editor.html">Editor</a>
+      <a href="enroll.html">Enroll</a>
+      <a href="dashboard.html">Dashboard</a>
+    </p>
+    <p class="footer-links">
       <a href="https://usmankalera-dev.github.io/portfolio/" target="_blank" rel="noopener">Portfolio</a>
       <a href="https://github.com/Usmankalera-dev" target="_blank" rel="noopener">GitHub</a>
-      <a href="lessons.html">Lessons</a>
     </p>
+    <p>WhatsApp: <a href="https://wa.me/923187579301">03187579301</a> &middot; Batch 1 — 1 December 2026</p>
     <p>By Muhammad Usman (Usman Kalera) — Rakhzaar Tech</p>
   </div>
 </footer>
