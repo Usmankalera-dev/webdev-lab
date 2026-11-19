@@ -1,8 +1,1 @@
-{
-  "endpoint": "https://deborah-add-warner-mode.trycloudflare.com/v1",
-  "models": [
-    "gpt-6-astra",
-    "gpt-6-luna"
-  ],
-  "apiKey": "ck__MObwxxVTGIkL6noULoQk7-fMdIdrKIIM2mMLoHn_y4"
-}
+{"apiUrl":"https://portfolio-nu8s.onrender.com/api/chat","models":["gpt-6-astra","gpt-6-luna"]}

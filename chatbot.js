@@ -4,19 +4,16 @@
    ------------------------------------------------------------
    How it works:
    1. CONFIG — on load, this file fetches chatbot-config.json
-      (endpoint + models + apiKey). The key is the site's own key,
-      saved in that config file, so students never type a key.
-      NOTE: this is a static site, so the config file is public —
-      anyone who opens it can read the key. That is only safe
-      because this key is a free shared proxy key, not a paid
-      account key. If the key is abused or rotated, the chatbot
-      stops answering and the key must be replaced in the config.
-   2. ASK — the question goes to the endpoint's OpenAI-compatible
-      /chat/completions with the chosen model (GPT-6 Astra first).
-      If that model fails, the other model is tried once.
+      (the backend chat URL + the model list). There is NO key in
+      this file and NO key in this page.
+   2. ASK — the question goes to the portfolio backend
+      (POST /api/chat). The backend reads the chatbot key from
+      its Postgres database (app_secrets table) and forwards the
+      request to the AI endpoint, trying GPT-6 Astra first and
+      GPT-6 Luna if Astra fails. The key is never sent to any
+      browser, so students just type and ask.
    3. ANSWER — the reply is shown with a small "Answered by …"
       line. The last 20 exchanges are kept in this browser only.
-   The key is never logged and never shown on the page.
    ============================================================ */
 (function () {
   "use strict";
@@ -28,7 +25,6 @@
     "student (English, Urdu or Roman Urdu). Keep answers short, " +
     "simple and practical, with a small code example when it helps. " +
     "If you do not know the answer, say so plainly instead of guessing.";
-  var MAX_TOKENS = 1024;
   var HISTORY_NAME = "webdevlab-chatbot-history";
   var HISTORY_MAX = 20;
 
@@ -71,26 +67,26 @@
   }
 
   function friendlyError(err, res) {
-    if (res && (res.status === 401 || res.status === 403)) {
-      return "Chatbot abhi nahi chal raha — endpoint ne request block " +
-        "kar di (error " + res.status + "). Thori dair baad dobara try " +
-        "karo, ya <a href='tutor.html'>AI Tutor</a> se pooch lo.";
+    if (res && res.status === 503) {
+      return "Chatbot abhi set up nahi hai — database mein key nahi " +
+        "mili. Thori dair baad dobara try karo, ya <a href='tutor.html'>" +
+        "AI Tutor</a> se pooch lo.";
     }
-    if (res && res.status === 404) {
-      return "Model nahi mila (error 404) — endpoint par ye model ka " +
-        "naam shayad alag hai. Thori dair baad dobara try karo.";
+    if (res && res.status === 502) {
+      return "Chatbot down hai — AI endpoint se jawab nahi mila. " +
+        "Thori dair baad dobara try karo, ya <a href='tutor.html'>" +
+        "AI Tutor</a> se pooch lo.";
     }
     if (res && res.status === 429) {
-      return "Free limit khatam ho gaya — thori dair baad dobara try karo.";
+      return "Bohat sare sawal pooch liye — kuch dair baad dobara try karo.";
     }
     if (res) {
-      return "Endpoint se jawab nahi mila (error " + res.status +
+      return "Chatbot se jawab nahi mila (error " + res.status +
         ") — thori dair baad dobara try karo.";
     }
     if (err) {
-      return "Browser ne request rok di (internet ya CORS) — apna " +
-        "connection check karo aur dobara try karo. Agar ye error " +
-        "bar bar aaye to endpoint browser se block ho raha hai.";
+      return "Chatbot server nahi mil raha — apna connection check " +
+        "karo aur dobara try karo.";
     }
     return "Kuch ghalat ho gaya — dobara try karo.";
   }
@@ -190,32 +186,7 @@
       : name === "gpt-6-luna" ? "GPT-6 Luna" : name;
   }
 
-  /* ---------- API call ---------- */
-
-  function callChat(modelName, messages) {
-    return fetch(config.endpoint + "/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + config.apiKey
-      },
-      body: JSON.stringify({
-        model: modelName,
-        messages: messages,
-        max_tokens: MAX_TOKENS,
-        temperature: 0.7
-      })
-    });
-  }
-
-  function extractText(data) {
-    try {
-      var choice = (data.choices || [])[0] || {};
-      return (choice.message && choice.message.content) || "";
-    } catch (e) {
-      return "";
-    }
-  }
+  /* ---------- backend call ---------- */
 
   function ask(question) {
     question = (question || "").trim();
@@ -244,34 +215,23 @@
     });
     messages.push({ role: "user", content: question });
 
-    var tried = [model];
-    var other = (config.models || []).filter(function (m) {
-      return m !== model;
-    })[0];
-
-    var tryModel = function (modelName) {
-      return callChat(modelName, messages).then(function (res) {
-        if (!res.ok) throw { res: res, modelName: modelName };
-        return res.json().then(function (data) {
-          return { data: data, modelName: modelName };
-        });
-      });
-    };
-
-    tryModel(model).catch(function (err) {
-      // First model failed: try the other model once.
-      if (other && err && err.res) return tryModel(other);
-      throw err;
-    }).then(function (out) {
+    fetch(config.apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: messages, model: model })
+    }).then(function (res) {
+      if (!res.ok) throw { res: res };
+      return res.json();
+    }).then(function (data) {
       setLoading(false);
-      var answer = extractText(out.data).trim();
+      var answer = (data && data.answer ? String(data.answer) : "").trim();
       if (!answer) {
         addMessage("ai", "<p>Jawab khaali aaya — dobara try karo.</p>");
         return;
       }
       var html = renderAnswer(escapeHtml(answer)) +
         "<p class='chatbot-answered'>Answered by " +
-        escapeHtml(modelLabel(out.modelName)) + "</p>";
+        escapeHtml(modelLabel(data.model || model)) + "</p>";
       addAi(html, question);
     }).catch(function (err) {
       setLoading(false);
@@ -288,8 +248,7 @@
       if (!res.ok) throw new Error("config " + res.status);
       return res.json();
     }).then(function (cfg) {
-      if (!cfg || !cfg.endpoint || !cfg.apiKey ||
-          !(cfg.models || []).length) {
+      if (!cfg || !cfg.apiUrl || !(cfg.models || []).length) {
         throw new Error("config incomplete");
       }
       config = cfg;
