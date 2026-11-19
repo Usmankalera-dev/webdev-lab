@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WebDev Lab AI Chatbot — ask anything about HTML, CSS and JavaScript in English, Urdu or Roman Urdu. No key needed, the chatbot answers with GPT-6 Astra or Luna.">
+<title>AI Chatbot — WebDev Lab</title>
+<script>try{var t=localStorage.getItem("webdevlab-theme");if(t){document.documentElement.setAttribute("data-theme",t);}}catch(e){}</script>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .chatbot-model-picker{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
+  .chatbot-model-picker .tutor-chip[aria-pressed="true"]{background:var(--accent,#6B4A2E);color:#fff;border-color:transparent}
+  .chatbot-model-note{font-size:.9em;opacity:.85;margin:0}
+  .chatbot-answered{font-size:.82em;opacity:.75;margin-top:6px}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html"><img class="site-logo-img" alt="WebDev Lab logo">WebDev <span>Lab</span></a>
+    <button class="icon-btn menu-btn" id="menuToggle" aria-label="Open menu">&#9776;</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="editor.html">Editor</a>
+      <a href="enroll.html">Enroll</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="chatbot.html">Chatbot</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="index.html#teacher">Teacher</a>
+      <a href="index.html#demo">Free Demo</a>
+      <a href="enroll.html?plan=earlybird" class="cta">Enroll — Rs 999</a>
+    </nav>
+    <div class="theme-picker" id="themePicker">
+      <button class="icon-btn theme-picker-btn" id="themePickerBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="themePanel">🎨 Colour</button>
+      <div class="theme-panel" id="themePanel" role="menu" hidden>
+      <button type="button" class="theme-option" data-theme="brown" role="menuitemradio" aria-checked="true"><span class="theme-dots"><i style="background:#1A120E"></i><i style="background:#3A2418"></i><i style="background:#6B4A2E"></i><i style="background:#A88462"></i><i style="background:#D5C4AE"></i><i style="background:#4A4A46"></i></span><span class="theme-name">Brown (Default)</span><span class="theme-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="theme-option" data-theme="forest" role="menuitemradio" aria-checked="false"><span class="theme-dots"><i style="background:#0F1F17"></i><i style="background:#1E3A2E"></i><i style="background:#3E5A3F"></i><i style="background:#6B7F67"></i><i style="background:#C7CBB8"></i><i style="background:#3D4337"></i></span><span class="theme-name">Forest</span><span class="theme-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="theme-option" data-theme="ocean" role="menuitemradio" aria-checked="false"><span class="theme-dots"><i style="background:#0B132B"></i><i style="background:#1C2541"></i><i style="background:#3A506B"></i><i style="background:#5BC0DE"></i><i style="background:#F4D6B0"></i><i style="background:#D97706"></i></span><span class="theme-name">Ocean</span><span class="theme-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="theme-option" data-theme="grape" role="menuitemradio" aria-checked="false"><span class="theme-dots"><i style="background:#0E0B1D"></i><i style="background:#2A1E4D"></i><i style="background:#5A3B8C"></i><i style="background:#8B7CC7"></i><i style="background:#C9C2E3"></i><i style="background:#3A3A52"></i></span><span class="theme-name">Grape</span><span class="theme-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="theme-option" data-theme="berry" role="menuitemradio" aria-checked="false"><span class="theme-dots"><i style="background:#1A0F2E"></i><i style="background:#3B1B4F"></i><i style="background:#7A2E6F"></i><i style="background:#D6598F"></i><i style="background:#F4D7D4"></i><i style="background:#FF6B6B"></i></span><span class="theme-name">Berry</span><span class="theme-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="theme-option" data-theme="teal" role="menuitemradio" aria-checked="false"><span class="theme-dots"><i style="background:#0A0F14"></i><i style="background:#0F3D3E"></i><i style="background:#2E6F73"></i><i style="background:#7FB3B8"></i><i style="background:#EADCC8"></i><i style="background:#C6601F"></i></span><span class="theme-name">Teal</span><span class="theme-check" aria-hidden="true">✓</span></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>AI Chatbot</h2>
+        <p>Ask anything about HTML, CSS and JavaScript — in English, Urdu or Roman Urdu. No key needed: the chatbot answers with GPT-6 Astra or Luna.</p>
+      </div>
+
+      <div class="card tutor-how">
+        <h3>How this chatbot works</h3>
+        <ol class="tutor-steps">
+          <li><strong>Ask anything about web development.</strong> Unlike the AI Tutor (which answers only from the 23 lessons), this chatbot answers general HTML, CSS and JavaScript questions.</li>
+          <li><strong>Pick a model.</strong> GPT-6 Astra answers first. If Astra does not answer, the chatbot tries GPT-6 Luna automatically.</li>
+          <li><strong>No key needed.</strong> The key is saved in the site's config, so students just type and ask. Your chat stays in this browser only.</li>
+        </ol>
+        <p class="note">If the chatbot shows an error, the AI endpoint is blocking the request right now — try again later, or ask the <a href="tutor.html">AI Tutor</a>, which answers from the lessons without any key.</p>
+      </div>
+
+      <div class="card tutor-card">
+        <div class="tutor-chat-bar">
+          <button type="button" class="btn btn-outline btn-small" id="chatbotNewChat">＋ New chat</button>
+        </div>
+        <div class="chatbot-model-picker" role="group" aria-label="Choose a model">
+          <span class="chatbot-model-note">Model:</span>
+          <button type="button" class="tutor-chip" id="modelAstra" aria-pressed="true">GPT-6 Astra</button>
+          <button type="button" class="tutor-chip" id="modelLuna" aria-pressed="false">GPT-6 Luna</button>
+          <span class="chatbot-model-note" id="chatbotModelStatus">Loading…</span>
+        </div>
+        <div class="tutor-chat" id="chatbotChat">
+          <div class="tutor-msg tutor-msg-ai" id="chatbotWelcome">
+            <p>Assalam-o-Alaikum! 👋 Main WebDev Lab ka AI Chatbot hoon. Mujh se HTML, CSS ya JavaScript ke baare mein kuch bhi pooch lo — jaise "Flexbox kya hai?" ya "JavaScript mein array kaise banayein?"</p>
+            <p>Main course ke bahar ke sawal bhi jawab deta hoon. Lesson se jawab chahiye to <a href="tutor.html">AI Tutor</a> use karo.</p>
+          </div>
+        </div>
+        <div class="tutor-chips">
+          <button type="button" class="tutor-chip" data-question="Flexbox kya hai?">Flexbox kya hai?</button>
+          <button type="button" class="tutor-chip" data-question="JavaScript mein array kaise banayein?">Array kaise banayein?</button>
+          <button type="button" class="tutor-chip" data-question="HTML mein form kaise banayein?">Form kaise banayein?</button>
+          <button type="button" class="tutor-chip" data-question="CSS mein responsive design kya hai?">Responsive design kya hai?</button>
+          <button type="button" class="tutor-chip" data-question="JavaScript mein loop kya hota hai?">Loop kya hota hai?</button>
+        </div>
+        <form id="chatbotForm" class="tutor-form" autocomplete="off">
+          <label for="chatbotInput" class="hidden">Ask the chatbot</label>
+          <input type="text" id="chatbotInput" placeholder="Apna sawal likho… (English, Urdu ya Roman Urdu)" maxlength="500">
+          <button type="submit" class="btn" id="chatbotAskBtn">Ask</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand-col">
+        <p class="footer-brand"><img class="site-logo-img footer-logo-img" alt="WebDev Lab logo">WebDev Lab</p>
+        <p class="footer-tagline">Learn HTML, CSS &amp; JavaScript by building real things</p>
+      </div>
+      <div class="footer-col">
+        <h4>Course</h4>
+        <ul>
+          <li><a href="lessons.html">Lessons</a></li>
+          <li><a href="tutor.html">AI Tutor</a></li>
+          <li><a href="chatbot.html">AI Chatbot</a></li>
+          <li><a href="editor.html">Editor</a></li>
+          <li><a href="enroll.html">Enroll</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="verify.html">Verify Certificate</a></li>
+          <li><a href="leaderboard.html">Leaderboard</a></li>
+          <li><a href="cheatsheets.html">Cheat Sheets</a></li>
+          <li><a href="final-project.html">Final Project</a></li>
+          <li><a href="index.html#teacher">Your Teacher</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://usmankalera-dev.github.io/portfolio/" target="_blank" rel="noopener">Portfolio</a></li>
+          <li><a href="https://github.com/Usmankalera-dev" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://wa.me/923187579301">WhatsApp 03187579301</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 WebDev Lab &middot; Batch 1 — 1 December 2026</p>
+      <p>By Muhammad Usman (Usman Kalera) — Rakhzaar Tech</p>
+    </div>
+  </div>
+</footer>
+
+<script src="logo.js"></script>
+<script src="chatbot.js?v=1"></script>
+<script src="script.js"></script>
+</body>
+</html>
